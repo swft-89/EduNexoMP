@@ -1,0 +1,215 @@
+.profile-page {
+    padding: 6px;
+}
+
+.profile-hero {
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at top left, rgba(39, 72, 166, 0.12), transparent 34%),
+        radial-gradient(circle at bottom right, rgba(77, 136, 245, 0.10), transparent 28%),
+        #ffffff;
+    border: 1px solid var(--border-soft);
+    border-radius: 30px;
+    box-shadow: var(--shadow-card);
+    padding: 30px;
+    margin-bottom: 24px;
+}
+
+.profile-hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.profile-hero-user {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.profile-avatar {
+    width: 78px;
+    height: 78px;
+    border-radius: 22px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.55rem;
+    font-weight: 800;
+    box-shadow: 0 14px 28px rgba(39, 72, 166, 0.20);
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-hero h1 {
+    margin: 0 0 10px;
+    font-size: clamp(2rem, 4vw, 3.1rem);
+    line-height: 1;
+    color: var(--text);
+    letter-spacing: -0.04em;
+    font-weight: 800;
+}
+
+.profile-hero p {
+    margin: 0;
+    color: var(--text-soft);
+    font-size: 1.02rem;
+    line-height: 1.5;
+}
+
+.profile-hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.profile-card {
+    background: #ffffff;
+    border: 1px solid var(--border-soft);
+    border-radius: 30px;
+    box-shadow: var(--shadow-card);
+    padding: 28px;
+}
+
+.profile-card-head {
+    margin-bottom: 24px;
+}
+
+.profile-card-head h2 {
+    margin: 0 0 8px;
+    color: var(--text);
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+.profile-card-head p {
+    margin: 0;
+    color: var(--text-soft);
+    line-height: 1.6;
+}
+
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.profile-section {
+    border: 1px solid var(--border-soft);
+    border-radius: 24px;
+    padding: 22px;
+    background:
+        radial-gradient(circle at top right, rgba(39, 72, 166, 0.05), transparent 28%),
+        #ffffff;
+}
+
+.profile-section h3 {
+    margin: 0 0 18px;
+    color: var(--primary);
+    font-size: 1.05rem;
+    font-weight: 800;
+}
+
+.profile-section .form-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
+    gap: 18px;
+}
+
+.profile-section .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.profile-section .form-group.full {
+    grid-column: 1 / -1;
+}
+
+.profile-section label {
+    color: var(--text);
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.profile-section input,
+.profile-section select,
+.profile-section textarea {
+    width: 100%;
+    min-height: 52px;
+    border: 1px solid var(--border-soft);
+    border-radius: 16px;
+    background: #ffffff;
+    padding: 0 16px;
+    color: var(--text);
+    font-size: 0.96rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.22s ease, box-shadow 0.22s ease;
+}
+
+.profile-section textarea {
+    min-height: 120px;
+    padding: 14px 16px;
+    resize: vertical;
+}
+
+.profile-section input:focus,
+.profile-section select:focus,
+.profile-section textarea:focus {
+    border-color: rgba(39, 72, 166, 0.40);
+    box-shadow: 0 0 0 4px rgba(39, 72, 166, 0.08);
+}
+
+.profile-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 14px;
+    flex-wrap: wrap;
+    padding-top: 8px;
+}
+
+@media (max-width: 900px) {
+    .profile-section .form-grid-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-hero,
+    .profile-card {
+        padding: 20px;
+        border-radius: 24px;
+    }
+
+    .profile-avatar {
+        width: 64px;
+        height: 64px;
+        border-radius: 18px;
+    }
+
+    .profile-hero-user {
+        align-items: flex-start;
+    }
+
+    .profile-hero-actions,
+    .profile-actions {
+        width: 100%;
+    }
+
+    .profile-hero-actions .btn,
+    .profile-actions .btn {
+        width: 100%;
+    }
+}

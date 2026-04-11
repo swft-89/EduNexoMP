@@ -1,0 +1,230 @@
+:root[data-theme="dark"] {
+    --primary: #4d88f5;
+    --primary-dark: #3b6fe0;
+    --primary-light: #6ea3ff;
+
+    --text: #e5e7eb;
+    --text-soft: #94a3b8;
+
+    --bg-soft: #0f172a;
+    --white: #1e293b;
+    --border-soft: #334155;
+
+    --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.45);
+    --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Base */
+:root[data-theme="dark"] body {
+    background: var(--bg-soft);
+    color: var(--text);
+}
+
+/* Header */
+:root[data-theme="dark"] .main-header {
+    background: rgba(15, 23, 42, 0.94);
+    border-bottom: 1px solid var(--border-soft);
+}
+
+:root[data-theme="dark"] .brand,
+:root[data-theme="dark"] .brand-title,
+:root[data-theme="dark"] .nav-links a {
+    color: var(--text);
+}
+
+/* Secciones claras */
+:root[data-theme="dark"] .benefits,
+:root[data-theme="dark"] .steps,
+:root[data-theme="dark"] .contact-preview {
+    background: #0f172a;
+}
+
+:root[data-theme="dark"] .benefits h2,
+:root[data-theme="dark"] .steps h2,
+:root[data-theme="dark"] .contact-preview h2,
+:root[data-theme="dark"] .step-card h3,
+:root[data-theme="dark"] .benefit-card h3,
+:root[data-theme="dark"] .section-label {
+    color: var(--text);
+}
+
+:root[data-theme="dark"] .section-description,
+:root[data-theme="dark"] .contact-preview p,
+:root[data-theme="dark"] .step-card p,
+:root[data-theme="dark"] .benefit-card p {
+    color: var(--text-soft);
+}
+
+/* Cards */
+:root[data-theme="dark"] .benefit-card,
+:root[data-theme="dark"] .steps-card,
+:root[data-theme="dark"] .modal-box {
+    background: #1e293b;
+    box-shadow: var(--shadow-card);
+}
+
+:root[data-theme="dark"] .benefit-icon {
+    background: #233252;
+}
+
+:root[data-theme="dark"] .benefit-icon.green {
+    background: #173629;
+}
+
+/* Inputs */
+:root[data-theme="dark"] .form-group label,
+:root[data-theme="dark"] .modal-heading h2 {
+    color: var(--text);
+}
+
+:root[data-theme="dark"] .modal-heading p {
+    color: var(--text-soft);
+}
+
+:root[data-theme="dark"] .form-group input {
+    background: #0f172a;
+    border: 1px solid #334155;
+    color: var(--text);
+}
+
+:root[data-theme="dark"] .form-group input::placeholder {
+    color: #94a3b8;
+}
+
+:root[data-theme="dark"] .modal-close {
+    background: #334155;
+    color: #e5e7eb;
+}
+
+/* Splash */
+:root[data-theme="dark"] .splash-screen {
+    background: #0f172a;
+}
+
+:root[data-theme="dark"] .logo-text {
+    color: var(--text);
+}
+
+:root[data-theme="dark"] .logo-sub {
+    color: var(--text-soft);
+}
+
+:root[data-theme="dark"] .splash-loader {
+    background: #233252;
+}
+
+/* Footer */
+:root[data-theme="dark"] .footer {
+    background: #111827;
+}
+
+/* Botón tema */
+.btn-theme {
+    background: transparent;
+    border: 1px solid var(--border-soft);
+    color: var(--text);
+    padding: 14px 18px;
+    margin-left: 10px;
+}
+
+:root[data-theme="dark"] .btn-theme {
+    border-color: #475569;
+    color: #e5e7eb;
+}
+
+/*Estudiante*/
+:root[data-theme="dark"] .sidebar {
+    background: #111827;
+    border-right-color: #334155;
+}
+
+:root[data-theme="dark"] .sidebar-top,
+:root[data-theme="dark"] .sidebar-menu a {
+    color: var(--text);
+}
+
+:root[data-theme="dark"] .sidebar-menu a:hover {
+    background: #1e293b;
+}
+
+:root[data-theme="dark"] .dashboard-summary-card,
+:root[data-theme="dark"] .filters-bar,
+:root[data-theme="dark"] .challenge-card,
+:root[data-theme="dark"] .quick-link-card {
+    background: #1e293b;
+    box-shadow: var(--shadow-card);
+}
+
+:root[data-theme="dark"] .filters-bar input,
+:root[data-theme="dark"] .filters-bar select {
+    background: #0f172a;
+    border-color: #334155;
+    color: var(--text);
+}
+
+:root[data-theme="dark"] .dashboard-summary-card strong,
+:root[data-theme="dark"] .content-header h1,
+:root[data-theme="dark"] .challenge-card h3,
+:root[data-theme="dark"] .quick-link-card strong {
+    color: var(--text);
+}
+
+:root[data-theme="dark"] .dashboard-summary-card span,
+:root[data-theme="dark"] .dashboard-summary-card p,
+:root[data-theme="dark"] .content-header p,
+:root[data-theme="dark"] .empresa,
+:root[data-theme="dark"] .fecha,
+:root[data-theme="dark"] .quick-link-card p {
+    color: var(--text-soft);
+}
+
+/*Detalle desafio*/
+:root[data-theme="dark"] .detalle-chip {
+    background: #1e293b;
+    color: var(--text);
+}
+
+:root[data-theme="dark"] .detalle-text,
+:root[data-theme="dark"] .detalle-side-item span {
+    color: var(--text-soft);
+}
+
+:root[data-theme="dark"] .detalle-section-title,
+:root[data-theme="dark"] .detalle-side-title,
+:root[data-theme="dark"] .detalle-side-item strong,
+:root[data-theme="dark"] .detalle-tag {
+    color: var(--text);
+}
+
+:root[data-theme="dark"] .detalle-tag,
+:root[data-theme="dark"] .detalle-side-item {
+    background: #0f172a;
+}
+
+/*Mis propuestas*/
+:root[data-theme="dark"] .propuesta-card,
+:root[data-theme="dark"] .meta-line,
+:root[data-theme="dark"] .feedback-box,
+:root[data-theme="dark"] .empty-state,
+:root[data-theme="dark"] .btn-outline-dark {
+    background: #1e293b;
+    color: var(--text);
+}
+
+:root[data-theme="dark"] .propuesta-header h3,
+:root[data-theme="dark"] .meta-line strong,
+:root[data-theme="dark"] .feedback-box p,
+:root[data-theme="dark"] .empty-state h3 {
+    color: var(--text);
+}
+
+:root[data-theme="dark"] .propuesta-empresa,
+:root[data-theme="dark"] .meta-line span,
+:root[data-theme="dark"] .feedback-box span,
+:root[data-theme="dark"] .empty-state p {
+    color: var(--text-soft);
+}
+
+:root[data-theme="dark"] .btn-outline-dark {
+    border-color: #475569;
+}

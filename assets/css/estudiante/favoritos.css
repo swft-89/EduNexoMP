@@ -1,0 +1,144 @@
+/* ================= FAVORITOS ================= */
+
+.favoritos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+/* Reutilizamos estilo tipo card pero adaptado */
+.favorito-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 22px;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.favorito-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+}
+
+.favorito-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.favorito-card h3 {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.4;
+}
+
+.badge-fav {
+    background: #ffe4e6;
+    color: #e11d48;
+    padding: 6px 10px;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+/* info */
+.favorito-meta {
+    font-size: 0.9rem;
+    color: var(--text-soft);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.favorito-meta span {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* descripción */
+.favorito-desc {
+    font-size: 0.95rem;
+    color: var(--text-soft);
+    line-height: 1.5;
+}
+
+/* acciones */
+.favorito-actions {
+    margin-top: auto;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn-remove-fav {
+    background: #e11d48;
+    color: #fff;
+}
+
+.btn-remove-fav:hover {
+    background: #be123c;
+}
+
+/* estado vacío */
+.empty-favoritos {
+    text-align: center;
+    padding: 40px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: var(--shadow-card);
+}
+
+.empty-favoritos i {
+    font-size: 2rem;
+    color: #94a3b8;
+    margin-bottom: 10px;
+}
+
+.empty-favoritos h3 {
+    font-weight: 800;
+    color: var(--text);
+}
+
+.empty-favoritos p {
+    color: var(--text-soft);
+    margin-top: 6px;
+}
+
+/* responsive */
+@media (max-width: 1200px) {
+    .favoritos-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 700px) {
+    .favoritos-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/*Corazon de favorito*/
+.favorite-btn {
+    border: none;
+    background: transparent;
+    color: #94a3b8;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.favorite-btn:hover {
+    transform: scale(1.08);
+}
+
+.favorite-btn.active {
+    color: #e11d48;
+}
+
+.favorite-btn.active i {
+    color: #e11d48;
+}

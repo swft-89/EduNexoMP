@@ -1,0 +1,414 @@
+.org-profile-page {
+    padding: 6px;
+}
+
+/* ================= HERO ================= */
+
+.org-profile-hero {
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at top left, rgba(39, 72, 166, 0.12), transparent 34%),
+        radial-gradient(circle at bottom right, rgba(77, 136, 245, 0.10), transparent 28%),
+        #ffffff;
+    border: 1px solid var(--border-soft);
+    border-radius: 30px;
+    box-shadow: var(--shadow-card);
+    padding: 30px;
+    margin-bottom: 24px;
+}
+
+.org-profile-hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.org-profile-hero-user {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.org-profile-avatar {
+    width: 78px;
+    height: 78px;
+    border-radius: 22px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 800;
+    box-shadow: 0 14px 28px rgba(39, 72, 166, 0.20);
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.org-profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.org-profile-hero h1 {
+    margin: 0 0 10px;
+    font-size: clamp(2rem, 4vw, 3.1rem);
+    line-height: 1;
+    color: var(--text);
+    letter-spacing: -0.04em;
+    font-weight: 800;
+}
+
+.org-profile-hero p {
+    margin: 0;
+    color: var(--text-soft);
+    font-size: 1.02rem;
+    line-height: 1.5;
+}
+
+.org-profile-hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* ================= PROGRESO ================= */
+
+.org-profile-progress {
+    margin-top: 24px;
+    max-width: 780px;
+    display: grid;
+    grid-template-columns: minmax(260px, 320px) 1fr;
+    gap: 22px;
+    align-items: start;
+    padding: 22px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.84);
+    border: 1px solid var(--border-soft);
+    backdrop-filter: blur(8px);
+}
+
+.org-profile-progress-left {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.org-profile-progress-right {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.org-profile-progress-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.org-profile-progress-top span {
+    color: var(--text-soft);
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.org-profile-progress-top strong {
+    color: var(--text);
+    font-size: 1.1rem;
+    font-weight: 800;
+}
+
+.org-profile-progress-bar {
+    width: 100%;
+    height: 14px;
+    border-radius: 999px;
+    background: #e8edf5;
+    overflow: hidden;
+}
+
+.org-profile-progress-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+    transition: width 0.35s ease;
+}
+
+.org-profile-progress-right p {
+    margin: 0;
+    color: var(--text-soft);
+    font-size: 0.98rem;
+    line-height: 1.7;
+}
+
+.org-profile-missing {
+    padding: 14px 16px;
+    border-radius: 16px;
+    background: #f8fbff;
+    border: 1px dashed #c8d7ee;
+    color: var(--text-soft);
+    font-size: 0.93rem;
+    line-height: 1.55;
+}
+
+.org-profile-missing strong {
+    color: var(--text);
+    margin-right: 6px;
+}
+
+/* ================= TARJETA PRINCIPAL ================= */
+
+.org-profile-card {
+    background: #ffffff;
+    border: 1px solid var(--border-soft);
+    border-radius: 30px;
+    box-shadow: var(--shadow-card);
+    padding: 28px;
+}
+
+.org-profile-card-head {
+    margin-bottom: 24px;
+}
+
+.org-profile-card-head h2 {
+    margin: 0 0 8px;
+    color: var(--text);
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+.org-profile-card-head p {
+    margin: 0;
+    color: var(--text-soft);
+    line-height: 1.6;
+}
+
+.org-profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* ================= SECCIONES DEL FORMULARIO ================= */
+
+.org-profile-section {
+    border: 1px solid var(--border-soft);
+    border-radius: 24px;
+    padding: 22px;
+    background:
+        radial-gradient(circle at top right, rgba(39, 72, 166, 0.05), transparent 28%),
+        #ffffff;
+}
+
+.org-profile-section h3 {
+    margin: 0 0 18px;
+    color: var(--primary);
+    font-size: 1.05rem;
+    font-weight: 800;
+}
+
+.org-profile-section .form-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
+    gap: 18px;
+}
+
+.org-profile-section .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.org-profile-section .form-group.full {
+    grid-column: 1 / -1;
+}
+
+.org-profile-section label {
+    color: var(--text);
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.org-profile-section input,
+.org-profile-section select,
+.org-profile-section textarea {
+    width: 100%;
+    min-height: 52px;
+    border: 1px solid var(--border-soft);
+    border-radius: 16px;
+    background: #ffffff;
+    padding: 0 16px;
+    color: var(--text);
+    font-size: 0.96rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.22s ease, box-shadow 0.22s ease;
+}
+
+.org-profile-section textarea {
+    min-height: 120px;
+    padding: 14px 16px;
+    resize: vertical;
+}
+
+.org-profile-section input:focus,
+.org-profile-section select:focus,
+.org-profile-section textarea:focus {
+    border-color: rgba(39, 72, 166, 0.40);
+    box-shadow: 0 0 0 4px rgba(39, 72, 166, 0.08);
+}
+
+.org-profile-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 14px;
+    flex-wrap: wrap;
+    padding-top: 8px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 900px) {
+    .org-profile-progress {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+    }
+
+    .org-profile-section .form-grid-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .org-profile-hero,
+    .org-profile-card {
+        padding: 20px;
+        border-radius: 24px;
+    }
+
+    .org-profile-avatar {
+        width: 64px;
+        height: 64px;
+        border-radius: 18px;
+    }
+
+    .org-profile-hero-user {
+        align-items: flex-start;
+    }
+
+    .org-profile-hero-actions,
+    .org-profile-actions {
+        width: 100%;
+    }
+
+    .org-profile-hero-actions .btn,
+    .org-profile-actions .btn {
+        width: 100%;
+    }
+}
+
+.org-profile-hero-extra {
+    margin-top: 18px;
+    max-width: 420px;
+}
+
+.org-profile-preview {
+    width: 100%;
+}
+
+.org-preview-card {
+    border: 1px solid var(--border-soft);
+    border-radius: 22px;
+    background: #ffffff;
+    box-shadow: var(--shadow-card);
+    padding: 20px;
+}
+
+.org-preview-label {
+    display: inline-flex;
+    margin-bottom: 14px;
+    padding: 7px 12px;
+    border-radius: 999px;
+    background: #eef4ff;
+    color: var(--primary);
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.org-preview-header {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.org-preview-avatar {
+    width: 58px;
+    height: 58px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.2rem;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.org-preview-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.org-preview-header h4 {
+    margin: 0 0 4px;
+    color: var(--text);
+    font-size: 1rem;
+    line-height: 1.2;
+    font-weight: 800;
+}
+
+.org-preview-header span {
+    color: var(--text-soft);
+    font-size: 0.92rem;
+}
+
+.org-preview-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.org-preview-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-soft);
+    font-size: 0.94rem;
+    line-height: 1.5;
+}
+
+.org-preview-item i {
+    color: var(--primary);
+    font-size: 0.98rem;
+}
+
+.btn-soft {
+    width: 100%;
+    border: 1px solid var(--border-soft);
+    background: #f5f7fb;
+    color: var(--text);
+    border-radius: 14px;
+    padding: 12px 16px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: default;
+}
