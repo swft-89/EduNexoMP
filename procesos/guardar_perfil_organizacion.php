@@ -8,7 +8,7 @@ if (!isset($_SESSION['usuario_id']) || !isset($_SESSION['rol']) || $_SESSION['ro
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../editar_perfil_organizacion.php');
+    header('Location: ../organizacion/editar_perfil_organizacion.php');
     exit;
 }
 
@@ -34,19 +34,19 @@ $_SESSION['old'] = $_POST;
 
 if ($nombreEmpresa === '' || $correoElectronico === '') {
     $_SESSION['error'] = 'Completa los campos obligatorios.';
-    header('Location: ../editar_perfil_organizacion.php');
+    header('Location: ../organizacion/editar_perfil_organizacion.php');
     exit;
 }
 
 if (!filter_var($correoElectronico, FILTER_VALIDATE_EMAIL)) {
     $_SESSION['error'] = 'El correo electrónico no es válido.';
-    header('Location: ../editar_perfil_organizacion.php');
+    header('Location: ../organizacion/editar_perfil_organizacion.php');
     exit;
 }
 
 if ($fotoUrl !== '' && !filter_var($fotoUrl, FILTER_VALIDATE_URL)) {
     $_SESSION['error'] = 'La URL de la imagen no es válida.';
-    header('Location: ../editar_perfil_organizacion.php');
+    header('Location: ../organizacion/editar_perfil_organizacion.php');
     exit;
 }
 
@@ -68,7 +68,7 @@ try {
     if ($stmt->fetch()) {
         $pdo->rollBack();
         $_SESSION['error'] = 'Ese correo electrónico ya está registrado.';
-        header('Location: ../editar_perfil_organizacion.php');
+        header('Location: ../organizacion/editar_perfil_organizacion.php');
         exit;
     }
 
@@ -186,7 +186,7 @@ try {
 
     unset($_SESSION['old']);
     $_SESSION['success'] = 'El perfil de la organización fue actualizado correctamente.';
-    header('Location: ../editar_perfil_organizacion.php');
+    header('Location: ../organizacion/editar_perfil_organizacion.php');
     exit;
 
 } catch (PDOException $e) {
@@ -195,6 +195,6 @@ try {
     }
 
     $_SESSION['error'] = 'No se pudo actualizar el perfil de la organización.';
-    header('Location: ../editar_perfil_organizacion.php');
+    header('Location: ../organizacion/editar_perfil_organizacion.php');
     exit;
 }

@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/includes/session_superadmin.php';
-require_once __DIR__ . '/config/conexion.php';
+require_once __DIR__ . '../../../includes/session_superadmin.php';
+require_once __DIR__ . '../../../config/conexion.php';
 
 $stmtAdmin = $pdo->prepare("
     SELECT nombre
@@ -42,10 +42,10 @@ unset($_SESSION['success'], $_SESSION['error']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solicitudes admin | Superadmin - EduNexo MP</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/dark.css">
-    <link rel="stylesheet" href="assets/css/dashboard_superadmin.css">
-    <link rel="stylesheet" href="assets/css/superadmin_sections.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/dark.css">
+    <link rel="stylesheet" href="../../assets/css/superadmin/dashboard_superadmin.css">
+    <link rel="stylesheet" href="../../assets/css/superadmin/superadmin_sections.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
@@ -58,25 +58,25 @@ unset($_SESSION['success'], $_SESSION['error']);
         </div>
 
         <nav class="sidebar-menu">
-            <a href="dashboard_superadmin.php">
+            <a href="../dashboard_superadmin.php">
                 <i class="bi bi-bar-chart-line"></i> Dashboard
             </a>
-            <a href="usuarios_superadmin.php">
+            <a href="../usuarios/usuarios_superadmin.php">
                 <i class="bi bi-people"></i> Usuarios
             </a>
-            <a href="solicitudes_admin.php" class="active">
+            <a href="../usuarios/solicitudes_admin.php" class="active">
                 <i class="bi bi-person-check"></i> Solicitudes admin
             </a>
-            <a href="reportes_superadmin.php">
+            <a href="../reportes_superadmin.php">
                 <i class="bi bi-clipboard-data"></i> Reportes
             </a>
-            <a href="desafios_superadmin.php">
+            <a href="../desafios/desafios_superadmin.php">
                 <i class="bi bi-file-earmark-text"></i> Desafíos
             </a>
-            <a href="propuestas_superadmin.php">
+            <a href="../propuestas/propuestas_superadmin.php">
                 <i class="bi bi-send"></i> Propuestas
             </a>
-            <a href="categorias_superadmin.php">
+            <a href="../categorias_superadmin.php">
                 <i class="bi bi-tags"></i> Categorías
             </a>
         </nav>
@@ -162,12 +162,12 @@ unset($_SESSION['success'], $_SESSION['error']);
 
                             <div class="verification-actions">
                                 <?php if (($item['estado_solicitud'] ?? '') === 'pendiente'): ?>
-                                    <form action="procesos/aprobar_admin.php" method="POST">
+                                    <form action="../../procesos/aprobar_admin.php" method="POST">
                                         <input type="hidden" name="id_admin" value="<?php echo (int) $item['id_admin']; ?>">
                                         <button type="submit" class="btn btn-primary btn-verify">Verificar</button>
                                     </form>
 
-                                    <form action="procesos/rechazar_admin.php" method="POST">
+                                    <form action="../../procesos/rechazar_admin.php" method="POST">
                                         <input type="hidden" name="id_admin" value="<?php echo (int) $item['id_admin']; ?>">
                                         <button type="submit" class="btn btn-reject">Rechazar</button>
                                     </form>

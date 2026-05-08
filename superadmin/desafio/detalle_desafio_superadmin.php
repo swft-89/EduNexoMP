@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '../../includes/session_superadmin.php';
-require_once __DIR__ . '../../config/conexion.php';
+require_once __DIR__ . '../../../includes/session_superadmin.php';
+require_once __DIR__ . '../../../config/conexion.php';
 
 $idDesafio = (int) ($_GET['id'] ?? 0);
 
@@ -232,7 +232,7 @@ unset($_SESSION['success'], $_SESSION['error']);
 
                 <div class="detail-actions">
                     <?php if ($estado !== 'activo'): ?>
-                        <form action="procesos/cambiar_estado_desafio_admin.php" method="POST">
+                        <form action="../../procesos/cambiar_estado_desafio_admin.php" method="POST">
                             <input type="hidden" name="id_desafio" value="<?php echo (int) $desafio['id_desafio']; ?>">
                             <input type="hidden" name="nuevo_estado" value="activo">
                             <button type="submit" class="btn btn-primary">Activar desafío</button>
@@ -240,7 +240,7 @@ unset($_SESSION['success'], $_SESSION['error']);
                     <?php endif; ?>
 
                     <?php if ($estado !== 'pausado'): ?>
-                        <form action="procesos/cambiar_estado_desafio_admin.php" method="POST">
+                        <form action="../../procesos/cambiar_estado_desafio_admin.php" method="POST">
                             <input type="hidden" name="id_desafio" value="<?php echo (int) $desafio['id_desafio']; ?>">
                             <input type="hidden" name="nuevo_estado" value="pausado">
                             <button type="submit" class="btn superadmin-btn-light">Pausar desafío</button>
@@ -248,7 +248,7 @@ unset($_SESSION['success'], $_SESSION['error']);
                     <?php endif; ?>
 
                     <?php if ($estado !== 'cerrado'): ?>
-                        <form action="procesos/cambiar_estado_desafio_admin.php" method="POST">
+                        <form action="../../procesos/cambiar_estado_desafio_admin.php" method="POST">
                             <input type="hidden" name="id_desafio" value="<?php echo (int) $desafio['id_desafio']; ?>">
                             <input type="hidden" name="nuevo_estado" value="cerrado">
                             <button type="submit" class="btn btn-reject">Cerrar desafío</button>

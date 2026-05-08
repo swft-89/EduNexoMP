@@ -8,7 +8,7 @@ if (!isset($_SESSION['usuario_id']) || !isset($_SESSION['rol']) || $_SESSION['ro
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../propuestas_organizacion.php');
+    header('Location: ../organizacion/propuestas_organizacion.php');
     exit;
 }
 
@@ -21,13 +21,13 @@ $estadosValidos = ['en revisión', 'aceptada', 'rechazada'];
 
 if ($idPropuesta <= 0 || !in_array($nuevoEstado, $estadosValidos, true)) {
     $_SESSION['error'] = 'No se pudo actualizar la propuesta.';
-    header('Location: ../propuestas_organizacion.php');
+    header('Location: ../organizacion/propuestas_organizacion.php');
     exit;
 }
 
 if (mb_strlen($feedback) > 1000) {
     $_SESSION['error'] = 'El feedback no puede exceder 1000 caracteres.';
-    header('Location: ../propuestas_organizacion.php');
+    header('Location: ../organizacion/propuestas_organizacion.php');
     exit;
 }
 
@@ -48,7 +48,7 @@ try {
 
     if (!$stmt->fetchColumn()) {
         $_SESSION['error'] = 'La propuesta no pertenece a tu organización.';
-        header('Location: ../propuestas_organizacion.php');
+        header('Location: ../organizacion/propuestas_organizacion.php');
         exit;
     }
 
@@ -66,11 +66,11 @@ try {
     ]);
 
     $_SESSION['success'] = 'Propuesta actualizada correctamente.';
-    header('Location: ../propuestas_organizacion.php');
+    header('Location: ../organizacion/propuestas_organizacion.php');
     exit;
 
 } catch (PDOException $e) {
     $_SESSION['error'] = 'Ocurrió un error al actualizar la propuesta.';
-    header('Location: ../propuestas_organizacion.php');
+    header('Location: ../organizacion/propuestas_organizacion.php');
     exit;
 }

@@ -3,7 +3,7 @@ require_once __DIR__ . '/../config/conexion.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../categorias_superadmin.php');
+    header('Location: ../superadmin/categorias_superadmin.php');
     exit;
 }
 
@@ -19,7 +19,7 @@ $idSuperadmin = (int) $_SESSION['usuario_id'];
 
 if ($idHabilidad <= 0 || $nombre === '') {
     $_SESSION['error'] = 'Datos inválidos para editar la habilidad.';
-    header('Location: ../categorias_superadmin.php');
+    header('Location: ../superadmin/categorias_superadmin.php');
     exit;
 }
 
@@ -104,5 +104,5 @@ try {
     $_SESSION['error'] = $e->getMessage();
 }
 
-header('Location: ../categorias_superadmin.php');
+header('Location: ../superadmin/categorias_superadmin.php');
 exit;

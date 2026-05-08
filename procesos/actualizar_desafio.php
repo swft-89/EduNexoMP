@@ -8,7 +8,7 @@ if (!isset($_SESSION['usuario_id']) || !isset($_SESSION['rol']) || $_SESSION['ro
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../dashboard_organizacion.php');
+    header('Location: ../organizacion/dashboard_organizacion.php');
     exit;
 }
 
@@ -73,7 +73,7 @@ $_SESSION['old_editar_desafio'] = [
 if (!empty($errores)) {
     $_SESSION['error_form'] = $errores;
     $_SESSION['error_fields'] = $erroresCampos;
-    header('Location: ../editar_desafio.php?id=' . $idDesafio);
+    header('Location: ../organizacion/desafios/editar_desafio.php?id=' . $idDesafio);
     exit;
 }
 
@@ -91,7 +91,7 @@ $stmt->execute([
 
 if (!$stmt->fetchColumn()) {
     $_SESSION['error'] = 'No tienes permiso para editar este desafío.';
-    header('Location: ../dashboard_organizacion.php');
+    header('Location: ../organizacion/dashboard_organizacion.php');
     exit;
 }
 
@@ -123,10 +123,10 @@ try {
     unset($_SESSION['old_editar_desafio'], $_SESSION['error_form'], $_SESSION['error_fields']);
 
     $_SESSION['success'] = 'Desafío actualizado correctamente.';
-    header('Location: ../detalle_desafio_organizacion.php?id=' . $idDesafio);
+    header('Location: ../organizacion/desafios/detalle_desafio_organizacion.php?id=' . $idDesafio);
     exit;
 } catch (PDOException $e) {
     $_SESSION['error'] = 'No se pudo actualizar el desafío.';
-    header('Location: ../editar_desafio.php?id=' . $idDesafio);
+    header('Location: ../organizacion/desafios/editar_desafio.php?id=' . $idDesafio);
     exit;
 }

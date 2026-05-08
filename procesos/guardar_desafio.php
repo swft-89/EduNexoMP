@@ -8,7 +8,7 @@ if (!isset($_SESSION['usuario_id']) || !isset($_SESSION['rol']) || $_SESSION['ro
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../dashboard_organizacion.php');
+    header('Location: ../organizacion/dashboard_organizacion.php');
     exit;
 }
 
@@ -66,7 +66,7 @@ $_SESSION['old_crear_desafio'] = [
 if (!empty($errores)) {
     $_SESSION['error_form'] = $errores;
     $_SESSION['error_fields'] = $erroresCampos;
-    header('Location: ../crear_desafio.php');
+    header('Location: ../organizacion/desafios/crear_desafio.php');
     exit;
 }
 
@@ -157,7 +157,7 @@ try {
     unset($_SESSION['old_crear_desafio'], $_SESSION['error_form'], $_SESSION['error_fields']);
 
     $_SESSION['success'] = 'Desafío creado correctamente.';
-    header('Location: ../dashboard_organizacion.php');
+    header('Location: ../organizacion/dashboard_organizacion.php');
     exit;
 } catch (Throwable $e) {
     if ($pdo->inTransaction()) {
@@ -166,6 +166,6 @@ try {
 
     $_SESSION['error_form'] = ['No se pudo crear el desafío. Intenta nuevamente.'];
     $_SESSION['error_fields'] = [];
-    header('Location: ../crear_desafio.php');
+    header('Location: ../organizacion/desafios/crear_desafio.php');
     exit;
 }

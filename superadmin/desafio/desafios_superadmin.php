@@ -246,7 +246,7 @@ unset($_SESSION['success'], $_SESSION['error']);
                                             </a>
 
                                             <?php if ($estado !== 'activo'): ?>
-                                                <form action="procesos/cambiar_estado_desafio_admin.php" method="POST">
+                                                <form action="../../procesos/cambiar_estado_desafio_admin.php" method="POST">
                                                     <input type="hidden" name="id_desafio" value="<?php echo (int) $desafio['id_desafio']; ?>">
                                                     <input type="hidden" name="nuevo_estado" value="activo">
                                                     <button type="submit" class="btn btn-primary btn-sm">Activar</button>
@@ -254,7 +254,7 @@ unset($_SESSION['success'], $_SESSION['error']);
                                             <?php endif; ?>
 
                                             <?php if ($estado !== 'pausado'): ?>
-                                                <form action="procesos/cambiar_estado_desafio_admin.php" method="POST">
+                                                <form action="../../procesos/cambiar_estado_desafio_admin.php" method="POST">
                                                     <input type="hidden" name="id_desafio" value="<?php echo (int) $desafio['id_desafio']; ?>">
                                                     <input type="hidden" name="nuevo_estado" value="pausado">
                                                     <button type="submit" class="btn superadmin-btn-light btn-sm">Pausar</button>
@@ -262,7 +262,7 @@ unset($_SESSION['success'], $_SESSION['error']);
                                             <?php endif; ?>
 
                                             <?php if ($estado !== 'cerrado'): ?>
-                                                <form action="procesos/cambiar_estado_desafio_admin.php" method="POST">
+                                                <form action="../../procesos/cambiar_estado_desafio_admin.php" method="POST">
                                                     <input type="hidden" name="id_desafio" value="<?php echo (int) $desafio['id_desafio']; ?>">
                                                     <input type="hidden" name="nuevo_estado" value="cerrado">
                                                     <button type="submit" class="btn btn-reject btn-sm">Cerrar</button>

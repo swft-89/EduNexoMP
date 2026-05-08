@@ -3,7 +3,7 @@ require_once __DIR__ . '/../config/conexion.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../usuarios_superadmin.php');
+    header('Location: ../superadmin/usuarios_superadmin.php');
     exit;
 }
 
@@ -151,5 +151,5 @@ try {
     $_SESSION['error'] = $e->getMessage();
 }
 
-header('Location: ../usuarios_superadmin.php');
+header('Location: ../superadmin/usuarios_superadmin.php');
 exit;

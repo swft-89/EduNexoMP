@@ -3,7 +3,7 @@ require_once __DIR__ . '/../config/conexion.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../dashboard_superadmin.php');
+    header('Location: ../superadmin/dashboard_superadmin.php');
     exit;
 }
 
@@ -17,7 +17,7 @@ $idSuperadmin = (int) $_SESSION['usuario_id'];
 
 if ($idAdminObjetivo <= 0) {
     $_SESSION['error'] = "Solicitud inválida.";
-    header('Location: ../dashboard_superadmin.php');
+    header('Location: ../superadmin/dashboard_superadmin.php');
     exit;
 }
 
@@ -115,5 +115,5 @@ try {
     $_SESSION['error'] = $e->getMessage();
 }
 
-header('Location: ../dashboard_superadmin.php');
+header('Location: ../superadmin/dashboard_superadmin.php');
 exit;

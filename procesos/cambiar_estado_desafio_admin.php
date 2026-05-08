@@ -20,7 +20,7 @@ $estadosPermitidos = ['activo', 'pausado', 'cerrado'];
 
 if ($idDesafio <= 0 || !in_array($nuevoEstado, $estadosPermitidos, true)) {
     $_SESSION['error'] = 'Solicitud inválida.';
-    header('Location: ../desafios_superadmin.php');
+    header('Location: ../superadmin/desafios/desafios_superadmin.php');
     exit;
 }
 
@@ -111,5 +111,5 @@ try {
     $_SESSION['error'] = $e->getMessage();
 }
 
-header('Location: ../desafios_superadmin.php');
+header('Location: ../superadmin/desafio/desafios_superadmin.php');
 exit;

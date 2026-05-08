@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../config/conexion.php';
+require_once '../../config/conexion.php';
 
 if (!isset($_SESSION['usuario_id']) || !isset($_SESSION['rol']) || $_SESSION['rol'] !== 'estudiante') {
     header('Location: ../index.php');
@@ -8,7 +8,7 @@ if (!isset($_SESSION['usuario_id']) || !isset($_SESSION['rol']) || $_SESSION['ro
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../editar_perfil_estudiante.php');
+    header('Location: ../../estudiante/editar_perfil_estudiante.php');
     exit;
 }
 
@@ -44,19 +44,19 @@ if (
     $semestre <= 0
 ) {
     $_SESSION['error'] = 'Completa los campos obligatorios.';
-    header('Location: ../editar_perfil_estudiante.php');
+    header('Location: ../../estudiante/editar_perfil_estudiante.php');
     exit;
 }
 
 if (!filter_var($correoElectronico, FILTER_VALIDATE_EMAIL)) {
     $_SESSION['error'] = 'El correo electrónico no es válido.';
-    header('Location: ../editar_perfil_estudiante.php');
+    header('Location: ../../estudiante/editar_perfil_estudiante.php');
     exit;
 }
 
 if ($fotoUrl !== '' && !filter_var($fotoUrl, FILTER_VALIDATE_URL)) {
     $_SESSION['error'] = 'La URL de la foto no es válida.';
-    header('Location: ../editar_perfil_estudiante.php');
+    header('Location: ../../estudiante/editar_perfil_estudiante.php');
     exit;
 }
 
@@ -78,7 +78,7 @@ try {
     if ($stmt->fetch()) {
         $pdo->rollBack();
         $_SESSION['error'] = 'Ese correo electrónico ya está registrado.';
-        header('Location: ../editar_perfil_estudiante.php');
+        header('Location: ../../estudiante/editar_perfil_estudiante.php');
         exit;
     }
 
@@ -97,7 +97,7 @@ try {
     if ($stmt->fetch()) {
         $pdo->rollBack();
         $_SESSION['error'] = 'Ese número de control ya está registrado.';
-        header('Location: ../editar_perfil_estudiante.php');
+        header('Location: ../../estudiante/editar_perfil_estudiante.php');
         exit;
     }
 
@@ -117,7 +117,7 @@ try {
         if ($stmt->fetch()) {
             $pdo->rollBack();
             $_SESSION['error'] = 'La CURP ya está registrada.';
-            header('Location: ../estudiante/editar_perfil_estudiante.php');
+            header('Location: ../../estudiante/editar_perfil_estudiante.php');
             exit;
         }
     }
@@ -242,7 +242,7 @@ try {
 
     unset($_SESSION['old']);
     $_SESSION['success'] = 'Tu perfil fue actualizado correctamente.';
-    header('Location: ../estudiante/editar_perfil_estudiante.php');
+    header('Location: ../../estudiante/editar_perfil_estudiante.php');
     exit;
 } catch (PDOException $e) {
     if ($pdo->inTransaction()) {
@@ -250,7 +250,7 @@ try {
     }
 
     $_SESSION['error'] = 'No se pudo actualizar tu perfil.';
-    header('Location: ../estudiante/editar_perfil_estudiante.php');
+    header('Location: ../../estudiante/editar_perfil_estudiante.php');
     exit;
 } catch (PDOException $e) {
     if ($pdo->inTransaction()) {
@@ -258,6 +258,6 @@ try {
     }
 
     $_SESSION['error'] = 'No se pudo actualizar tu perfil.';
-    header('Location: ../estudiante/editar_perfil_estudiante.php');
+    header('Location: ../../estudiante/editar_perfil_estudiante.php');
     exit;
 }

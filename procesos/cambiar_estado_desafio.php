@@ -8,7 +8,7 @@ if (!isset($_SESSION['usuario_id']) || !isset($_SESSION['rol']) || $_SESSION['ro
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../dashboard_organizacion.php');
+    header('Location: ../organizacion/dashboard_organizacion.php');
     exit;
 }
 
@@ -20,7 +20,7 @@ $estadosValidos = ['activo', 'cerrado'];
 
 if ($idDesafio <= 0 || !in_array($estado, $estadosValidos, true)) {
     $_SESSION['error'] = 'Estado de desafío no válido.';
-    header('Location: ../dashboard_organizacion.php');
+    header('Location: ../organizacion/dashboard_organizacion.php');
     exit;
 }
 
@@ -39,15 +39,15 @@ try {
 
     if ($stmt->rowCount() === 0) {
         $_SESSION['error'] = 'No se pudo actualizar el estado del desafío.';
-        header('Location: ../dashboard_organizacion.php');
+        header('Location: ../organizacion/dashboard_organizacion.php');
         exit;
     }
 
     $_SESSION['success'] = 'Estado del desafío actualizado.';
-    header('Location: ../detalle_desafio_organizacion.php?id=' . $idDesafio);
+    header('Location: ../organizacion/desafios/detalle_desafio_organizacion.php?id=' . $idDesafio);
     exit;
 } catch (PDOException $e) {
     $_SESSION['error'] = 'Ocurrió un error al cambiar el estado.';
-    header('Location: ../detalle_desafio_organizacion.php?id=' . $idDesafio);
+    header('Location: ../organizacion/desafios/detalle_desafio_organizacion.php?id=' . $idDesafio);
     exit;
 }

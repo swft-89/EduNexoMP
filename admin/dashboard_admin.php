@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/includes/session_admin.php';
-require_once __DIR__ . '/config/conexion.php';
+require_once __DIR__ . '../../includes/session_admin.php';
+require_once __DIR__ . '../../config/conexion.php';
 
 $stmt = $pdo->prepare("
     SELECT a.nombre, a.apellido_paterno, a.apellido_materno, a.puesto, a.departamento, a.tipo_admin
@@ -21,10 +21,13 @@ $nombreCompleto = trim(($admin['nombre'] ?? '') . ' ' . ($admin['apellido_patern
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard administrador | EduNexo MP</title>
-    <link rel="stylesheet" href="assets/css/dashboard_admin.css">
+    <link rel="stylesheet" href="../../assets/css/admin/dashboard_admin.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/org/dashboard_organizacion.css">
+    <link rel="stylesheet" href="../assets/css/dark.css">
 </head>
 <body>
-    <?php include 'includes/header.php'; ?>
+    <?php include '../includes/header.php'; ?>
 
     <main class="admin-dashboard">
         <section class="admin-hero">
@@ -65,6 +68,6 @@ $nombreCompleto = trim(($admin['nombre'] ?? '') . ' ' . ($admin['apellido_patern
         </section>
     </main>
 
-    <?php include 'includes/footer.php'; ?>
+    <?php include '../../includes/footer.php'; ?>
 </body>
 </html>

@@ -8,7 +8,7 @@ if (!isset($_SESSION['usuario_id']) || !isset($_SESSION['rol']) || $_SESSION['ro
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../chat_organizacion.php');
+    header('Location: ../organizacion/chat_organizacion.php');
     exit;
 }
 
@@ -18,7 +18,7 @@ $contenido = trim($_POST['contenido'] ?? '');
 
 if ($idConversacion <= 0 || $contenido === '') {
     $_SESSION['error'] = 'No se pudo enviar el mensaje.';
-    header('Location: ../chat_organizacion.php?id=' . $idConversacion);
+    header('Location: ../organizacion/chat_organizacion.php?id=' . $idConversacion);
     exit;
 }
 
@@ -40,7 +40,7 @@ $stmt->execute([
 
 if (!$stmt->fetchColumn()) {
     $_SESSION['error'] = 'Conversación no válida.';
-    header('Location: ../chat_organizacion.php');
+    header('Location: ../organizacion/chat_organizacion.php');
     exit;
 }
 
@@ -63,10 +63,10 @@ try {
         ':id_emisor' => $idUsuario
     ]);
 
-    header('Location: ../chat_organizacion.php?id=' . $idConversacion);
+    header('Location: ../organizacion/chat_organizacion.php?id=' . $idConversacion);
     exit;
 } catch (PDOException $e) {
     $_SESSION['error'] = 'No se pudo enviar el mensaje.';
-    header('Location: ../chat_organizacion.php?id=' . $idConversacion);
+    header('Location: ../organizacion/chat_organizacion.php?id=' . $idConversacion);
     exit;
 }

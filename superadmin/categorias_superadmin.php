@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/includes/session_superadmin.php';
-require_once __DIR__ . '/config/conexion.php';
+require_once __DIR__ . '../../includes/session_superadmin.php';
+require_once __DIR__ . '../../config/conexion.php';
 
 $stmtAdmin = $pdo->prepare("
     SELECT nombre
@@ -90,10 +90,10 @@ unset(
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogos globales | Superadmin - EduNexo MP</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/dark.css">
-    <link rel="stylesheet" href="assets/css/dashboard_superadmin.css">
-    <link rel="stylesheet" href="assets/css/superadmin_sections.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/dark.css">
+    <link rel="stylesheet" href="../assets/css/superadmin/dashboard_superadmin.css">
+    <link rel="stylesheet" href="../assets/css/superadmin/superadmin_sections.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
@@ -106,25 +106,25 @@ unset(
         </div>
 
         <nav class="sidebar-menu">
-           <a href="dashboard_superadmin.php">
+            <a href="dashboard_superadmin.php" class="active">
                 <i class="bi bi-bar-chart-line"></i> Dashboard
             </a>
-            <a href="usuarios_superadmin.php">
+            <a href="usuarios/usuarios_superadmin.php">
                 <i class="bi bi-people"></i> Usuarios
             </a>
-            <a href="solicitudes_admin.php">
+            <a href="usuarios/solicitudes_admin.php">
                 <i class="bi bi-person-check"></i> Solicitudes admin
             </a>
-            <a href="desafios_superadmin.php">
-                <i class="bi bi-file-earmark-text"></i> Desafíos
-            </a>  
             <a href="reportes_superadmin.php">
                 <i class="bi bi-clipboard-data"></i> Reportes
             </a>
-            <a href="propuestas_superadmin.php">
+            <a href="desafios/desafios_superadmin.php">
+                <i class="bi bi-file-earmark-text"></i> Desafíos
+            </a>
+            <a href="propuestas/propuestas_superadmin.php">
                 <i class="bi bi-send"></i> Propuestas
             </a>
-            <a href="categorias_superadmin.php" class="active">
+            <a href="categorias_superadmin.php">
                 <i class="bi bi-tags"></i> Categorías
             </a>
         </nav>
@@ -175,7 +175,7 @@ unset(
                         </div>
                     </div>
 
-                    <form action="procesos/guardar_categoria.php" method="POST" class="stack-form">
+                    <form action="../procesos/guardar_categoria.php" method="POST" class="stack-form">
                         <div class="filter-group">
                             <label for="nombre_categoria">Nombre</label>
                             <input
@@ -264,7 +264,7 @@ unset(
                                                 Editar
                                             </button>
 
-                                            <form action="procesos/eliminar_categoria.php" method="POST" onsubmit="return confirm('¿Seguro que deseas eliminar esta categoría?');">
+                                            <form action="../procesos/eliminar_categoria.php" method="POST" onsubmit="return confirm('¿Seguro que deseas eliminar esta categoría?');">
                                                 <input type="hidden" name="id_categoria" value="<?php echo (int) $categoria['id_categoria']; ?>">
                                                 <button type="submit" class="btn btn-reject btn-sm">Eliminar</button>
                                             </form>
@@ -299,7 +299,7 @@ unset(
                         </div>
                     </div>
 
-                    <form action="procesos/guardar_habilidad.php" method="POST" class="stack-form">
+                    <form action="../procesos/guardar_habilidad.php" method="POST" class="stack-form">
                         <div class="filter-group">
                             <label for="nombre_habilidad">Nombre</label>
                             <input
@@ -393,7 +393,7 @@ unset(
                                                 Editar
                                             </button>
 
-                                            <form action="procesos/eliminar_habilidad.php" method="POST" onsubmit="return confirm('¿Seguro que deseas eliminar esta habilidad?');">
+                                            <form action="../procesos/eliminar_habilidad.php" method="POST" onsubmit="return confirm('¿Seguro que deseas eliminar esta habilidad?');">
                                                 <input type="hidden" name="id_habilidad" value="<?php echo (int) $habilidad['id_habilidad']; ?>">
                                                 <button type="submit" class="btn btn-reject btn-sm">Eliminar</button>
                                             </form>
@@ -422,7 +422,7 @@ unset(
             </button>
         </div>
 
-        <form action="procesos/editar_categoria.php" method="POST" class="stack-form">
+        <form action="../procesos/editar_categoria.php" method="POST" class="stack-form">
             <input type="hidden" name="id_categoria" id="edit_id_categoria">
 
             <div class="filter-group">
@@ -452,7 +452,7 @@ unset(
             </button>
         </div>
 
-        <form action="procesos/editar_habilidad.php" method="POST" class="stack-form">
+        <form action="../procesos/editar_habilidad.php" method="POST" class="stack-form">
             <input type="hidden" name="id_habilidad" id="edit_id_habilidad">
 
             <div class="filter-group">

@@ -8,7 +8,7 @@ if (!isset($_SESSION['usuario_id']) || !isset($_SESSION['rol']) || $_SESSION['ro
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../dashboard_organizacion.php');
+    header('Location: ../organizacion/dashboard_organizacion.php');
     exit;
 }
 
@@ -20,7 +20,7 @@ $obligatorios = $_POST['obligatorio'] ?? [];
 
 if ($idDesafio <= 0) {
     $_SESSION['error'] = 'Desafío no válido.';
-    header('Location: ../dashboard_organizacion.php');
+    header('Location: ../organizacion/dashboard_organizacion.php');
     exit;
 }
 
@@ -38,7 +38,7 @@ $stmt->execute([
 
 if (!$stmt->fetchColumn()) {
     $_SESSION['error'] = 'No tienes permiso para modificar este desafío.';
-    header('Location: ../dashboard_organizacion.php');
+    header('Location: ../organizacion/dashboard_organizacion.php');
     exit;
 }
 
@@ -84,7 +84,7 @@ try {
     $pdo->commit();
 
     $_SESSION['success'] = 'Habilidades del desafío actualizadas.';
-    header('Location: ../detalle_desafio_organizacion.php?id=' . $idDesafio);
+    header('Location: ../organizacion/desafios/detalle_desafio_organizacion.php?id=' . $idDesafio);
     exit;
 } catch (PDOException $e) {
     if ($pdo->inTransaction()) {
@@ -92,6 +92,6 @@ try {
     }
 
     $_SESSION['error'] = 'No se pudieron guardar las habilidades.';
-    header('Location: ../habilidades_desafio.php?id=' . $idDesafio);
+    header('Location: ../organizacion/habilidades_desafio.php?id=' . $idDesafio);
     exit;
 }

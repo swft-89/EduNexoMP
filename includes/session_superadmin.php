@@ -20,6 +20,6 @@ $stmt->execute([
 $admin = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$admin || ($admin['tipo_admin'] ?? '') !== 'superadmin') {
-    header('Location: dashboard_admin.php');
+    header('Location: ../../superadmin/dashboard_admin.php');
     exit;
 }

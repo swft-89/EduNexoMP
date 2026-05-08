@@ -3,7 +3,7 @@ require_once __DIR__ . '/../config/conexion.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../categorias_superadmin.php');
+    header('Location: ../superadmin/categorias_superadmin.php');
     exit;
 }
 
@@ -23,7 +23,7 @@ $_SESSION['old_habilidad'] = [
 
 if ($nombre === '') {
     $_SESSION['error'] = 'El nombre de la habilidad es obligatorio.';
-    header('Location: ../categorias_superadmin.php');
+    header('Location: ../superadmin/categorias_superadmin.php');
     exit;
 }
 
@@ -109,5 +109,5 @@ try {
     $_SESSION['error'] = $e->getMessage();
 }
 
-header('Location: ../categorias_superadmin.php');
+header('Location: ../superadmin/categorias_superadmin.php');
 exit;
