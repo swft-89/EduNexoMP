@@ -73,7 +73,7 @@ unset($_SESSION['success'], $_SESSION['error']);
             <a href="crear_desafio.php" class="active">
                 <i class="bi bi-plus-circle"></i> Crear desafío
             </a>
-            <a href="../mis_desafios.php">
+            <a href="mis_desafios.php">
                 <i class="bi bi-briefcase"></i> Mis desafíos
             </a>
             <a href="../propuestas_recibidas.php">
@@ -86,6 +86,12 @@ unset($_SESSION['success'], $_SESSION['error']);
                 <i class="bi bi-building"></i> Perfil
             </a>
         </nav>
+        <div class="sidebar-bottom">
+            <a href="../../procesos/logout.php" class="sidebar-logout">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Cerrar sesión</span>
+            </a>
+        </div>
     </aside>
 
     <section class="app-content org-content">

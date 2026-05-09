@@ -65,7 +65,17 @@ $stmt = $pdo->prepare("
             ELSE ROUND(
                 COUNT(DISTINCT eh.id_habilidad) * 100.0 / :total_habilidades
             )
-        END AS match_porcentaje
+        END AS match_porcentaje,
+
+        CASE
+            WHEN p.id_propuesta IS NOT NULL THEN 1
+            ELSE 0
+        END AS ya_postulado,
+
+        CASE
+            WHEN n.id_notificacion IS NOT NULL THEN 1
+            ELSE 0
+        END AS ya_invitado
 
     FROM estudiante e
     INNER JOIN usuario u
@@ -79,6 +89,16 @@ $stmt = $pdo->prepare("
             WHERE id_desafio = :id_desafio
        )
 
+    LEFT JOIN propuesta p
+        ON p.id_estudiante = e.id_estudiante
+       AND p.id_desafio = :id_desafio
+
+    LEFT JOIN notificacion n
+        ON n.id_usuario = e.id_estudiante
+       AND n.tipo = 'invitacion_desafio'
+       AND n.mensaje LIKE :patron_invitacion
+       AND n.leida = FALSE
+
     WHERE u.estado = 'activo'
 
     GROUP BY
@@ -89,13 +109,16 @@ $stmt = $pdo->prepare("
         e.carrera,
         e.semestre,
         e.telefono,
-        u.correo_electronico
+        u.correo_electronico,
+        p.id_propuesta,
+        n.id_notificacion
 
     ORDER BY match_porcentaje DESC, habilidades_coincidentes DESC
 ");
 $stmt->execute([
     ':id_desafio' => $idDesafio,
-    ':total_habilidades' => $totalHabilidades
+    ':total_habilidades' => $totalHabilidades,
+    ':patron_invitacion' => '%ID_DESAFIO:' . $idDesafio . '%'
 ]);
 $talentos = $stmt->fetchAll();
 
@@ -152,14 +175,23 @@ unset($_SESSION['success'], $_SESSION['error']);
         </div>
 
         <nav class="sidebar-menu">
-            <a href="dashboard_organizacion.php">
-                <i class="bi bi-house-door"></i> Mis desafíos
+            <a href="../dashboard_organizacion.php">
+                <i class="bi bi-house-door"></i> Inicio
             </a>
-            <a href="propuestas_organizacion.php">
+            <a href="crear_desafio.php">
+                <i class="bi bi-plus-circle"></i> Crear desafío
+            </a>
+            <a href="../mis_desafios.php" class="active">
+                <i class="bi bi-briefcase"></i> Mis desafíos
+            </a>
+            <a href="../propuestas_recibidas.php">
                 <i class="bi bi-file-earmark-text"></i> Propuestas
             </a>
-            <a href="chat_organizacion.php">
+            <a href="../chat_organizacion.php">
                 <i class="bi bi-chat"></i> Chat
+            </a>
+            <a href="../editar_perfil_organizacion.php">
+                <i class="bi bi-building"></i> Perfil
             </a>
         </nav>
     </aside>
@@ -236,6 +268,27 @@ unset($_SESSION['success'], $_SESSION['error']);
                                     <?php endforeach; ?>
                                 <?php else: ?>
                                     <span>Sin coincidencias registradas</span>
+                                <?php endif; ?>
+                            </div>
+
+                            <div class="talento-actions">
+                                <?php if (!empty($talento['ya_postulado'])): ?>
+                                    <button type="button" class="btn btn-nav" disabled>
+                                        Ya postulado
+                                    </button>
+                                <?php elseif (!empty($talento['ya_invitado'])): ?>
+                                    <button type="button" class="btn btn-nav" disabled>
+                                        Invitación enviada
+                                    </button>
+                                <?php else: ?>
+                                    <form action="../../procesos/organizacion/invitar_estudiante.php" method="POST">
+                                        <input type="hidden" name="id_desafio" value="<?php echo (int) $idDesafio; ?>">
+                                        <input type="hidden" name="id_estudiante" value="<?php echo (int) $talento['id_estudiante']; ?>">
+
+                                        <button type="submit" class="btn btn-primary">
+                                            Invitar a postularse
+                                        </button>
+                                    </form>
                                 <?php endif; ?>
                             </div>
                         </article>

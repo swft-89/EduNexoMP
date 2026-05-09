@@ -98,10 +98,10 @@ unset($_SESSION['success'], $_SESSION['error']);
             <a href="../dashboard_organizacion.php">
                 <i class="bi bi-house-door"></i> Inicio
             </a>
-            <a href="crear_desafio.php" class="active">
+            <a href="crear_desafio.php">
                 <i class="bi bi-plus-circle"></i> Crear desafío
             </a>
-            <a href="../mis_desafios.php" class="active">
+            <a href="mis_desafios.php" class="active">
                 <i class="bi bi-briefcase"></i> Mis desafíos
             </a>
             <a href="../propuestas_recibidas.php">
@@ -132,7 +132,7 @@ unset($_SESSION['success'], $_SESSION['error']);
             <div class="org-detail-actions">
                 <a href="mis_desafios.php" class="btn btn-nav">Volver</a>
                 <a href="editar_desafio.php?id=<?php echo (int) $desafio['id_desafio']; ?>" class="btn btn-primary">Editar</a>
-                <!a href="../habilidades_desafio.php?id=><//?php echo (int) $desafio['id_desafio']; ?>" <!class="btn btn-primary"><!Gesionar habilidades><!/a>
+                <!a href="../habilidades_desafio.php?id=><//?php echo (int) $desafio['id_desafio']; ?> <!class="btn btn-primary"><!Gesionar habilidades><!/a>
                 <a href="talentos_desafio.php?id=<?php echo (int) $desafio['id_desafio']; ?>" class="btn btn-primary">Ver talentos compatibles</a>
             </div>
         </div>

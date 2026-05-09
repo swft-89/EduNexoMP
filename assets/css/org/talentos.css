@@ -131,3 +131,19 @@
         grid-template-columns: 1fr;
     }
 }
+
+/*talento*/
+.talento-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.talento-actions form {
+    margin: 0;
+}
+
+.talento-actions .btn {
+    border-radius: 14px;
+    padding: 13px 20px;
+}

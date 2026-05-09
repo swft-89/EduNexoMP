@@ -1457,3 +1457,49 @@ body {
         align-items: flex-start;
     }
 }
+
+/*Cerrar sesion org*/
+.sidebar {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-menu {
+    flex: 1;
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.sidebar-logout {
+    height: 52px;
+    border-radius: 16px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 0 16px;
+
+    color: #fca5a5;
+    text-decoration: none;
+    font-weight: 600;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.sidebar-logout:hover {
+    background: rgba(239, 68, 68, 0.12);
+    color: #ffffff;
+    transform: translateX(2px);
+}
+
+.sidebar-logout i {
+    font-size: 1.1rem;
+}
