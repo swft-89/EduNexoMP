@@ -1,0 +1,133 @@
+.talentos-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+}
+
+.talento-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 22px;
+    padding: 24px;
+    box-shadow: var(--shadow-card);
+}
+
+.talento-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.talento-avatar {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.talento-header h3 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--text);
+}
+
+.talento-header p {
+    margin-top: 5px;
+    color: var(--text-soft);
+    font-size: 0.95rem;
+}
+
+.talento-match {
+    margin-top: 22px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.talento-bar {
+    flex: 1;
+    height: 10px;
+    background: #dbe3ee;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.talento-progress {
+    height: 100%;
+    background: #22c55e;
+    border-radius: 999px;
+}
+
+.talento-match strong {
+    color: #16a34a;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.talento-info {
+    margin-top: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.talento-info p {
+    color: var(--text-soft);
+    font-size: 0.94rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.talento-tags {
+    margin-top: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.talento-tags span {
+    background: #e0edff;
+    color: #2563eb;
+    padding: 7px 10px;
+    border-radius: 10px;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.talentos-warning {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    color: #92400e;
+    border-radius: 18px;
+    padding: 18px;
+    margin-bottom: 24px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+}
+
+.talentos-warning i {
+    font-size: 1.4rem;
+}
+
+.talentos-warning strong {
+    display: block;
+    font-weight: 800;
+}
+
+.talentos-warning p {
+    margin-top: 4px;
+}
+
+@media (max-width: 900px) {
+    .talentos-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -146,22 +146,22 @@ unset($_SESSION['success'], $_SESSION['error']);
         </div>
 
         <nav class="sidebar-menu">
-            <a href="../dashboard_organizacion.php" class="active">
+            <a href="dashboard_organizacion.php" class="active">
                 <i class="bi bi-house-door"></i> Inicio
             </a>
             <a href="desafios/crear_desafio.php">
                 <i class="bi bi-plus-circle"></i> Crear desafío
             </a>
-            <a href="../mis_desafios.php">
+            <a href="mis_desafios.php">
                 <i class="bi bi-briefcase"></i> Mis desafíos
             </a>
-            <a href="../propuestas_recibidas.php">
+            <a href="propuestas_organizacion.php">
                 <i class="bi bi-file-earmark-text"></i> Propuestas
             </a>
-            <a href="../chat_organizacion.php">
+            <a href="chat_organizacion.php">
                 <i class="bi bi-chat"></i> Chat
             </a>
-            <a href="../editar_perfil_organizacion.php">
+            <a href="editar_perfil_organizacion.php">
                 <i class="bi bi-building"></i> Perfil
             </a>
             </a>

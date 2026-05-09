@@ -127,6 +127,7 @@ unset($_SESSION['success'], $_SESSION['error']);
                 <a href="../dashboard_organizacion.php" class="btn btn-nav">Volver</a>
                 <a href="editar_desafio.php?id=<?php echo (int) $desafio['id_desafio']; ?>" class="btn btn-primary">Editar</a>
                 <a href="../habilidades_desafio.php?id=<?php echo (int) $desafio['id_desafio']; ?>" class="btn btn-primary">Gestionar habilidades</a>
+                <a href="talentos_desafio.php?id=<?php echo (int) $desafio['id_desafio']; ?>" class="btn btn-primary">Ver talentos compatibles</a>
             </div>
         </div>
 
