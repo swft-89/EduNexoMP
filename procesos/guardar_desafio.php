@@ -8,7 +8,7 @@ if (!isset($_SESSION['usuario_id']) || !isset($_SESSION['rol']) || $_SESSION['ro
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../organizacion/dashboard_organizacion.php');
+    header('Location: ../dashboard_organizacion.php');
     exit;
 }
 
@@ -21,6 +21,10 @@ $modalidad = trim($_POST['modalidad'] ?? '');
 $estado = trim($_POST['estado'] ?? 'activo');
 $idCategoria = (int) ($_POST['id_categoria'] ?? 0);
 $fechaLimite = trim($_POST['fecha_limite'] ?? '');
+
+$habilidadesSeleccionadas = array_unique(array_map('intval', $_POST['habilidades'] ?? []));
+$niveles = $_POST['nivel_requerido'] ?? [];
+$obligatorios = $_POST['obligatorio'] ?? [];
 
 $errores = [];
 $erroresCampos = [];
@@ -60,7 +64,10 @@ $_SESSION['old_crear_desafio'] = [
     'modalidad' => $modalidad,
     'estado' => $estado,
     'id_categoria' => $idCategoria,
-    'fecha_limite' => $fechaLimite
+    'fecha_limite' => $fechaLimite,
+    'habilidades' => $habilidadesSeleccionadas,
+    'nivel_requerido' => $niveles,
+    'obligatorio' => $obligatorios
 ];
 
 if (!empty($errores)) {
@@ -72,22 +79,6 @@ if (!empty($errores)) {
 
 try {
     $pdo->beginTransaction();
-
-    $stmtOrg = $pdo->prepare("
-        SELECT nombre_empresa
-        FROM organizacion
-        WHERE id_organizacion = :id_organizacion
-        LIMIT 1
-    ");
-    $stmtOrg->execute([
-        ':id_organizacion' => $idOrganizacion
-    ]);
-
-    $organizacion = $stmtOrg->fetch(PDO::FETCH_ASSOC);
-
-    if (!$organizacion) {
-        throw new Exception('No se encontró la organización.');
-    }
 
     $stmt = $pdo->prepare("
         INSERT INTO desafio (
@@ -112,6 +103,7 @@ try {
         )
         RETURNING id_desafio
     ");
+
     $stmt->execute([
         ':titulo' => $titulo,
         ':descripcion' => $descripcion,
@@ -123,43 +115,47 @@ try {
         ':id_categoria' => $idCategoria
     ]);
 
-    $idDesafio = (int) $stmt->fetchColumn();
+    $idDesafioCreado = (int) $stmt->fetchColumn();
 
-    if ($idDesafio <= 0) {
-        throw new Exception('No se pudo crear el desafío.');
+    if (!empty($habilidadesSeleccionadas)) {
+        $stmtHab = $pdo->prepare("
+            INSERT INTO desafio_habilidad (
+                id_desafio,
+                id_habilidad,
+                nivel_requerido,
+                obligatorio
+            )
+            VALUES (
+                :id_desafio,
+                :id_habilidad,
+                :nivel_requerido,
+                :obligatorio
+            )
+        ");
+
+        foreach ($habilidadesSeleccionadas as $idHabilidad) {
+            $idHabilidad = (int) $idHabilidad;
+            $nivel = trim($niveles[$idHabilidad] ?? '');
+            $obligatorio = !empty($obligatorios[$idHabilidad]) ? 1 : 0;
+
+            $stmtHab->execute([
+                ':id_desafio' => $idDesafioCreado,
+                ':id_habilidad' => $idHabilidad,
+                ':nivel_requerido' => $nivel !== '' ? $nivel : null,
+                ':obligatorio' => $obligatorio
+            ]);
+        }
     }
-
-    $stmtAudit = $pdo->prepare("
-        INSERT INTO auditoria_admin (
-            tipo_evento,
-            descripcion,
-            usuario_nombre,
-            usuario_rol,
-            id_usuario_relacionado
-        ) VALUES (
-            :tipo_evento,
-            :descripcion,
-            :usuario_nombre,
-            :usuario_rol,
-            :id_usuario_relacionado
-        )
-    ");
-    $stmtAudit->execute([
-        ':tipo_evento' => 'Nuevo desafío',
-        ':descripcion' => 'Se publicó el desafío "' . $titulo . '"',
-        ':usuario_nombre' => $organizacion['nombre_empresa'] ?? 'Organización',
-        ':usuario_rol' => 'Org.',
-        ':id_usuario_relacionado' => $idOrganizacion
-    ]);
 
     $pdo->commit();
 
     unset($_SESSION['old_crear_desafio'], $_SESSION['error_form'], $_SESSION['error_fields']);
 
     $_SESSION['success'] = 'Desafío creado correctamente.';
-    header('Location: ../organizacion/dashboard_organizacion.php');
+    header('Location: ../organizacion/desafios/detalle_desafio_organizacion.php?id=' . $idDesafioCreado);
     exit;
-} catch (Throwable $e) {
+
+} catch (PDOException $e) {
     if ($pdo->inTransaction()) {
         $pdo->rollBack();
     }

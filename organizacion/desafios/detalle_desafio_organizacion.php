@@ -132,7 +132,7 @@ unset($_SESSION['success'], $_SESSION['error']);
             <div class="org-detail-actions">
                 <a href="mis_desafios.php" class="btn btn-nav">Volver</a>
                 <a href="editar_desafio.php?id=<?php echo (int) $desafio['id_desafio']; ?>" class="btn btn-primary">Editar</a>
-                <a href="habilidades_desafio.php?id=<?php echo (int) $desafio['id_desafio']; ?>" class="btn btn-primary">Gestionar habilidades</a>
+                <!a href="../habilidades_desafio.php?id=><//?php echo (int) $desafio['id_desafio']; ?>" <!class="btn btn-primary"><!Gesionar habilidades><!/a>
                 <a href="talentos_desafio.php?id=<?php echo (int) $desafio['id_desafio']; ?>" class="btn btn-primary">Ver talentos compatibles</a>
             </div>
         </div>

@@ -1,6 +1,6 @@
 <?php
-require_once 'includes/session_organizacion.php';
-require_once 'config/conexion.php';
+require_once '../../includes/session_organizacion.php';
+require_once '../../config/conexion.php';
 
 $idUsuario = $_SESSION['usuario_id'];
 $idDesafio = isset($_GET['id']) ? (int) $_GET['id'] : 0;
@@ -134,10 +134,10 @@ unset($_SESSION['success'], $_SESSION['error']);
     <meta charset="UTF-8">
     <title>Talentos compatibles - EduNexo MP</title>
 
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/dashboard_organizacion.css">
-    <link rel="stylesheet" href="assets/css/org/talentos.css">
-    <link rel="stylesheet" href="assets/css/dark.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard_organizacion.css">
+    <link rel="stylesheet" href="../../assets/css/org/talentos.css">
+    <link rel="stylesheet" href="../../assets/css/dark.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">

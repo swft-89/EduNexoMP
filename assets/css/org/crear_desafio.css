@@ -147,3 +147,350 @@
     border-radius: 18px;
     padding: 16px;
 }
+
+/*Habilidades*/
+.habilidades-featured {
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 22px;
+    padding: 20px;
+    margin-bottom: 22px;
+}
+
+.habilidades-featured h3 {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 14px;
+}
+
+.habilidades-featured-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.habilidad-featured-card {
+    background: #ffffff;
+    border: 1px solid #dbe3ff;
+    border-radius: 18px;
+    padding: 16px;
+    display: flex;
+    gap: 12px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.habilidad-featured-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(39, 72, 166, 0.12);
+}
+
+.habilidad-featured-card input {
+    margin-top: 4px;
+}
+
+.habilidad-featured-card strong {
+    display: block;
+    color: var(--text);
+    font-weight: 800;
+}
+
+.habilidad-featured-card small {
+    display: block;
+    margin-top: 4px;
+    color: var(--text-soft);
+}
+
+.habilidades-search-box {
+    height: 52px;
+    border: 1px solid #d1d5db;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.habilidades-search-box i {
+    color: #64748b;
+}
+
+.habilidades-search-box input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    font-size: 0.98rem;
+    color: var(--text);
+}
+
+.habilidades-create-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.habilidad-card-item {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    padding: 18px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.habilidad-card-item:hover {
+    border-color: #c7d2fe;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+}
+
+.habilidad-check-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.habilidad-check-label input {
+    margin-top: 5px;
+    width: 18px;
+    height: 18px;
+}
+
+.habilidad-check-label strong {
+    display: block;
+    color: var(--text);
+    font-weight: 800;
+}
+
+.habilidad-check-label small {
+    display: block;
+    margin-top: 4px;
+    color: var(--text-soft);
+    font-size: 0.88rem;
+}
+
+.habilidad-options {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+@media (max-width: 900px) {
+    .habilidades-featured-grid,
+    .habilidades-create-grid,
+    .habilidad-options {
+        grid-template-columns: 1fr;
+    }
+}
+
+/*Modal*/
+.habilidades-featured {
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 22px;
+    padding: 20px;
+    margin-bottom: 22px;
+}
+
+.habilidades-featured-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 14px;
+}
+
+.habilidades-featured-head h3 {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--text);
+}
+
+.habilidades-featured-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.habilidad-mini-card {
+    background: #ffffff;
+    border: 1px solid #dbe3ff;
+    border-radius: 18px;
+    padding: 16px;
+}
+
+.habilidad-featured-card {
+    display: flex;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.habilidad-featured-card input {
+    margin-top: 4px;
+}
+
+.habilidad-featured-card strong,
+.skill-modal-check strong {
+    display: block;
+    color: var(--text);
+    font-weight: 800;
+}
+
+.habilidad-featured-card small,
+.skill-modal-check small {
+    display: block;
+    margin-top: 4px;
+    color: var(--text-soft);
+}
+
+.habilidad-mini-options,
+.skill-modal-options {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.habilidad-mini-options select,
+.skill-modal-options select {
+    height: 42px;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    padding: 0 12px;
+    font-family: inherit;
+    color: var(--text);
+    background: #fff;
+}
+
+.habilidades-search-box,
+.skills-modal-search {
+    height: 52px;
+    border: 1px solid #d1d5db;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.habilidades-search-box i,
+.skills-modal-search i {
+    color: #64748b;
+}
+
+.habilidades-search-box input,
+.skills-modal-search input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    font-size: 0.98rem;
+    color: var(--text);
+}
+
+.skills-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.42);
+    backdrop-filter: blur(6px);
+    z-index: 2500;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.skills-modal-overlay.active {
+    display: flex;
+}
+
+.skills-modal {
+    width: min(100%, 980px);
+    max-height: 88vh;
+    background: #ffffff;
+    border-radius: 26px;
+    box-shadow: 0 28px 80px rgba(15, 23, 42, 0.24);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.skills-modal-head {
+    padding: 24px 26px;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.skills-modal-head h3 {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--text);
+}
+
+.skills-modal-head p {
+    margin-top: 6px;
+    color: var(--text-soft);
+}
+
+.skills-modal-close {
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 50%;
+    background: #f3f4f6;
+    cursor: pointer;
+}
+
+.skills-modal-search {
+    margin: 18px 26px;
+}
+
+.skills-modal-list {
+    padding: 0 26px 20px;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+.skill-modal-item {
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    padding: 16px;
+    background: #f8fafc;
+}
+
+.skill-modal-check {
+    display: flex;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.skill-modal-check input {
+    margin-top: 4px;
+}
+
+.skills-modal-actions {
+    padding: 18px 26px;
+    border-top: 1px solid #e5e7eb;
+    background: #ffffff;
+    display: flex;
+    justify-content: flex-end;
+}
+
+@media (max-width: 900px) {
+    .habilidades-featured-grid,
+    .skills-modal-list,
+    .habilidad-mini-options,
+    .skill-modal-options {
+        grid-template-columns: 1fr;
+    }
+}

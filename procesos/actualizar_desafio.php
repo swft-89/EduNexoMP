@@ -22,13 +22,16 @@ $modalidad = trim($_POST['modalidad'] ?? '');
 $estado = trim($_POST['estado'] ?? 'activo');
 $idCategoria = (int) ($_POST['id_categoria'] ?? 0);
 $fechaLimite = trim($_POST['fecha_limite'] ?? '');
+$habilidadesSeleccionadas = array_unique(array_map('intval', $_POST['habilidades'] ?? []));
+$niveles = $_POST['nivel_requerido'] ?? [];
+$obligatorios = $_POST['obligatorio'] ?? [];
 
 $errores = [];
 $erroresCampos = [];
 
 if ($idDesafio <= 0) {
     $_SESSION['error'] = 'Desafío no válido.';
-    header('Location: ../dashboard_organizacion.php');
+    header('Location: ../organizacion/dashboard_organizacion.php');
     exit;
 }
 
@@ -67,7 +70,10 @@ $_SESSION['old_editar_desafio'] = [
     'modalidad' => $modalidad,
     'estado' => $estado,
     'id_categoria' => $idCategoria,
-    'fecha_limite' => $fechaLimite
+    'fecha_limite' => $fechaLimite,
+    'habilidades' => $habilidadesSeleccionadas,
+    'nivel_requerido' => $niveles,
+    'obligatorio' => $obligatorios
 ];
 
 if (!empty($errores)) {
@@ -96,6 +102,8 @@ if (!$stmt->fetchColumn()) {
 }
 
 try {
+    $pdo->beginTransaction();
+
     $stmt = $pdo->prepare("
         UPDATE desafio
         SET titulo = :titulo,
@@ -120,12 +128,53 @@ try {
         ':id_organizacion' => $idOrganizacion
     ]);
 
+    $stmt = $pdo->prepare("
+        DELETE FROM desafio_habilidad
+        WHERE id_desafio = :id_desafio
+    ");
+    $stmt->execute([':id_desafio' => $idDesafio]);
+
+    if (!empty($habilidadesSeleccionadas)) {
+        $stmtHab = $pdo->prepare("
+            INSERT INTO desafio_habilidad (
+                id_desafio,
+                id_habilidad,
+                nivel_requerido,
+                obligatorio
+            )
+            VALUES (
+                :id_desafio,
+                :id_habilidad,
+                :nivel_requerido,
+                :obligatorio
+            )
+        ");
+
+        foreach ($habilidadesSeleccionadas as $idHabilidad) {
+            $nivel = trim($niveles[$idHabilidad] ?? '');
+            $obligatorio = !empty($obligatorios[$idHabilidad]) ? 1 : 0;
+
+            $stmtHab->execute([
+                ':id_desafio' => $idDesafio,
+                ':id_habilidad' => $idHabilidad,
+                ':nivel_requerido' => $nivel !== '' ? $nivel : null,
+                ':obligatorio' => $obligatorio
+            ]);
+        }
+    }
+
+    $pdo->commit();
+
     unset($_SESSION['old_editar_desafio'], $_SESSION['error_form'], $_SESSION['error_fields']);
 
     $_SESSION['success'] = 'Desafío actualizado correctamente.';
     header('Location: ../organizacion/desafios/detalle_desafio_organizacion.php?id=' . $idDesafio);
     exit;
 } catch (PDOException $e) {
+    if ($pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
+
     $_SESSION['error'] = 'No se pudo actualizar el desafío.';
     header('Location: ../organizacion/desafios/editar_desafio.php?id=' . $idDesafio);
     exit;
