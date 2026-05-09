@@ -152,7 +152,7 @@ unset($_SESSION['success'], $_SESSION['error']);
             <a href="desafios/crear_desafio.php">
                 <i class="bi bi-plus-circle"></i> Crear desafío
             </a>
-            <a href="mis_desafios.php">
+            <a href="desafios/mis_desafios.php">
                 <i class="bi bi-briefcase"></i> Mis desafíos
             </a>
             <a href="propuestas_organizacion.php">

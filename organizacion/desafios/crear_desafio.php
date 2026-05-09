@@ -84,7 +84,7 @@ unset($_SESSION['success'], $_SESSION['error']);
                     <h1>Crear nuevo desafío</h1>
                     <p>Publica una oportunidad para conectar con talento estudiantil</p>
                 </div>
-                <a href="dashboard_organizacion.php" class="btn btn-nav">Volver</a>
+                <a href="../dashboard_organizacion.php" class="btn btn-nav">Volver</a>
             </div>
 
             <div class="crear-desafio-card">

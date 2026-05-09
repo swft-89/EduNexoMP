@@ -116,112 +116,114 @@ unset($_SESSION['success'], $_SESSION['error']);
         </nav>
     </aside>
 
-    <section class="app-content">
-        <div class="content-header">
+<section class="app-content org-content">
+    <div class="org-detail-wrap">
+
+        <div class="org-detail-header">
             <div>
                 <h1><?php echo htmlspecialchars($desafio['titulo']); ?></h1>
-                <p><?php echo htmlspecialchars($desafio['nombre_categoria']); ?> · <?php echo htmlspecialchars($desafio['modalidad'] ?? 'No especificada'); ?></p>
+                <p>
+                    <?php echo htmlspecialchars($desafio['nombre_categoria']); ?>
+                    ·
+                    <?php echo htmlspecialchars($desafio['modalidad'] ?? 'No especificada'); ?>
+                </p>
             </div>
 
-            <div class="user-box">
-                <a href="../dashboard_organizacion.php" class="btn btn-nav">Volver</a>
+            <div class="org-detail-actions">
+                <a href="mis_desafios.php" class="btn btn-nav">Volver</a>
                 <a href="editar_desafio.php?id=<?php echo (int) $desafio['id_desafio']; ?>" class="btn btn-primary">Editar</a>
-                <a href="../habilidades_desafio.php?id=<?php echo (int) $desafio['id_desafio']; ?>" class="btn btn-primary">Gestionar habilidades</a>
+                <a href="habilidades_desafio.php?id=<?php echo (int) $desafio['id_desafio']; ?>" class="btn btn-primary">Gestionar habilidades</a>
                 <a href="talentos_desafio.php?id=<?php echo (int) $desafio['id_desafio']; ?>" class="btn btn-primary">Ver talentos compatibles</a>
             </div>
         </div>
 
-        <div class="detalle-grid">
-            <div class="detalle-main">
-                <div class="dashboard-card">
-                    <div class="detalle-top-meta">
-                        <span class="detalle-chip">
-                            <i class="bi bi-calendar-event"></i>
-                            Publicado:
-                            <?php echo htmlspecialchars(date('d/m/Y', strtotime($desafio['fecha_publicacion']))); ?>
-                        </span>
+        <div class="org-detail-grid">
+            <div class="org-detail-card">
+                <div class="org-detail-meta">
+                    <span class="org-detail-chip">
+                        <i class="bi bi-calendar-plus"></i>
+                        Publicado:
+                        <?php echo htmlspecialchars(date('d/m/Y', strtotime($desafio['fecha_publicacion']))); ?>
+                    </span>
 
-                        <span class="detalle-chip">
-                            <i class="bi bi-hourglass-split"></i>
-                            Fecha límite:
-                            <?php echo !empty($desafio['fecha_limite']) ? htmlspecialchars(date('d/m/Y', strtotime($desafio['fecha_limite']))) : 'Sin definir'; ?>
-                        </span>
+                    <span class="org-detail-chip">
+                        <i class="bi bi-hourglass-split"></i>
+                        Fecha límite:
+                        <?php echo !empty($desafio['fecha_limite']) ? htmlspecialchars(date('d/m/Y', strtotime($desafio['fecha_limite']))) : 'Sin definir'; ?>
+                    </span>
 
-                        <span class="detalle-chip">
-                            <i class="bi bi-journal-text"></i>
-                            <?php echo (int) $desafio['propuestas_recibidas']; ?> propuestas
-                        </span>
-                    </div>
+                    <span class="org-detail-chip">
+                        <i class="bi bi-journal-text"></i>
+                        <?php echo (int) $desafio['propuestas_recibidas']; ?> propuestas
+                    </span>
+                </div>
 
-                    <h2 class="detalle-section-title">Descripción</h2>
-                    <p class="detalle-text"><?php echo nl2br(htmlspecialchars($desafio['descripcion'])); ?></p>
+                <div class="org-detail-section">
+                    <h2>Descripción</h2>
+                    <p><?php echo nl2br(htmlspecialchars($desafio['descripcion'])); ?></p>
+                </div>
 
-                    <h2 class="detalle-section-title">Requisitos específicos</h2>
-                    <p class="detalle-text">
+                <div class="org-detail-section">
+                    <h2>Requisitos específicos</h2>
+                    <p>
                         <?php echo !empty($desafio['requisitos_especificos'])
                             ? nl2br(htmlspecialchars($desafio['requisitos_especificos']))
                             : 'No especificados.'; ?>
                     </p>
+                </div>
 
-                    <h2 class="detalle-section-title">Habilidades requeridas</h2>
-                    <div class="detalle-tags">
+                <div class="org-detail-section">
+                    <h2>Habilidades requeridas</h2>
+                    <div class="org-detail-tags">
                         <?php if (!empty($habilidades)): ?>
                             <?php foreach ($habilidades as $habilidad): ?>
-                                <span class="detalle-tag">
+                                <span class="org-detail-tag">
                                     <?php echo htmlspecialchars($habilidad['nombre']); ?>
-                                    <?php if (!empty($habilidad['nivel_requerido'])): ?>
-                                        · <?php echo htmlspecialchars($habilidad['nivel_requerido']); ?>
-                                    <?php endif; ?>
-                                    <?php if (!empty($habilidad['obligatorio'])): ?>
-                                        · Obligatoria
-                                    <?php endif; ?>
                                 </span>
                             <?php endforeach; ?>
                         <?php else: ?>
-                            <span class="detalle-tag">Sin habilidades registradas</span>
+                            <span class="org-detail-tag">Sin habilidades registradas</span>
                         <?php endif; ?>
                     </div>
                 </div>
             </div>
 
-            <aside class="detalle-side">
-                <div class="dashboard-card">
-                    <h3 class="detalle-side-title">Estado del desafío</h3>
+            <aside class="org-detail-card org-side-card">
+                <h3>Estado del desafío</h3>
 
-                    <div class="detalle-side-item">
-                        <span>Estado actual</span>
-                        <strong><?php echo htmlspecialchars($desafio['estado'] ?? 'No definido'); ?></strong>
-                    </div>
-
-                    <div class="detalle-side-item">
-                        <span>Categoría</span>
-                        <strong><?php echo htmlspecialchars($desafio['nombre_categoria']); ?></strong>
-                    </div>
-
-                    <div class="detalle-side-item">
-                        <span>Modalidad</span>
-                        <strong><?php echo htmlspecialchars($desafio['modalidad'] ?? 'No definida'); ?></strong>
-                    </div>
-
-                    <form action="../../procesos/cambiar_estado_desafio.php" method="POST" style="margin-top:18px;">
-                        <input type="hidden" name="id_desafio" value="<?php echo (int) $desafio['id_desafio']; ?>">
-
-                        <div class="form-group">
-                            <label for="estado">Cambiar estado</label>
-                            <select id="estado" name="estado">
-                                <option value="activo" <?php echo (($desafio['estado'] ?? '') === 'activo') ? 'selected' : ''; ?>>Activo</option>
-                                <option value="cerrado" <?php echo (($desafio['estado'] ?? '') === 'cerrado') ? 'selected' : ''; ?>>Cerrado</option>
-                            </select>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary detalle-btn-full">
-                            Guardar estado
-                        </button>
-                    </form>
+                <div class="org-side-item">
+                    <span>Estado actual</span>
+                    <strong><?php echo htmlspecialchars($desafio['estado'] ?? 'No definido'); ?></strong>
                 </div>
+
+                <div class="org-side-item">
+                    <span>Categoría</span>
+                    <strong><?php echo htmlspecialchars($desafio['nombre_categoria']); ?></strong>
+                </div>
+
+                <div class="org-side-item">
+                    <span>Modalidad</span>
+                    <strong><?php echo htmlspecialchars($desafio['modalidad'] ?? 'No definida'); ?></strong>
+                </div>
+
+                <form action="../../procesos/cambiar_estado_desafio.php" method="POST" class="org-state-form">
+                    <input type="hidden" name="id_desafio" value="<?php echo (int) $desafio['id_desafio']; ?>">
+
+                    <label for="estado">Cambiar estado</label>
+                    <select id="estado" name="estado">
+                        <option value="activo" <?php echo (($desafio['estado'] ?? '') === 'activo') ? 'selected' : ''; ?>>Activo</option>
+                        <option value="cerrado" <?php echo (($desafio['estado'] ?? '') === 'cerrado') ? 'selected' : ''; ?>>Cerrado</option>
+                    </select>
+
+                    <button type="submit" class="btn btn-primary">
+                        Guardar estado
+                    </button>
+                </form>
             </aside>
         </div>
-    </section>
+
+    </div>
+</section>
 </div>
 
 <?php if ($success): ?>

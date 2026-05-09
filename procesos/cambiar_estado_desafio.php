@@ -20,7 +20,7 @@ $estadosValidos = ['activo', 'cerrado'];
 
 if ($idDesafio <= 0 || !in_array($estado, $estadosValidos, true)) {
     $_SESSION['error'] = 'Estado de desafío no válido.';
-    header('Location: ../organizacion/dashboard_organizacion.php');
+    header('Location: ../organizacion/desafios/detalle_desafio_organizacion.php?id=' . $idDesafio);
     exit;
 }
 
@@ -39,7 +39,7 @@ try {
 
     if ($stmt->rowCount() === 0) {
         $_SESSION['error'] = 'No se pudo actualizar el estado del desafío.';
-        header('Location: ../organizacion/dashboard_organizacion.php');
+        header('Location: ../organizacion/desafios/detalle_desafio_organizacion.php?id=' . $idDesafio);
         exit;
     }
 
