@@ -1,0 +1,167 @@
+.propuesta-wrap {
+    padding: 34px 38px 42px;
+}
+
+.propuesta-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+.propuesta-header h1 {
+    font-size: clamp(2.4rem, 5vw, 4.4rem);
+    line-height: 1.02;
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    color: var(--text);
+}
+
+.propuesta-header p {
+    margin-top: 12px;
+    color: var(--text-soft);
+    font-size: 1.08rem;
+}
+
+.propuesta-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 30px;
+    padding: 34px;
+    box-shadow: var(--shadow-card);
+}
+
+.propuesta-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+}
+
+.form-group.full {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--text);
+    font-weight: 700;
+    font-size: 0.96rem;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    border: 1px solid #dbe2ea;
+    border-radius: 18px;
+    background: #ffffff;
+
+    padding: 16px 18px;
+
+    font-family: inherit;
+    font-size: 0.98rem;
+
+    color: var(--text);
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #3152b3;
+    box-shadow: 0 0 0 4px rgba(49, 82, 179, 0.12);
+}
+
+.upload-box {
+    border: 2px dashed #cbd5e1;
+    border-radius: 24px;
+
+    background: #f8fafc;
+
+    padding: 42px 28px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.upload-box:hover {
+    border-color: #3152b3;
+    background: #eef2ff;
+    transform: translateY(-2px);
+}
+
+.upload-box i {
+    font-size: 2.8rem;
+    color: #3152b3;
+    margin-bottom: 16px;
+}
+
+.upload-box p {
+    max-width: 360px;
+    line-height: 1.7;
+    color: var(--text-soft);
+    margin-bottom: 18px;
+}
+
+.upload-box input[type="file"] {
+    max-width: 320px;
+    border: none;
+    background: transparent;
+    padding: 0;
+}
+
+.upload-help {
+    display: block;
+    margin-top: 12px;
+    color: var(--text-soft);
+    line-height: 1.6;
+}
+
+.propuesta-actions {
+    margin-top: 34px;
+
+    display: flex;
+    justify-content: flex-end;
+    gap: 14px;
+}
+
+.propuesta-actions .btn {
+    min-width: 180px;
+}
+
+@media (max-width: 900px) {
+
+    .propuesta-header {
+        flex-direction: column;
+    }
+
+    .propuesta-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .propuesta-actions {
+        flex-direction: column;
+    }
+
+    .propuesta-actions .btn {
+        width: 100%;
+    }
+}

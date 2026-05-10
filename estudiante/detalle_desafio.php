@@ -235,13 +235,9 @@ unset($_SESSION['success'], $_SESSION['error']);
                                 Ya postulaste
                             </button>
                         <?php else: ?>
-                            <form method="POST" action="../procesos/postular_desafios.php">
-                                <input type="hidden" name="id_desafio" value="<?php echo (int) $desafio['id_desafio']; ?>">
-                                <input type="hidden" name="redirect" value="detalle_desafio.php?id=<?php echo (int) $desafio['id_desafio']; ?>">
-                                <button type="submit" class="btn btn-primary detalle-btn-full">
-                                    Postularme
-                                </button>
-                            </form>
+                            <a href="crear_propuesta.php?id=<?php echo (int) $desafio['id_desafio']; ?>" class="btn btn-primary detalle-btn-full">
+                                Crear propuesta
+                            </a>
                         <?php endif; ?>
                     </div>
                 </div>
