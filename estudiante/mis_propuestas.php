@@ -11,12 +11,19 @@ $stmt = $pdo->prepare("
         p.estado,
         p.feedback,
         p.fecha_respuesta,
+        p.titulo_propuesta,
+        p.descripcion_breve,
+        p.enlace_portafolio,
         d.id_desafio,
         d.titulo,
         d.fecha_limite,
         d.modalidad,
         o.nombre_empresa,
-        c.nombre_categoria
+        c.nombre_categoria,
+        dp.nombre_archivo,
+        dp.url_archivo,
+        dp.tipo_archivo,
+        dp.tamano_bytes
     FROM propuesta p
     INNER JOIN desafio d
         ON p.id_desafio = d.id_desafio
@@ -24,6 +31,8 @@ $stmt = $pdo->prepare("
         ON d.id_organizacion = o.id_organizacion
     INNER JOIN categoria c
         ON d.id_categoria = c.id_categoria
+    LEFT JOIN documento_propuesta dp
+        ON p.id_propuesta = dp.id_propuesta
     WHERE p.id_estudiante = :id_estudiante
     ORDER BY p.fecha_envio DESC
 ");
@@ -38,11 +47,13 @@ unset($_SESSION['success'], $_SESSION['error']);
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis propuestas - EduNexo MP</title>
+
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/estudiante/mis_propuestas.css">
     <link rel="stylesheet" href="../assets/css/dark.css">
+    <link rel="stylesheet" href="../assets/css/estudiante/modal_propuesta.css">
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
@@ -68,9 +79,6 @@ unset($_SESSION['success'], $_SESSION['error']);
             <a href="chat.php">
                 <i class="bi bi-chat"></i> Chat
             </a>
-            <a href="habilidades_estudiante.php">
-                <i class="bi bi-stars"></i> Mis habilidades
-            </a>
             <a href="editar_perfil_estudiante.php">
                 <i class="bi bi-person"></i> Perfil
             </a>
@@ -81,7 +89,7 @@ unset($_SESSION['success'], $_SESSION['error']);
         <div class="content-header">
             <div>
                 <h1>Mis propuestas</h1>
-                <p>Consulta el estado de tus postulaciones enviadas</p>
+                <p>Consulta el estado y detalle de tus postulaciones enviadas</p>
             </div>
 
             <div class="user-box">
@@ -93,6 +101,9 @@ unset($_SESSION['success'], $_SESSION['error']);
         <?php if (!empty($propuestas)): ?>
             <div class="propuestas-grid">
                 <?php foreach ($propuestas as $propuesta): ?>
+                    <?php
+                    $estadoClase = strtolower(str_replace(' ', '-', $propuesta['estado'] ?? ''));
+                    ?>
                     <article class="propuesta-card">
                         <div class="propuesta-header">
                             <div>
@@ -103,10 +114,8 @@ unset($_SESSION['success'], $_SESSION['error']);
                                 </p>
                             </div>
 
-                            <?php $estadoClase = strtolower(str_replace(' ', '-', $propuesta['estado'])); ?>
-
                             <span class="estado-badge estado-<?php echo htmlspecialchars($estadoClase); ?>">
-                                <?php echo htmlspecialchars($propuesta['estado']); ?>
+                                <?php echo htmlspecialchars($propuesta['estado'] ?? 'Sin estado'); ?>
                             </span>
                         </div>
 
@@ -127,12 +136,12 @@ unset($_SESSION['success'], $_SESSION['error']);
                             </div>
 
                             <div class="meta-line">
-                                <span>Fecha límite</span>
+                                <span>Fecha de respuesta</span>
                                 <strong>
                                     <?php
-                                    echo !empty($propuesta['fecha_limite'])
-                                        ? htmlspecialchars(date('d/m/Y', strtotime($propuesta['fecha_limite'])))
-                                        : 'Sin definir';
+                                    echo !empty($propuesta['fecha_respuesta'])
+                                        ? htmlspecialchars(date('d/m/Y', strtotime($propuesta['fecha_respuesta'])))
+                                        : 'Pendiente';
                                     ?>
                                 </strong>
                             </div>
@@ -148,18 +157,98 @@ unset($_SESSION['success'], $_SESSION['error']);
                         </div>
 
                         <div class="propuesta-actions">
+                            <button
+                                type="button"
+                                class="btn btn-primary btn-ver-propuesta"
+                                data-modal="modalPropuesta_<?php echo (int) $propuesta['id_propuesta']; ?>"
+                            >
+                                Ver propuesta
+                            </button>
+
                             <a href="detalle_desafio.php?id=<?php echo (int) $propuesta['id_desafio']; ?>" class="btn btn-outline-dark">
                                 Ver desafío
                             </a>
                         </div>
                     </article>
+
+                    <div class="propuesta-modal-overlay" id="modalPropuesta_<?php echo (int) $propuesta['id_propuesta']; ?>">
+                        <div class="propuesta-modal">
+                            <div class="propuesta-modal-head">
+                                <div>
+                                    <h2>Detalle de propuesta</h2>
+                                    <p><?php echo htmlspecialchars($propuesta['titulo']); ?></p>
+                                </div>
+
+                                <button type="button" class="propuesta-modal-close">
+                                    <i class="bi bi-x-lg"></i>
+                                </button>
+                            </div>
+
+                            <div class="propuesta-modal-body">
+                                <div class="modal-section">
+                                    <span>Título de propuesta</span>
+                                    <strong>
+                                        <?php echo htmlspecialchars($propuesta['titulo_propuesta'] ?? 'Sin título registrado'); ?>
+                                    </strong>
+                                </div>
+
+                                <div class="modal-section">
+                                    <span>Descripción breve</span>
+                                    <p>
+                                        <?php echo !empty($propuesta['descripcion_breve'])
+                                            ? nl2br(htmlspecialchars($propuesta['descripcion_breve']))
+                                            : 'No se agregó descripción breve.'; ?>
+                                    </p>
+                                </div>
+
+                                <div class="modal-section">
+                                    <span>Portafolio / GitHub / Drive</span>
+
+                                    <?php if (!empty($propuesta['enlace_portafolio'])): ?>
+                                        <a href="<?php echo htmlspecialchars($propuesta['enlace_portafolio']); ?>" target="_blank" class="modal-link">
+                                            <?php echo htmlspecialchars($propuesta['enlace_portafolio']); ?>
+                                        </a>
+                                    <?php else: ?>
+                                        <p>No se agregó enlace.</p>
+                                    <?php endif; ?>
+                                </div>
+
+                                <div class="modal-section">
+                                    <span>Archivo enviado</span>
+
+                                    <?php if (!empty($propuesta['url_archivo'])): ?>
+                                        <a href="../<?php echo htmlspecialchars($propuesta['url_archivo']); ?>" target="_blank" class="modal-file">
+                                            <i class="bi bi-file-earmark-arrow-down"></i>
+                                            <?php echo htmlspecialchars($propuesta['nombre_archivo']); ?>
+                                        </a>
+                                    <?php else: ?>
+                                        <p>No hay archivo registrado.</p>
+                                    <?php endif; ?>
+                                </div>
+
+                                <div class="modal-section">
+                                    <span>Estado</span>
+                                    <strong><?php echo htmlspecialchars($propuesta['estado'] ?? 'Sin estado'); ?></strong>
+                                </div>
+
+                                <div class="modal-section">
+                                    <span>Feedback de la organización</span>
+                                    <p>
+                                        <?php echo !empty($propuesta['feedback'])
+                                            ? nl2br(htmlspecialchars($propuesta['feedback']))
+                                            : 'Aún no hay retroalimentación para esta propuesta.'; ?>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 <?php endforeach; ?>
             </div>
         <?php else: ?>
             <div class="dashboard-card empty-state">
                 <i class="bi bi-file-earmark-text"></i>
                 <h3>Aún no has enviado propuestas</h3>
-                <p>Explora los desafíos disponibles y postúlate a los que mejor coincidan con tu perfil.</p>
+                <p>Explora los desafíos disponibles y envía una propuesta a los que mejor coincidan con tu perfil.</p>
                 <a href="dashboard_estudiante.php" class="btn btn-primary">Ver desafíos</a>
             </div>
         <?php endif; ?>
@@ -180,5 +269,35 @@ unset($_SESSION['success'], $_SESSION['error']);
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../assets/js/main.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.btn-ver-propuesta').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const modalId = this.dataset.modal;
+            const modal = document.getElementById(modalId);
+
+            if (modal) {
+                modal.classList.add('active');
+            }
+        });
+    });
+
+    document.querySelectorAll('.propuesta-modal-close').forEach(btn => {
+        btn.addEventListener('click', function () {
+            this.closest('.propuesta-modal-overlay').classList.remove('active');
+        });
+    });
+
+    document.querySelectorAll('.propuesta-modal-overlay').forEach(overlay => {
+        overlay.addEventListener('click', function (e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+            }
+        });
+    });
+});
+</script>
+
 </body>
 </html>
