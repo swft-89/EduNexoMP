@@ -164,12 +164,12 @@ unset($_SESSION['success'], $_SESSION['error']);
             <a href="editar_perfil_organizacion.php">
                 <i class="bi bi-building"></i> Perfil
             </a>
-        <div class="sidebar-bottom">
-            <a href="../procesos/logout.php" class="sidebar-logout">
-                <i class="bi bi-box-arrow-right"></i>
-                <span>Cerrar sesión</span>
-            </a>
-        </div>
+            <div class="sidebar-bottom">
+                <a href="../procesos/logout.php" class="sidebar-logout">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span>Cerrar sesión</span>
+                </a>
+            </div>
         </nav>
     </aside>
 

@@ -3,18 +3,18 @@ session_start();
 require_once '../../config/conexion.php';
 
 if (!isset($_SESSION['usuario_id'])) {
-    header('Location: ../index.php');
+    header('Location: ../../index.php');
     exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../estudiante/dashboard_estudiante.php');
+    header('Location: ../../estudiante/dashboard_estudiante.php');
     exit;
 }
 
 $idEstudiante = (int) $_SESSION['usuario_id'];
 $idDesafio = isset($_POST['id_desafio']) ? (int) $_POST['id_desafio'] : 0;
-$redirect = $_POST['redirect'] ?? 'estudiante/dashboard_estudiante.php';
+$redirect = $_POST['redirect'] ?? '../estudiante/dashboard_estudiante.php';
 
 if ($idDesafio <= 0) {
     $_SESSION['error'] = 'Desafío no válido.';

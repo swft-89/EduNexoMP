@@ -304,11 +304,11 @@ unset($_SESSION['success'], $_SESSION['error']);
                     <article class="challenge-card">
                         <div class="challenge-card-header">
                             <h3><?php echo htmlspecialchars($d['titulo']); ?></h3>
-                            <form action="../procesos/toggle_favorito.php" method="POST" style="margin:0;">
+                            <form action="../procesos/estudiante/toggle_favorito.php" method="POST" style="margin:0;">
                                 <input type="hidden" name="id_desafio" value="<?php echo (int) $d['id_desafio']; ?>">
                                 <input type="hidden" name="redirect" value="dashboard_estudiante.php">
 
-                                <form action="../procesos/toggle_favorito.php" method="POST" style="margin:0;">
+                                <form action="../procesos/estudiante/toggle_favorito.php" method="POST" style="margin:0;">
                                     <input type="hidden" name="id_desafio" value="<?php echo (int) $d['id_desafio']; ?>">
                                     <input type="hidden" name="redirect" value="dashboard_estudiante.php">
 

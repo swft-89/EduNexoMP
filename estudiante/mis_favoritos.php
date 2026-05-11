@@ -146,9 +146,9 @@ unset($_SESSION['success'], $_SESSION['error']);
                                 Ver desafío
                             </a>
 
-                            <form action="../procesos/toggle_favorito.php" method="POST" style="margin:0;">
+                            <form action="../procesos/estudiante/toggle_favorito.php" method="POST" style="margin:0;">
                                 <input type="hidden" name="id_desafio" value="<?php echo (int) $favorito['id_desafio']; ?>">
-                                <input type="hidden" name="redirect" value="mis_favoritos.php">
+                                <input type="hidden" name="redirect" value="../estudiante/mis_favoritos.php">
                                 <button type="submit" class="btn btn-primary">
                                     Quitar de favoritos
                                 </button>

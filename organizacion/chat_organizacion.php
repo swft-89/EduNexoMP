@@ -138,13 +138,13 @@ unset($_SESSION['success'], $_SESSION['error']);
             <a href="dashboard_organizacion.php">
                 <i class="bi bi-house-door"></i> Inicio
             </a>
-            <a href="crear_desafio.php">
+            <a href="desafios/crear_desafio.php">
                 <i class="bi bi-plus-circle"></i> Crear desafío
             </a>
-            <a href="mis_desafios.php">
+            <a href="desafios/mis_desafios.php">
                 <i class="bi bi-briefcase"></i> Mis desafíos
             </a>
-            <a href="propuestas_recibidas.php">
+            <a href="propuestas_organizacion.php">
                 <i class="bi bi-file-earmark-text"></i> Propuestas
             </a>
             <a href="chat_organizacion.php" class="active">
@@ -153,6 +153,12 @@ unset($_SESSION['success'], $_SESSION['error']);
             <a href="editar_perfil_organizacion.php">
                 <i class="bi bi-building"></i> Perfil
             </a>
+            <div class="sidebar-bottom">
+                <a href="../procesos/logout.php" class="sidebar-logout">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span>Cerrar sesión</span>
+                </a>
+            </div>
         </nav>
     </aside>
 

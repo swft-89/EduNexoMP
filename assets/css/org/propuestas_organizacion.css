@@ -236,3 +236,226 @@
     gap: 12px;
     flex-wrap: wrap;
 }
+
+.org-modal-open {
+    overflow: hidden;
+}
+
+.org-propuesta-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none !important;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+
+.org-propuesta-modal.is-open {
+    display: flex !important;
+}
+
+.org-propuesta-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.64);
+}
+
+.org-propuesta-modal-panel {
+    position: relative;
+    width: min(1040px, calc(100vw - 32px));
+    max-height: calc(100vh - 32px);
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    box-shadow: 0 24px 80px rgba(15, 23, 42, 0.28);
+}
+
+.org-propuesta-modal-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 22px 24px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.org-modal-kicker {
+    display: block;
+    margin-bottom: 6px;
+    color: #2563eb;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.org-propuesta-modal-head h2 {
+    color: var(--text);
+    font-size: 1.35rem;
+    line-height: 1.25;
+    font-weight: 800;
+}
+
+.org-propuesta-modal-head p {
+    margin-top: 6px;
+    color: var(--text-soft);
+    line-height: 1.45;
+}
+
+.org-modal-close {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    display: grid;
+    place-items: center;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: #ffffff;
+    color: var(--text);
+    cursor: pointer;
+}
+
+.org-modal-close:hover {
+    background: #f8fafc;
+}
+
+.org-propuesta-modal-body {
+    max-height: calc(100vh - 150px);
+    overflow: auto;
+    padding: 22px 24px 26px;
+}
+
+.org-modal-summary {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.org-modal-summary div,
+.org-modal-section {
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    background: #f8fafc;
+}
+
+.org-modal-summary div {
+    padding: 14px;
+}
+
+.org-modal-summary span,
+.org-doc-info span {
+    display: block;
+    color: var(--text-soft);
+    font-size: 0.84rem;
+}
+
+.org-modal-summary strong,
+.org-modal-summary a {
+    display: block;
+    margin-top: 6px;
+    color: var(--text);
+    font-weight: 800;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+.org-modal-summary a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.org-modal-section {
+    margin-top: 16px;
+    padding: 18px;
+}
+
+.org-modal-section h3 {
+    color: var(--text);
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.org-modal-section p {
+    margin-top: 10px;
+    color: var(--text-soft);
+    line-height: 1.65;
+}
+
+.org-doc-list {
+    display: grid;
+    gap: 14px;
+    margin-top: 14px;
+}
+
+.org-doc-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    padding: 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    background: #ffffff;
+}
+
+.org-doc-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.org-doc-info i {
+    color: #2563eb;
+    font-size: 1.35rem;
+}
+
+.org-doc-info strong {
+    display: block;
+    color: var(--text);
+    overflow-wrap: anywhere;
+}
+
+.org-pdf-preview {
+    width: 100%;
+    min-height: 620px;
+    border: 1px solid #d1d5db;
+    border-radius: 14px;
+    background: #ffffff;
+}
+
+.org-modal-empty {
+    padding: 14px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 14px;
+    background: #ffffff;
+}
+
+@media (max-width: 900px) {
+    .org-propuesta-modal-panel {
+        width: calc(100vw - 20px);
+        max-height: calc(100vh - 20px);
+    }
+
+    .org-propuesta-modal-head {
+        padding: 18px;
+    }
+
+    .org-propuesta-modal-body {
+        max-height: calc(100vh - 132px);
+        padding: 18px;
+    }
+
+    .org-modal-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .org-doc-item {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .org-pdf-preview {
+        min-height: 520px;
+    }
+}
