@@ -3,7 +3,7 @@ require_once __DIR__ . '/../config/conexion.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../superadmin/usuarios_superadmin.php');
+    header('Location: ../superadmin/usuarios/usuarios_superadmin.php');
     exit;
 }
 
@@ -20,7 +20,7 @@ $estadosPermitidos = ['activo', 'suspendido'];
 
 if ($idUsuarioObjetivo <= 0 || !in_array($nuevoEstado, $estadosPermitidos, true)) {
     $_SESSION['error'] = 'Solicitud inválida.';
-    header('Location: ../usuarios_superadmin.php');
+    header('Location: ../superadmin/usuarios/usuarios_superadmin.php');
     exit;
 }
 
@@ -151,5 +151,15 @@ try {
     $_SESSION['error'] = $e->getMessage();
 }
 
-header('Location: ../superadmin/usuarios_superadmin.php');
+$redirect = $_POST['redirect'] ?? '../superadmin/usuarios/usuarios_superadmin.php';
+$redirectsPermitidos = [
+    '../superadmin/usuarios/usuarios_superadmin.php',
+    '../superadmin/usuarios/detalle_usuario_superadmin.php?id=' . $idUsuarioObjetivo
+];
+
+if (!in_array($redirect, $redirectsPermitidos, true)) {
+    $redirect = '../superadmin/usuarios/usuarios_superadmin.php';
+}
+
+header('Location: ' . $redirect);
 exit;

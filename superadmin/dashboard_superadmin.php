@@ -186,15 +186,15 @@ unset($_SESSION['success'], $_SESSION['error']);
         </div>
 
         <?php if ($success): ?>
-            <div class="superadmin-alert success">
-                <?php echo htmlspecialchars($success); ?>
-            </div>
+            <script>
+                window.edunexoSuccess = <?php echo json_encode($success); ?>;
+            </script>
         <?php endif; ?>
 
         <?php if ($error): ?>
-            <div class="superadmin-alert error">
-                <?php echo htmlspecialchars($error); ?>
-            </div>
+            <script>
+                window.edunexoError = <?php echo json_encode($error); ?>;
+            </script>
         <?php endif; ?>
 
         <div class="superadmin-summary-grid">
@@ -369,15 +369,19 @@ unset($_SESSION['success'], $_SESSION['error']);
                             </div>
 
                             <div class="verification-actions">
-                                <button type="button" class="btn superadmin-btn-light">Ver detalles</button>
+                                <a href="usuarios/detalle_usuario_superadmin.php?id=<?php echo (int) $item['id_admin']; ?>" class="btn superadmin-btn-light">
+                                    Ver detalles
+                                </a>
 
-                                <form action="procesos/aprobar_admin.php" method="POST">
+                                <form action="../procesos/aprobar_admin.php" method="POST">
                                     <input type="hidden" name="id_admin" value="<?php echo (int) $item['id_admin']; ?>">
+                                    <input type="hidden" name="redirect" value="../superadmin/dashboard_superadmin.php">
                                     <button type="submit" class="btn btn-primary btn-verify">Verificar</button>
                                 </form>
 
-                                <form action="procesos/rechazar_admin.php" method="POST">
+                                <form action="../procesos/rechazar_admin.php" method="POST">
                                     <input type="hidden" name="id_admin" value="<?php echo (int) $item['id_admin']; ?>">
+                                    <input type="hidden" name="redirect" value="../superadmin/dashboard_superadmin.php">
                                     <button type="submit" class="btn btn-reject">Rechazar</button>
                                 </form>
                             </div>
@@ -477,6 +481,7 @@ unset($_SESSION['success'], $_SESSION['error']);
     </section>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../assets/js/main.js"></script>
 </body>
 </html>

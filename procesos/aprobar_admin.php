@@ -14,10 +14,19 @@ if (!isset($_SESSION['usuario_id']) || ($_SESSION['rol'] ?? '') !== 'administrad
 
 $idAdminObjetivo = (int) ($_POST['id_admin'] ?? 0);
 $idSuperadmin = (int) $_SESSION['usuario_id'];
+$redirect = $_POST['redirect'] ?? '../superadmin/dashboard_superadmin.php';
+$redirectsPermitidos = [
+    '../superadmin/dashboard_superadmin.php',
+    '../superadmin/usuarios/solicitudes_admin.php'
+];
+
+if (!in_array($redirect, $redirectsPermitidos, true)) {
+    $redirect = '../superadmin/dashboard_superadmin.php';
+}
 
 if ($idAdminObjetivo <= 0) {
     $_SESSION['error'] = "Solicitud inválida.";
-    header('Location: ../superadmin/dashboard_superadmin.php');
+    header('Location: ' . $redirect);
     exit;
 }
 
@@ -115,5 +124,5 @@ try {
     $_SESSION['error'] = $e->getMessage();
 }
 
-header('Location: ../superadmin/dashboard_superadmin.php');
+header('Location: ' . $redirect);
 exit;

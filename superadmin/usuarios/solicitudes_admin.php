@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '../../../includes/session_superadmin.php';
-require_once __DIR__ . '../../../config/conexion.php';
+require_once __DIR__ . '/../../includes/session_superadmin.php';
+require_once __DIR__ . '/../../config/conexion.php';
 
 $stmtAdmin = $pdo->prepare("
     SELECT nombre
@@ -93,11 +93,15 @@ unset($_SESSION['success'], $_SESSION['error']);
         </div>
 
         <?php if ($success): ?>
-            <div class="superadmin-alert success"><?php echo htmlspecialchars($success); ?></div>
+            <script>
+                window.edunexoSuccess = <?php echo json_encode($success); ?>;
+            </script>
         <?php endif; ?>
 
         <?php if ($error): ?>
-            <div class="superadmin-alert error"><?php echo htmlspecialchars($error); ?></div>
+            <script>
+                window.edunexoError = <?php echo json_encode($error); ?>;
+            </script>
         <?php endif; ?>
 
         <section class="superadmin-panel-card full-card">
@@ -154,15 +158,19 @@ unset($_SESSION['success'], $_SESSION['error']);
                                 <?php if (($item['estado_solicitud'] ?? '') === 'pendiente'): ?>
                                     <form action="../../procesos/aprobar_admin.php" method="POST">
                                         <input type="hidden" name="id_admin" value="<?php echo (int) $item['id_admin']; ?>">
+                                        <input type="hidden" name="redirect" value="../superadmin/usuarios/solicitudes_admin.php">
                                         <button type="submit" class="btn btn-primary btn-verify">Verificar</button>
                                     </form>
 
                                     <form action="../../procesos/rechazar_admin.php" method="POST">
                                         <input type="hidden" name="id_admin" value="<?php echo (int) $item['id_admin']; ?>">
+                                        <input type="hidden" name="redirect" value="../superadmin/usuarios/solicitudes_admin.php">
                                         <button type="submit" class="btn btn-reject">Rechazar</button>
                                     </form>
                                 <?php else: ?>
-                                    <button type="button" class="btn superadmin-btn-light btn-sm">Ver detalles</button>
+                                    <a href="detalle_usuario_superadmin.php?id=<?php echo (int) $item['id_admin']; ?>" class="btn superadmin-btn-light btn-sm">
+                                        Ver detalles
+                                    </a>
                                 <?php endif; ?>
                             </div>
                         </article>
@@ -174,6 +182,7 @@ unset($_SESSION['success'], $_SESSION['error']);
         </section>
     </section>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../../assets/js/main.js"></script>
 </body>
 </html>

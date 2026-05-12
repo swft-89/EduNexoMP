@@ -1,6 +1,6 @@
 <?php
-require_once '../../../includes/session_superadmin.php';
-require_once '../../../config/conexion.php';
+require_once __DIR__ . '/../../includes/session_superadmin.php';
+require_once __DIR__ . '/../../config/conexion.php';
 
 $idUsuario = (int) ($_GET['id'] ?? 0);
 
@@ -172,11 +172,15 @@ $esSuperadminObjetivo = (($usuario['tipo_admin'] ?? '') === 'superadmin');
         </div>
 
         <?php if ($success): ?>
-            <div class="superadmin-alert success"><?php echo htmlspecialchars($success); ?></div>
+            <script>
+                window.edunexoSuccess = <?php echo json_encode($success); ?>;
+            </script>
         <?php endif; ?>
 
         <?php if ($error): ?>
-            <div class="superadmin-alert error"><?php echo htmlspecialchars($error); ?></div>
+            <script>
+                window.edunexoError = <?php echo json_encode($error); ?>;
+            </script>
         <?php endif; ?>
 
         <section class="superadmin-panel-card full-card">
@@ -257,12 +261,14 @@ $esSuperadminObjetivo = (($usuario['tipo_admin'] ?? '') === 'superadmin');
                             <form action="../../procesos/cambiar_estado_usuario.php" method="POST">
                                 <input type="hidden" name="id_usuario" value="<?php echo (int) $usuario['id_usuario']; ?>">
                                 <input type="hidden" name="nuevo_estado" value="activo">
+                                <input type="hidden" name="redirect" value="../superadmin/usuarios/detalle_usuario_superadmin.php?id=<?php echo (int) $usuario['id_usuario']; ?>">
                                 <button type="submit" class="btn btn-primary">Reactivar usuario</button>
                             </form>
                         <?php else: ?>
                             <form action="../../procesos/cambiar_estado_usuario.php" method="POST">
                                 <input type="hidden" name="id_usuario" value="<?php echo (int) $usuario['id_usuario']; ?>">
                                 <input type="hidden" name="nuevo_estado" value="suspendido">
+                                <input type="hidden" name="redirect" value="../superadmin/usuarios/detalle_usuario_superadmin.php?id=<?php echo (int) $usuario['id_usuario']; ?>">
                                 <button type="submit" class="btn btn-reject">Suspender usuario</button>
                             </form>
                         <?php endif; ?>
@@ -352,6 +358,7 @@ $esSuperadminObjetivo = (($usuario['tipo_admin'] ?? '') === 'superadmin');
         </section>
     </section>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../../assets/js/main.js"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '../../../includes/session_superadmin.php';
-require_once __DIR__ . '../../../config/conexion.php';
+require_once __DIR__ . '/../../includes/session_superadmin.php';
+require_once __DIR__ . '/../../config/conexion.php';
 
 $stmtAdmin = $pdo->prepare("
     SELECT nombre, apellido_paterno, apellido_materno
@@ -140,11 +140,15 @@ unset($_SESSION['success'], $_SESSION['error']);
         </div>
 
         <?php if ($success): ?>
-            <div class="superadmin-alert success"><?php echo htmlspecialchars($success); ?></div>
+            <script>
+                window.edunexoSuccess = <?php echo json_encode($success); ?>;
+            </script>
         <?php endif; ?>
 
         <?php if ($error): ?>
-            <div class="superadmin-alert error"><?php echo htmlspecialchars($error); ?></div>
+            <script>
+                window.edunexoError = <?php echo json_encode($error); ?>;
+            </script>
         <?php endif; ?>
 
         <section class="superadmin-panel-card full-card">
@@ -262,12 +266,14 @@ unset($_SESSION['success'], $_SESSION['error']);
                                                     <form action="../../procesos/cambiar_estado_usuario.php" method="POST">
                                                         <input type="hidden" name="id_usuario" value="<?php echo (int) $usuario['id_usuario']; ?>">
                                                         <input type="hidden" name="nuevo_estado" value="activo">
+                                                        <input type="hidden" name="redirect" value="../superadmin/usuarios/usuarios_superadmin.php">
                                                         <button type="submit" class="btn btn-primary btn-sm">Reactivar</button>
                                                     </form>
                                                 <?php else: ?>
                                                     <form action="../../procesos/cambiar_estado_usuario.php" method="POST">
                                                         <input type="hidden" name="id_usuario" value="<?php echo (int) $usuario['id_usuario']; ?>">
                                                         <input type="hidden" name="nuevo_estado" value="suspendido">
+                                                        <input type="hidden" name="redirect" value="../superadmin/usuarios/usuarios_superadmin.php">
                                                         <button type="submit" class="btn btn-reject btn-sm">Suspender</button>
                                                     </form>
                                                 <?php endif; ?>
@@ -289,6 +295,7 @@ unset($_SESSION['success'], $_SESSION['error']);
         </section>
     </section>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../../assets/js/main.js"></script>
 </body>
 </html>
