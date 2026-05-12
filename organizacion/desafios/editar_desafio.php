@@ -117,7 +117,7 @@ $valores = [
 <div class="app-layout org-layout">
     <aside class="sidebar org-sidebar">
         <div class="sidebar-top">
-            <div class="logo-mini">EN</div>
+            <div class="logo-mini"><i class="bi bi-mortarboard"></i></div>
             <span>EduNexo MP</span>
         </div>
 

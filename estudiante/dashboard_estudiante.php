@@ -216,7 +216,7 @@ unset($_SESSION['success'], $_SESSION['error']);
     <!-- Sidebar -->
     <aside class="sidebar">
         <div class="sidebar-top">
-            <div class="logo-mini">L</div> <!--Logo pendiente-->
+            <div class="logo-mini"><i class="bi bi-mortarboard"></i></div>
             <span>EduNexo MP</span>
         </div>
 
