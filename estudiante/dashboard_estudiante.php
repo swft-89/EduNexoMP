@@ -198,7 +198,6 @@ $success = $_SESSION['success'] ?? null;
 $error = $_SESSION['error'] ?? null;
 unset($_SESSION['success'], $_SESSION['error']);
 ?>
-<?php include '../includes/splash.php'; ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -303,14 +302,9 @@ unset($_SESSION['success'], $_SESSION['error']);
                                 <input type="hidden" name="id_desafio" value="<?php echo (int) $d['id_desafio']; ?>">
                                 <input type="hidden" name="redirect" value="dashboard_estudiante.php">
 
-                                <form action="../procesos/estudiante/toggle_favorito.php" method="POST" style="margin:0;">
-                                    <input type="hidden" name="id_desafio" value="<?php echo (int) $d['id_desafio']; ?>">
-                                    <input type="hidden" name="redirect" value="dashboard_estudiante.php">
-
-                                    <button class="favorite-btn <?php echo !empty($d['es_favorito']) ? 'active' : ''; ?>" type="submit">
-                                        <i class="bi <?php echo !empty($d['es_favorito']) ? 'bi-heart-fill' : 'bi-heart'; ?>"></i>
-                                    </button>
-                                </form>
+                                <button class="favorite-btn <?php echo !empty($d['es_favorito']) ? 'active' : ''; ?>" type="submit">
+                                    <i class="bi <?php echo !empty($d['es_favorito']) ? 'bi-heart-fill' : 'bi-heart'; ?>"></i>
+                                </button>
                             </form>
                         </div>
 

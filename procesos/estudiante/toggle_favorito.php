@@ -14,11 +14,17 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $idEstudiante = (int) $_SESSION['usuario_id'];
 $idDesafio = isset($_POST['id_desafio']) ? (int) $_POST['id_desafio'] : 0;
-$redirect = $_POST['redirect'] ?? '../estudiante/dashboard_estudiante.php';
+$redirect = $_POST['redirect'] ?? 'dashboard_estudiante.php';
+$redirectsPermitidos = [
+    'dashboard_estudiante.php' => '../../estudiante/dashboard_estudiante.php',
+    'mis_favoritos.php' => '../../estudiante/mis_favoritos.php',
+    '../estudiante/mis_favoritos.php' => '../../estudiante/mis_favoritos.php'
+];
+$redirectUrl = $redirectsPermitidos[$redirect] ?? '../../estudiante/dashboard_estudiante.php';
 
 if ($idDesafio <= 0) {
     $_SESSION['error'] = 'Desafío no válido.';
-    header('Location: ../' . $redirect);
+    header('Location: ' . $redirectUrl);
     exit;
 }
 
@@ -65,5 +71,5 @@ try {
     $_SESSION['error'] = 'No se pudo actualizar favoritos.';
 }
 
-header('Location: ../' . $redirect);
+header('Location: ' . $redirectUrl);
 exit;
