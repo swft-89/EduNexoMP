@@ -83,6 +83,66 @@
     flex-wrap: wrap;
 }
 
+.btn-en {
+    min-height: 46px;
+    padding: 0 18px;
+    border-radius: 14px;
+    border: 1px solid transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    text-decoration: none;
+    font-size: 0.94rem;
+    font-weight: 800;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-en i {
+    font-size: 1.05rem;
+    line-height: 1;
+}
+
+.btn-en:hover,
+.btn-en:focus-visible {
+    transform: translateY(-2px);
+    outline: none;
+}
+
+.btn-en-primary {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: #ffffff;
+    box-shadow: 0 12px 24px rgba(39, 72, 166, 0.22);
+}
+
+.btn-en-primary:hover,
+.btn-en-primary:focus-visible {
+    color: #ffffff;
+    box-shadow: 0 16px 30px rgba(39, 72, 166, 0.30);
+}
+
+.btn-en-secondary {
+    background: #ffffff;
+    color: var(--primary);
+    border-color: rgba(39, 72, 166, 0.20);
+    box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
+}
+
+.btn-en-secondary:hover,
+.btn-en-secondary:focus-visible {
+    background: #eef4ff;
+    border-color: rgba(39, 72, 166, 0.34);
+    color: var(--primary);
+    box-shadow: 0 14px 26px rgba(39, 72, 166, 0.12);
+}
+
+.btn-en:active {
+    transform: translateY(0);
+}
+
 /* ================= RESUMEN / STATS ================= */
 
 .skills-summary,
@@ -526,7 +586,17 @@
 
     .skills-footer .btn,
     .skills-hero-actions .btn,
-    .skills-actions .btn {
+    .skills-actions .btn,
+    .skills-footer .btn-en,
+    .skills-hero-actions .btn-en,
+    .skills-actions .btn-en,
+    .skills-main-head .btn-en,
+    .empty-skills .btn-en {
         width: 100%;
+    }
+
+    .skills-main-head .btn-en,
+    .empty-skills .btn-en {
+        min-height: 50px;
     }
 }

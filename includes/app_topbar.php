@@ -3,6 +3,7 @@ require_once __DIR__ . '/profile_photo.php';
 $topbarUsuarioId = $_SESSION['usuario_id'] ?? null;
 $topbarRol = $_SESSION['rol'] ?? '';
 $topbarNombre = 'Usuario';
+$topbarCorreo = $_SESSION['correo'] ?? '';
 $topbarFoto = null;
 $topbarNotificaciones = [];
 $topbarNotificacionesNoLeidas = 0;
@@ -98,6 +99,17 @@ $topbarNombre = trim($topbarNombre) !== '' ? trim($topbarNombre) : 'Usuario';
 $topbarInicial = strtoupper(substr($topbarNombre, 0, 1));
 $topbarFotoSrc = edunexo_asset_url($topbarFoto);
 $topbarNotificacionUrl = edunexo_topbar_asset('procesos/ver_notificacion.php');
+$topbarLogoutUrl = edunexo_topbar_asset('procesos/logout.php');
+$topbarRolLabel = [
+    'estudiante' => 'Estudiante',
+    'organizacion' => 'Organizacion',
+    'administrador' => 'Administrador',
+][$topbarRol] ?? 'Usuario';
+$topbarPerfilPath = [
+    'estudiante' => 'estudiante/editar_perfil_estudiante.php',
+    'organizacion' => 'organizacion/editar_perfil_organizacion.php',
+][$topbarRol] ?? '';
+$topbarPerfilUrl = $topbarPerfilPath !== '' ? edunexo_topbar_asset($topbarPerfilPath) : '';
 ?>
 <style>
     .app-topbar {
@@ -269,6 +281,7 @@ $topbarNotificacionUrl = edunexo_topbar_asset('procesos/ver_notificacion.php');
         width: 48px;
         height: 48px;
         border-radius: 50%;
+        border: none;
         background: var(--primary);
         color: #ffffff;
         display: flex;
@@ -277,6 +290,15 @@ $topbarNotificacionUrl = edunexo_topbar_asset('procesos/ver_notificacion.php');
         font-weight: 800;
         font-size: 1.25rem;
         overflow: hidden;
+        cursor: pointer;
+        transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .app-avatar:hover,
+    .app-avatar:focus-visible {
+        box-shadow: 0 0 0 4px rgba(39, 72, 166, 0.14);
+        outline: none;
+        transform: translateY(-1px);
     }
 
     .app-avatar img {
@@ -284,6 +306,119 @@ $topbarNotificacionUrl = edunexo_topbar_asset('procesos/ver_notificacion.php');
         height: 100%;
         object-fit: cover;
         display: block;
+    }
+
+    .app-user-menu {
+        position: absolute;
+        top: calc(100% + 14px);
+        right: 0;
+        width: min(310px, calc(100vw - 32px));
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 18px;
+        box-shadow: 0 24px 60px rgba(15, 23, 42, 0.16);
+        overflow: hidden;
+        z-index: 2600;
+        display: none;
+    }
+
+    .app-user-menu.is-open {
+        display: block;
+    }
+
+    .app-user-card {
+        padding: 18px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .app-user-card .app-avatar {
+        width: 54px;
+        height: 54px;
+        flex: 0 0 54px;
+        cursor: default;
+        transform: none;
+    }
+
+    .app-user-card .app-avatar:hover {
+        box-shadow: none;
+    }
+
+    .app-user-info {
+        min-width: 0;
+    }
+
+    .app-user-info strong,
+    .app-user-info span,
+    .app-user-info small {
+        display: block;
+    }
+
+    .app-user-info strong {
+        color: var(--text);
+        font-size: 0.98rem;
+        line-height: 1.25;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .app-user-info span {
+        margin-top: 4px;
+        color: var(--text-soft);
+        font-size: 0.84rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .app-user-info small {
+        margin-top: 8px;
+        width: fit-content;
+        padding: 4px 9px;
+        border-radius: 999px;
+        background: #eef2ff;
+        color: var(--primary);
+        font-size: 0.72rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0;
+    }
+
+    .app-user-actions {
+        padding: 12px;
+        display: grid;
+        gap: 8px;
+    }
+
+    .app-user-action {
+        min-height: 42px;
+        padding: 0 12px;
+        border-radius: 10px;
+        color: var(--text);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.92rem;
+        font-weight: 700;
+        transition: background 0.18s ease, color 0.18s ease;
+    }
+
+    .app-user-action:hover {
+        background: #f1f5f9;
+        color: var(--primary);
+    }
+
+    .app-user-action.logout {
+        color: #dc2626;
+    }
+
+    .app-user-action.logout:hover {
+        background: #fef2f2;
+        color: #b91c1c;
     }
 
     :root[data-theme="dark"] .app-topbar {
@@ -314,14 +449,36 @@ $topbarNotificacionUrl = edunexo_topbar_asset('procesos/ver_notificacion.php');
         box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
     }
 
+    :root[data-theme="dark"] .app-user-menu {
+        background: #1e293b;
+        border-color: #334155;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+    }
+
     :root[data-theme="dark"] .app-notification-head,
-    :root[data-theme="dark"] .app-notification-item {
+    :root[data-theme="dark"] .app-notification-item,
+    :root[data-theme="dark"] .app-user-card {
         border-color: #334155;
     }
 
     :root[data-theme="dark"] .app-notification-item:hover,
     :root[data-theme="dark"] .app-notification-item.unread {
         background: #172033;
+    }
+
+    :root[data-theme="dark"] .app-user-info small {
+        background: #172033;
+        color: var(--primary-light);
+    }
+
+    :root[data-theme="dark"] .app-user-action:hover {
+        background: #172033;
+        color: var(--primary-light);
+    }
+
+    :root[data-theme="dark"] .app-user-action.logout:hover {
+        background: rgba(220, 38, 38, 0.14);
+        color: #fca5a5;
     }
 
     @media (max-width: 640px) {
@@ -386,34 +543,87 @@ $topbarNotificacionUrl = edunexo_topbar_asset('procesos/ver_notificacion.php');
             </div>
         </div>
 
-        <div class="app-avatar" title="<?php echo htmlspecialchars($topbarNombre); ?>">
+        <button class="app-avatar" id="appUserToggle" type="button" title="<?php echo htmlspecialchars($topbarNombre); ?>" aria-label="Abrir menu de usuario" aria-expanded="false">
             <?php if (!empty($topbarFotoSrc)): ?>
                 <img src="<?php echo htmlspecialchars($topbarFotoSrc); ?>" alt="Foto de perfil">
             <?php else: ?>
                 <?php echo htmlspecialchars($topbarInicial); ?>
             <?php endif; ?>
+        </button>
+
+        <div class="app-user-menu" id="appUserMenu">
+            <div class="app-user-card">
+                <div class="app-avatar" aria-hidden="true">
+                    <?php if (!empty($topbarFotoSrc)): ?>
+                        <img src="<?php echo htmlspecialchars($topbarFotoSrc); ?>" alt="">
+                    <?php else: ?>
+                        <?php echo htmlspecialchars($topbarInicial); ?>
+                    <?php endif; ?>
+                </div>
+
+                <div class="app-user-info">
+                    <strong><?php echo htmlspecialchars($topbarNombre); ?></strong>
+                    <span><?php echo htmlspecialchars($topbarCorreo !== '' ? $topbarCorreo : 'Sin correo registrado'); ?></span>
+                    <small><?php echo htmlspecialchars($topbarRolLabel); ?></small>
+                </div>
+            </div>
+
+            <div class="app-user-actions">
+                <?php if ($topbarPerfilUrl !== ''): ?>
+                    <a class="app-user-action" href="<?php echo htmlspecialchars($topbarPerfilUrl); ?>">
+                        <i class="bi bi-pencil-square"></i>
+                        Editar perfil
+                    </a>
+                <?php endif; ?>
+
+                <a class="app-user-action logout" href="<?php echo htmlspecialchars($topbarLogoutUrl); ?>">
+                    <i class="bi bi-box-arrow-right"></i>
+                    Cerrar sesion
+                </a>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
 document.addEventListener('click', function (event) {
-    const toggle = document.getElementById('appNotificationToggle');
-    const menu = document.getElementById('appNotificationMenu');
+    const notificationToggle = document.getElementById('appNotificationToggle');
+    const notificationMenu = document.getElementById('appNotificationMenu');
+    const userToggle = document.getElementById('appUserToggle');
+    const userMenu = document.getElementById('appUserMenu');
 
-    if (!toggle || !menu) {
+    if (notificationToggle && notificationMenu && event.target.closest('#appNotificationToggle')) {
+        notificationMenu.classList.toggle('is-open');
+        notificationToggle.setAttribute('aria-expanded', notificationMenu.classList.contains('is-open') ? 'true' : 'false');
+
+        if (userMenu && userToggle) {
+            userMenu.classList.remove('is-open');
+            userToggle.setAttribute('aria-expanded', 'false');
+        }
+
         return;
     }
 
-    if (event.target.closest('#appNotificationToggle')) {
-        menu.classList.toggle('is-open');
-        toggle.setAttribute('aria-expanded', menu.classList.contains('is-open') ? 'true' : 'false');
+    if (userToggle && userMenu && event.target.closest('#appUserToggle')) {
+        userMenu.classList.toggle('is-open');
+        userToggle.setAttribute('aria-expanded', userMenu.classList.contains('is-open') ? 'true' : 'false');
+
+        if (notificationMenu && notificationToggle) {
+            notificationMenu.classList.remove('is-open');
+            notificationToggle.setAttribute('aria-expanded', 'false');
+        }
+
         return;
     }
 
-    if (!event.target.closest('#appNotificationMenu')) {
-        menu.classList.remove('is-open');
-        toggle.setAttribute('aria-expanded', 'false');
+    if (notificationToggle && notificationMenu && !event.target.closest('#appNotificationMenu')) {
+        notificationMenu.classList.remove('is-open');
+        notificationToggle.setAttribute('aria-expanded', 'false');
+    }
+
+    if (userToggle && userMenu && !event.target.closest('#appUserMenu')) {
+        userMenu.classList.remove('is-open');
+        userToggle.setAttribute('aria-expanded', 'false');
     }
 });
 </script>

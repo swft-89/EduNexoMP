@@ -134,7 +134,7 @@ unset($_SESSION['success'], $_SESSION['error'], $_SESSION['old']);
 
     <aside class="sidebar">
         <div class="sidebar-top">
-            <div class="logo-mini">EN</div>
+            <div class="logo-mini"><i class="bi bi-mortarboard"></i></div>
             <span>EduNexo MP</span>
         </div>
 
