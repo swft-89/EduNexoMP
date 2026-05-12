@@ -33,15 +33,8 @@
 }
 
 .superadmin-icon-btn::after {
-    content: "";
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    width: 10px;
-    height: 10px;
-    background: #10b981;
-    border: 2px solid #ffffff;
-    border-radius: 50%;
+    content: none !important;
+    display: none !important;
 }
 
 .superadmin-avatar {

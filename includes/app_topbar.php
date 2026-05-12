@@ -147,23 +147,8 @@ $topbarNotificacionUrl = edunexo_topbar_asset('procesos/ver_notificacion.php');
     }
 
     .app-notification-btn::after {
-        content: "";
-        position: absolute;
-        top: 8px;
-        right: 8px;
-        width: 10px;
-        height: 10px;
-        background: #10b981;
-        border: 2px solid #ffffff;
-        border-radius: 50%;
-    }
-
-    .app-notification-btn.has-unread::after {
-        display: block;
-    }
-
-    .app-notification-btn:not(.has-unread)::after {
-        display: none;
+        content: none !important;
+        display: none !important;
     }
 
     .app-notification-count {
@@ -265,6 +250,16 @@ $topbarNotificacionUrl = edunexo_topbar_asset('procesos/ver_notificacion.php');
         font-size: 0.92rem;
     }
 
+    .sidebar-notification-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #10b981;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.18);
+        margin-left: auto;
+        flex: 0 0 auto;
+    }
+
     .app-avatar {
         width: 48px;
         height: 48px;
@@ -298,10 +293,6 @@ $topbarNotificacionUrl = edunexo_topbar_asset('procesos/ver_notificacion.php');
     :root[data-theme="dark"] .app-icon-btn:hover {
         background: #1e293b;
         color: var(--primary-light);
-    }
-
-    :root[data-theme="dark"] .app-notification-btn::after {
-        border-color: #111827;
     }
 
     :root[data-theme="dark"] .app-notification-count {
@@ -414,6 +405,18 @@ document.addEventListener('click', function (event) {
     if (!event.target.closest('#appNotificationMenu')) {
         menu.classList.remove('is-open');
         toggle.setAttribute('aria-expanded', 'false');
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const unreadNotifications = <?php echo (int) $topbarNotificacionesNoLeidas; ?>;
+    const sidebarTop = document.querySelector('.sidebar-top');
+
+    if (unreadNotifications > 0 && sidebarTop && !sidebarTop.querySelector('.sidebar-notification-dot')) {
+        const dot = document.createElement('span');
+        dot.className = 'sidebar-notification-dot';
+        dot.title = unreadNotifications + ' notificaciones nuevas';
+        sidebarTop.appendChild(dot);
     }
 });
 </script>

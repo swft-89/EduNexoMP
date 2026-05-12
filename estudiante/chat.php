@@ -167,7 +167,7 @@ unset($_SESSION['success'], $_SESSION['error']);
                             $activa = ($idConversacion === (int)$conv['id_conversacion']);
                             ?>
                             <a href="chat.php?id=<?php echo (int)$conv['id_conversacion']; ?>"
-                                    class="chat-list-item"
+                                    class="chat-list-item <?php echo $activa ? 'active' : ''; ?>"
                                     data-nombre="<?php echo strtolower($conv['nombre_empresa']); ?>"
                                     data-titulo="<?php echo strtolower($conv['titulo']); ?>">
                                 <div class="chat-avatar" style="width:52px;height:52px;min-width:52px;max-width:52px;min-height:52px;max-height:52px;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;flex:0 0 52px;">

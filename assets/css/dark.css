@@ -252,5 +252,378 @@
 :root[data-theme="dark"] .app-notification-btn::after,
 :root[data-theme="dark"] .org-icon-btn::after,
 :root[data-theme="dark"] .superadmin-icon-btn::after {
+    content: none !important;
+    display: none !important;
+}
+
+:root[data-theme="dark"] .app-notification-count {
     border-color: #111827;
+}
+
+:root[data-theme="dark"] .app-notification-menu {
+    background: #1e293b;
+    border-color: #334155;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+:root[data-theme="dark"] .app-notification-head,
+:root[data-theme="dark"] .app-notification-item {
+    border-color: #334155;
+}
+
+:root[data-theme="dark"] .app-notification-head strong,
+:root[data-theme="dark"] .app-notification-item p {
+    color: var(--text);
+}
+
+:root[data-theme="dark"] .app-notification-head span,
+:root[data-theme="dark"] .app-notification-item small,
+:root[data-theme="dark"] .app-notification-empty {
+    color: var(--text-soft);
+}
+
+:root[data-theme="dark"] .app-notification-item:hover,
+:root[data-theme="dark"] .app-notification-item.unread {
+    background: #172033;
+}
+
+:root[data-theme="dark"] .chat-shell,
+:root[data-theme="dark"] .chat-list-panel,
+:root[data-theme="dark"] .chat-main-header,
+:root[data-theme="dark"] .chat-send-form {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+}
+
+:root[data-theme="dark"] .chat-main-panel {
+    background: #0f172a !important;
+}
+
+:root[data-theme="dark"] .chat-page,
+:root[data-theme="dark"] .app-content,
+:root[data-theme="dark"] .org-content,
+:root[data-theme="dark"] .superadmin-content {
+    background: #0f172a !important;
+}
+
+:root[data-theme="dark"] .chat-list-item,
+:root[data-theme="dark"] .chat-list-header,
+:root[data-theme="dark"] .chat-list-panel,
+:root[data-theme="dark"] .chat-send-form,
+:root[data-theme="dark"] .chat-main-header {
+    border-color: #334155 !important;
+}
+
+:root[data-theme="dark"] .chat-list-item:hover,
+:root[data-theme="dark"] .chat-list-item.active {
+    background: #172033 !important;
+}
+
+:root[data-theme="dark"] .chat-search-box,
+:root[data-theme="dark"] .chat-bubble,
+:root[data-theme="dark"] .chat-placeholder-icon {
+    background: #111827 !important;
+}
+
+:root[data-theme="dark"] .chat-search-box input,
+:root[data-theme="dark"] .chat-send-form input {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+    color: var(--text) !important;
+}
+
+:root[data-theme="dark"] .chat-item-top strong,
+:root[data-theme="dark"] .chat-main-header h2,
+:root[data-theme="dark"] .chat-placeholder h2,
+:root[data-theme="dark"] .chat-bubble p,
+:root[data-theme="dark"] .chat-empty-state-inside h3 {
+    color: var(--text) !important;
+}
+
+:root[data-theme="dark"] .chat-item-top span,
+:root[data-theme="dark"] .chat-preview,
+:root[data-theme="dark"] .chat-main-header p,
+:root[data-theme="dark"] .chat-placeholder p,
+:root[data-theme="dark"] .chat-empty-list,
+:root[data-theme="dark"] .chat-empty-state-inside,
+:root[data-theme="dark"] .chat-search-box i {
+    color: var(--text-soft) !important;
+}
+
+:root[data-theme="dark"] .chat-bubble-row.mine .chat-bubble {
+    background: var(--primary) !important;
+    color: #ffffff !important;
+}
+
+:root[data-theme="dark"] .chat-bubble-row.mine .chat-bubble p,
+:root[data-theme="dark"] .chat-bubble-row.mine .chat-bubble span {
+    color: #ffffff !important;
+}
+
+:root[data-theme="dark"] .form-group input,
+:root[data-theme="dark"] .form-group select,
+:root[data-theme="dark"] .form-group textarea,
+:root[data-theme="dark"] .auth-group input,
+:root[data-theme="dark"] .auth-group select,
+:root[data-theme="dark"] .profile-section input,
+:root[data-theme="dark"] .profile-section select,
+:root[data-theme="dark"] .profile-section textarea,
+:root[data-theme="dark"] .org-profile-section input,
+:root[data-theme="dark"] .org-profile-section select,
+:root[data-theme="dark"] .org-profile-section textarea {
+    background: #0f172a;
+    border-color: #334155;
+    color: var(--text);
+}
+
+:root[data-theme="dark"] .profile-hero,
+:root[data-theme="dark"] .profile-card,
+:root[data-theme="dark"] .profile-section,
+:root[data-theme="dark"] .org-profile-hero,
+:root[data-theme="dark"] .org-profile-card,
+:root[data-theme="dark"] .org-profile-section,
+:root[data-theme="dark"] .org-profile-preview,
+:root[data-theme="dark"] .superadmin-card,
+:root[data-theme="dark"] .dashboard-card,
+:root[data-theme="dark"] .report-mini-card,
+:root[data-theme="dark"] .detail-item,
+:root[data-theme="dark"] .text-block-card,
+:root[data-theme="dark"] .skill-chip,
+:root[data-theme="dark"] .inner-card,
+:root[data-theme="dark"] .custom-modal,
+:root[data-theme="dark"] .propuesta-modal,
+:root[data-theme="dark"] .propuesta-modal-head,
+:root[data-theme="dark"] .modal-section,
+:root[data-theme="dark"] .org-propuesta-card,
+:root[data-theme="dark"] .org-propuesta-modal-panel,
+:root[data-theme="dark"] .org-modal-summary div,
+:root[data-theme="dark"] .org-modal-section,
+:root[data-theme="dark"] .org-doc-item,
+:root[data-theme="dark"] .org-modal-empty,
+:root[data-theme="dark"] .org-feedback-box {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+:root[data-theme="dark"] .superadmin-summary-card,
+:root[data-theme="dark"] .superadmin-panel-card,
+:root[data-theme="dark"] .upcoming-card,
+:root[data-theme="dark"] .verification-item,
+:root[data-theme="dark"] .bottom-action-btn,
+:root[data-theme="dark"] .org-summary-card,
+:root[data-theme="dark"] .org-challenge-card,
+:root[data-theme="dark"] .org-empty-card {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+}
+
+:root[data-theme="dark"] .distribution-bar,
+:root[data-theme="dark"] .role-badge.soft,
+:root[data-theme="dark"] .mini-role,
+:root[data-theme="dark"] .action-disabled {
+    background: #0f172a !important;
+    color: var(--text-soft) !important;
+}
+
+:root[data-theme="dark"] .crear-desafio-card,
+:root[data-theme="dark"] .habilidad-card-item,
+:root[data-theme="dark"] .habilidades-featured,
+:root[data-theme="dark"] .habilidad-featured-card,
+:root[data-theme="dark"] .habilidad-mini-card,
+:root[data-theme="dark"] .habilidades-search-box,
+:root[data-theme="dark"] .skills-modal,
+:root[data-theme="dark"] .skills-modal-head,
+:root[data-theme="dark"] .skills-modal-actions,
+:root[data-theme="dark"] .skill-modal-item,
+:root[data-theme="dark"] .skills-hero,
+:root[data-theme="dark"] .skills-edit-hero,
+:root[data-theme="dark"] .skills-main-card,
+:root[data-theme="dark"] .skills-edit-card,
+:root[data-theme="dark"] .summary-card,
+:root[data-theme="dark"] .stat-card,
+:root[data-theme="dark"] .skill-card,
+:root[data-theme="dark"] .skill-option,
+:root[data-theme="dark"] .empty-skills,
+:root[data-theme="dark"] .empty-icon,
+:root[data-theme="dark"] .no-results,
+:root[data-theme="dark"] .favorito-card,
+:root[data-theme="dark"] .empty-favoritos,
+:root[data-theme="dark"] .mis-desafio-card,
+:root[data-theme="dark"] .mis-desafio-meta div,
+:root[data-theme="dark"] .org-empty-card,
+:root[data-theme="dark"] .org-empty-card i,
+:root[data-theme="dark"] .propuesta-card,
+:root[data-theme="dark"] .meta-line,
+:root[data-theme="dark"] .feedback-box,
+:root[data-theme="dark"] .empty-state,
+:root[data-theme="dark"] .btn-outline-dark,
+:root[data-theme="dark"] .propuesta-modal,
+:root[data-theme="dark"] .modal-section {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+}
+
+:root[data-theme="dark"] .skills-modal-search,
+:root[data-theme="dark"] .search-box input,
+:root[data-theme="dark"] .filter-box select,
+:root[data-theme="dark"] .skill-level-wrap select,
+:root[data-theme="dark"] .habilidad-mini-options select,
+:root[data-theme="dark"] .skill-modal-options select,
+:root[data-theme="dark"] .habilidades-search-box input,
+:root[data-theme="dark"] .skills-modal-search input {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+    color: var(--text) !important;
+}
+
+:root[data-theme="dark"] .skills-modal-close {
+    background: #0f172a !important;
+    color: var(--text) !important;
+}
+
+:root[data-theme="dark"] .profile-card-head h2,
+:root[data-theme="dark"] .profile-section label,
+:root[data-theme="dark"] .org-profile-card-head h2,
+:root[data-theme="dark"] .org-profile-section label,
+:root[data-theme="dark"] .org-profile-preview strong,
+:root[data-theme="dark"] .report-mini-card h3,
+:root[data-theme="dark"] .report-mini-card strong,
+:root[data-theme="dark"] .detail-user-header h2,
+:root[data-theme="dark"] .detail-item strong,
+:root[data-theme="dark"] .text-block-card,
+:root[data-theme="dark"] .skill-chip strong,
+:root[data-theme="dark"] .custom-modal-header h3,
+:root[data-theme="dark"] .modal-section strong,
+:root[data-theme="dark"] .modal-section p,
+:root[data-theme="dark"] .org-propuesta-head h3,
+:root[data-theme="dark"] .org-propuesta-meta strong,
+:root[data-theme="dark"] .org-propuesta-modal-head h2,
+:root[data-theme="dark"] .org-modal-section h3,
+:root[data-theme="dark"] .org-doc-info strong {
+    color: var(--text);
+}
+
+:root[data-theme="dark"] .habilidad-featured-card strong,
+:root[data-theme="dark"] .habilidad-check-label strong,
+:root[data-theme="dark"] .skill-modal-check strong,
+:root[data-theme="dark"] .skills-modal-head h3,
+:root[data-theme="dark"] .skill-name,
+:root[data-theme="dark"] .summary-value,
+:root[data-theme="dark"] .stat-value,
+:root[data-theme="dark"] .empty-skills h3,
+:root[data-theme="dark"] .empty-favoritos h3,
+:root[data-theme="dark"] .favorito-card h3,
+:root[data-theme="dark"] .mis-desafio-head h3,
+:root[data-theme="dark"] .org-empty-card h3,
+:root[data-theme="dark"] .propuesta-header h3,
+:root[data-theme="dark"] .meta-line strong,
+:root[data-theme="dark"] .feedback-box p,
+:root[data-theme="dark"] .empty-state h3 {
+    color: var(--text) !important;
+}
+
+:root[data-theme="dark"] .superadmin-summary-card strong,
+:root[data-theme="dark"] .panel-card-head h2,
+:root[data-theme="dark"] .distribution-label,
+:root[data-theme="dark"] .upcoming-card h3,
+:root[data-theme="dark"] .upcoming-meta strong,
+:root[data-theme="dark"] .verification-main h3,
+:root[data-theme="dark"] .activity-table th,
+:root[data-theme="dark"] .activity-table td,
+:root[data-theme="dark"] .bottom-action-btn,
+:root[data-theme="dark"] .org-summary-card strong,
+:root[data-theme="dark"] .org-challenge-head h3,
+:root[data-theme="dark"] .org-section-head h2 {
+    color: var(--text) !important;
+}
+
+:root[data-theme="dark"] .profile-card-head p,
+:root[data-theme="dark"] .org-profile-card-head p,
+:root[data-theme="dark"] .org-profile-preview span,
+:root[data-theme="dark"] .detail-user-header p,
+:root[data-theme="dark"] .detail-item span,
+:root[data-theme="dark"] .row-subtext,
+:root[data-theme="dark"] .skill-chip span,
+:root[data-theme="dark"] .modal-section span,
+:root[data-theme="dark"] .propuesta-modal-head p,
+:root[data-theme="dark"] .org-propuesta-student,
+:root[data-theme="dark"] .org-propuesta-meta span,
+:root[data-theme="dark"] .org-propuesta-modal-head p,
+:root[data-theme="dark"] .org-modal-summary span,
+:root[data-theme="dark"] .org-doc-info span,
+:root[data-theme="dark"] .org-modal-section p,
+:root[data-theme="dark"] .org-feedback-box p {
+    color: var(--text-soft);
+}
+
+:root[data-theme="dark"] .habilidad-featured-card small,
+:root[data-theme="dark"] .habilidad-check-label small,
+:root[data-theme="dark"] .skill-modal-check small,
+:root[data-theme="dark"] .skills-modal-head p,
+:root[data-theme="dark"] .summary-label,
+:root[data-theme="dark"] .stat-label,
+:root[data-theme="dark"] .skill-meta,
+:root[data-theme="dark"] .empty-skills p,
+:root[data-theme="dark"] .empty-favoritos p,
+:root[data-theme="dark"] .favorito-meta,
+:root[data-theme="dark"] .favorito-desc,
+:root[data-theme="dark"] .mis-desafio-head p,
+:root[data-theme="dark"] .mis-desafio-desc,
+:root[data-theme="dark"] .mis-desafio-meta div,
+:root[data-theme="dark"] .org-empty-card p,
+:root[data-theme="dark"] .propuesta-empresa,
+:root[data-theme="dark"] .meta-line span,
+:root[data-theme="dark"] .feedback-box span,
+:root[data-theme="dark"] .empty-state p {
+    color: var(--text-soft) !important;
+}
+
+:root[data-theme="dark"] .superadmin-summary-card span,
+:root[data-theme="dark"] .superadmin-summary-card p,
+:root[data-theme="dark"] .panel-card-head p,
+:root[data-theme="dark"] .distribution-value,
+:root[data-theme="dark"] .upcoming-card p,
+:root[data-theme="dark"] .upcoming-card small,
+:root[data-theme="dark"] .upcoming-meta span,
+:root[data-theme="dark"] .verification-main p,
+:root[data-theme="dark"] .verification-main small,
+:root[data-theme="dark"] .empty-text,
+:root[data-theme="dark"] .org-summary-card span,
+:root[data-theme="dark"] .org-challenge-desc,
+:root[data-theme="dark"] .org-challenge-meta div {
+    color: var(--text-soft) !important;
+}
+
+:root[data-theme="dark"] .activity-table th,
+:root[data-theme="dark"] .activity-table td,
+:root[data-theme="dark"] .skills-footer,
+:root[data-theme="dark"] .org-estado-form,
+:root[data-theme="dark"] .propuesta-modal-head,
+:root[data-theme="dark"] .skills-modal-head,
+:root[data-theme="dark"] .skills-modal-actions {
+    border-color: #334155 !important;
+}
+
+:root[data-theme="dark"] .filter-group label,
+:root[data-theme="dark"] .org-estado-form label,
+:root[data-theme="dark"] .org-feedback-label,
+:root[data-theme="dark"] .org-feedback-box span {
+    color: var(--text);
+}
+
+:root[data-theme="dark"] .filter-group input,
+:root[data-theme="dark"] .filter-group select,
+:root[data-theme="dark"] .org-estado-select,
+:root[data-theme="dark"] .org-feedback-textarea {
+    background: #0f172a;
+    border-color: #334155;
+    color: var(--text);
+}
+
+:root[data-theme="dark"] .modal-close-btn,
+:root[data-theme="dark"] .propuesta-modal-close,
+:root[data-theme="dark"] .org-modal-close {
+    background: #0f172a;
+    border-color: #334155;
+    color: var(--text);
 }
