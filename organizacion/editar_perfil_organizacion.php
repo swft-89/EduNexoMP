@@ -1,6 +1,7 @@
 <?php
 require_once '../includes/session_organizacion.php';
 require_once '../config/conexion.php';
+require_once '../includes/profile_photo.php';
 
 $idUsuario = $_SESSION['usuario_id'] ?? null;
 
@@ -168,7 +169,7 @@ unset($_SESSION['success'], $_SESSION['error'], $_SESSION['old']);
                     <div class="org-profile-hero-user">
                         <div class="org-profile-avatar">
                             <?php if (!empty($organizacion['foto_url'])): ?>
-                                <img src="<?php echo htmlspecialchars($organizacion['foto_url']); ?>" alt="Logo de la organización">
+                                <img src="<?php echo htmlspecialchars(edunexo_asset_url($organizacion['foto_url'])); ?>" alt="Logo de la organización">
                             <?php else: ?>
                                 <?php echo htmlspecialchars($iniciales); ?>
                             <?php endif; ?>
@@ -233,7 +234,7 @@ unset($_SESSION['success'], $_SESSION['error'], $_SESSION['old']);
                             <div class="org-preview-header">
                                 <div class="org-preview-avatar">
                                     <?php if (!empty($organizacion['foto_url'])): ?>
-                                        <img src="<?php echo htmlspecialchars($organizacion['foto_url']); ?>" alt="">
+                                        <img src="<?php echo htmlspecialchars(edunexo_asset_url($organizacion['foto_url'])); ?>" alt="">
                                     <?php else: ?>
                                         <?php echo htmlspecialchars($iniciales); ?>
                                     <?php endif; ?>
@@ -293,7 +294,8 @@ unset($_SESSION['success'], $_SESSION['error'], $_SESSION['old']);
                     </div>
                 </div>
 
-                <form action="../procesos/guardar_perfil_organizacion.php" method="POST" class="org-profile-form" novalidate>
+                <form action="../procesos/guardar_perfil_organizacion.php" method="POST" enctype="multipart/form-data" class="org-profile-form" novalidate>
+                    <input type="hidden" name="foto_url_actual" value="<?php echo htmlspecialchars($organizacion['foto_url'] ?? ''); ?>">
 
                     <div class="org-profile-section">
                         <h3>Datos generales</h3>
@@ -362,14 +364,15 @@ unset($_SESSION['success'], $_SESSION['error'], $_SESSION['old']);
                             </div>
 
                             <div class="form-group full">
-                                <label for="foto_url">URL del logo o imagen</label>
+                                <label for="foto_perfil">Logo o imagen</label>
                                 <input
-                                    type="url"
-                                    id="foto_url"
-                                    name="foto_url"
-                                    maxlength="255"
-                                    value="<?php echo oldOrgValue('foto_url', $organizacion['foto_url'], $old); ?>">
+                                    type="file"
+                                    id="foto_perfil"
+                                    name="foto_perfil"
+                                    accept="image/jpeg,image/png,image/webp">
+                                <small>JPG, PNG o WEBP. Máximo 2 MB.</small>
                             </div>
+
                         </div>
                     </div>
 

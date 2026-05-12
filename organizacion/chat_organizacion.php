@@ -1,6 +1,7 @@
 <?php
 require_once '../includes/session_organizacion.php';
 require_once '../config/conexion.php';
+require_once '../includes/profile_photo.php';
 
 $idUsuario = $_SESSION['usuario_id'];
 $idConversacion = isset($_GET['id']) ? (int) $_GET['id'] : 0;
@@ -15,6 +16,7 @@ $stmt = $pdo->prepare("
         e.nombre,
         e.apellido_paterno,
         e.apellido_materno,
+        e.foto_url,
         m.contenido AS ultimo_mensaje,
         m.fecha_hora AS ultima_fecha,
         COALESCE(nr.no_leidos, 0) AS no_leidos
@@ -59,6 +61,7 @@ if ($idConversacion > 0) {
             e.nombre,
             e.apellido_paterno,
             e.apellido_materno,
+            e.foto_url,
             e.carrera,
             e.semestre
         FROM conversacion c
@@ -192,7 +195,13 @@ unset($_SESSION['success'], $_SESSION['error']);
                                 data-nombre="<?php echo htmlspecialchars(strtolower($nombreEstudiante)); ?>"
                                 data-titulo="<?php echo htmlspecialchars(strtolower($conv['titulo'])); ?>"
                             >
-                                <div class="chat-avatar"><?php echo htmlspecialchars($iniciales); ?></div>
+                                <div class="chat-avatar" style="width:52px;height:52px;min-width:52px;max-width:52px;min-height:52px;max-height:52px;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;flex:0 0 52px;">
+                                    <?php if (!empty($conv['foto_url'])): ?>
+                                        <img src="<?php echo htmlspecialchars(edunexo_asset_url($conv['foto_url'])); ?>" alt="" style="width:100%;height:100%;object-fit:cover;display:block;">
+                                    <?php else: ?>
+                                        <?php echo htmlspecialchars($iniciales); ?>
+                                    <?php endif; ?>
+                                </div>
 
                                 <div class="chat-item-body">
                                     <div class="chat-item-top">

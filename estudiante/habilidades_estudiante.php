@@ -1,6 +1,7 @@
 <?php
 require_once '../includes/session_estudiante.php';
 require_once '../config/conexion.php';
+require_once '../includes/profile_photo.php';
 
 $idUsuario = $_SESSION['usuario_id'] ?? null;
 
@@ -157,7 +158,7 @@ unset($_SESSION['success'], $_SESSION['error']);
                     <div class="skills-hero-user">
                         <div class="skills-avatar">
                             <?php if (!empty($estudiante['foto_url'])): ?>
-                                <img src="<?php echo htmlspecialchars($estudiante['foto_url']); ?>" alt="Foto de perfil">
+                                <img src="<?php echo htmlspecialchars(edunexo_asset_url($estudiante['foto_url'])); ?>" alt="Foto de perfil">
                             <?php else: ?>
                                 <?php echo htmlspecialchars($iniciales); ?>
                             <?php endif; ?>

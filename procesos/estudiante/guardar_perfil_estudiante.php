@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once '../../config/conexion.php';
+require_once '../../includes/profile_photo.php';
 
 if (!isset($_SESSION['usuario_id']) || !isset($_SESSION['rol']) || $_SESSION['rol'] !== 'estudiante') {
     header('Location: ../index.php');
@@ -22,7 +23,8 @@ $noControl = trim($_POST['no_control'] ?? '');
 $semestre = (int) ($_POST['semestre'] ?? 0);
 $curp = strtoupper(trim($_POST['curp'] ?? ''));
 $telefono = trim($_POST['telefono'] ?? '');
-$fotoUrl = trim($_POST['foto_url'] ?? '');
+$fotoUrlActual = trim($_POST['foto_url_actual'] ?? '');
+$fotoUrl = $fotoUrlActual;
 $correoElectronico = trim($_POST['correo_electronico'] ?? '');
 
 $pais = trim($_POST['pais'] ?? '');
@@ -54,13 +56,13 @@ if (!filter_var($correoElectronico, FILTER_VALIDATE_EMAIL)) {
     exit;
 }
 
-if ($fotoUrl !== '' && !filter_var($fotoUrl, FILTER_VALIDATE_URL)) {
-    $_SESSION['error'] = 'La URL de la foto no es válida.';
-    header('Location: ../../estudiante/editar_perfil_estudiante.php');
-    exit;
-}
-
 try {
+    $fotoSubida = edunexo_upload_profile_photo('foto_perfil', 'estudiante_' . $idEstudiante);
+
+    if ($fotoSubida !== null) {
+        $fotoUrl = $fotoSubida;
+    }
+
     $pdo->beginTransaction();
 
     $stmt = $pdo->prepare("
@@ -242,6 +244,14 @@ try {
 
     unset($_SESSION['old']);
     $_SESSION['success'] = 'Tu perfil fue actualizado correctamente.';
+    header('Location: ../../estudiante/editar_perfil_estudiante.php');
+    exit;
+} catch (RuntimeException $e) {
+    if ($pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
+
+    $_SESSION['error'] = $e->getMessage();
     header('Location: ../../estudiante/editar_perfil_estudiante.php');
     exit;
 } catch (PDOException $e) {

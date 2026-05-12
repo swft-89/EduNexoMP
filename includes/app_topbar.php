@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/profile_photo.php';
 $topbarUsuarioId = $_SESSION['usuario_id'] ?? null;
 $topbarRol = $_SESSION['rol'] ?? '';
 $topbarNombre = 'Usuario';
@@ -59,7 +60,7 @@ if ($topbarUsuarioId && isset($pdo)) {
         }
     } elseif ($topbarRol === 'administrador') {
         $stmtTopbar = $pdo->prepare("
-            SELECT nombre, apellido_paterno
+            SELECT nombre, apellido_paterno, foto_url
             FROM administrador
             WHERE id_admin = :id
             LIMIT 1
@@ -69,6 +70,7 @@ if ($topbarUsuarioId && isset($pdo)) {
 
         if ($topbarPerfil) {
             $topbarNombre = trim(($topbarPerfil['nombre'] ?? '') . ' ' . ($topbarPerfil['apellido_paterno'] ?? ''));
+            $topbarFoto = $topbarPerfil['foto_url'] ?? null;
         }
     }
 
@@ -94,7 +96,7 @@ if ($topbarUsuarioId && isset($pdo)) {
 
 $topbarNombre = trim($topbarNombre) !== '' ? trim($topbarNombre) : 'Usuario';
 $topbarInicial = strtoupper(substr($topbarNombre, 0, 1));
-$topbarFotoSrc = edunexo_topbar_asset($topbarFoto);
+$topbarFotoSrc = edunexo_asset_url($topbarFoto);
 $topbarNotificacionUrl = edunexo_topbar_asset('procesos/ver_notificacion.php');
 ?>
 <style>

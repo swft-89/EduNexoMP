@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once '../config/conexion.php';
+require_once '../includes/profile_photo.php';
 
 if (!isset($_SESSION['usuario_id']) || !isset($_SESSION['rol']) || $_SESSION['rol'] !== 'organizacion') {
     header('Location: ../index.php');
@@ -20,7 +21,8 @@ $sector = trim($_POST['sector'] ?? '');
 $representante = trim($_POST['representante'] ?? '');
 $telefonoContacto = trim($_POST['telefono_contacto'] ?? '');
 $correoElectronico = trim($_POST['correo_electronico'] ?? '');
-$fotoUrl = trim($_POST['foto_url'] ?? '');
+$fotoUrlActual = trim($_POST['foto_url_actual'] ?? '');
+$fotoUrl = $fotoUrlActual;
 
 $pais = trim($_POST['pais'] ?? '');
 $estado = trim($_POST['estado'] ?? '');
@@ -44,13 +46,13 @@ if (!filter_var($correoElectronico, FILTER_VALIDATE_EMAIL)) {
     exit;
 }
 
-if ($fotoUrl !== '' && !filter_var($fotoUrl, FILTER_VALIDATE_URL)) {
-    $_SESSION['error'] = 'La URL de la imagen no es válida.';
-    header('Location: ../organizacion/editar_perfil_organizacion.php');
-    exit;
-}
-
 try {
+    $fotoSubida = edunexo_upload_profile_photo('foto_perfil', 'organizacion_' . $idOrganizacion);
+
+    if ($fotoSubida !== null) {
+        $fotoUrl = $fotoSubida;
+    }
+
     $pdo->beginTransaction();
 
     $stmt = $pdo->prepare("
@@ -189,6 +191,14 @@ try {
     header('Location: ../organizacion/editar_perfil_organizacion.php');
     exit;
 
+} catch (RuntimeException $e) {
+    if ($pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
+
+    $_SESSION['error'] = $e->getMessage();
+    header('Location: ../organizacion/editar_perfil_organizacion.php');
+    exit;
 } catch (PDOException $e) {
     if ($pdo->inTransaction()) {
         $pdo->rollBack();

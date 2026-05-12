@@ -1,6 +1,7 @@
 <?php
 require_once '../../includes/session_organizacion.php';
 require_once '../../config/conexion.php';
+require_once '../../includes/profile_photo.php';
 
 $idUsuario = $_SESSION['usuario_id'];
 $idDesafio = isset($_GET['id']) ? (int) $_GET['id'] : 0;
@@ -53,6 +54,7 @@ $stmt = $pdo->prepare("
         e.nombre,
         e.apellido_paterno,
         e.apellido_materno,
+        e.foto_url,
         e.carrera,
         e.semestre,
         e.telefono,
@@ -106,6 +108,7 @@ $stmt = $pdo->prepare("
         e.nombre,
         e.apellido_paterno,
         e.apellido_materno,
+        e.foto_url,
         e.carrera,
         e.semestre,
         e.telefono,
@@ -241,7 +244,11 @@ unset($_SESSION['success'], $_SESSION['error']);
                         <article class="talento-card">
                             <div class="talento-header">
                                 <div class="talento-avatar">
-                                    <?php echo htmlspecialchars(strtoupper(substr($talento['nombre'], 0, 1))); ?>
+                                    <?php if (!empty($talento['foto_url'])): ?>
+                                        <img src="<?php echo htmlspecialchars(edunexo_asset_url($talento['foto_url'])); ?>" alt="">
+                                    <?php else: ?>
+                                        <?php echo htmlspecialchars(strtoupper(substr($talento['nombre'], 0, 1))); ?>
+                                    <?php endif; ?>
                                 </div>
 
                                 <div>

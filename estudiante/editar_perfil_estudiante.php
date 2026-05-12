@@ -1,6 +1,7 @@
 <?php
 require_once '../includes/session_estudiante.php';
 require_once '../config/conexion.php';
+require_once '../includes/profile_photo.php';
 
 $idUsuario = $_SESSION['usuario_id'] ?? null;
 
@@ -135,7 +136,7 @@ function oldValue($key, $default, $old)
                     <div class="profile-hero-user">
                         <div class="profile-avatar">
                             <?php if (!empty($estudiante['foto_url'])): ?>
-                                <img src="<?php echo htmlspecialchars($estudiante['foto_url']); ?>" alt="Foto de perfil">
+                                <img src="<?php echo htmlspecialchars(edunexo_asset_url($estudiante['foto_url'])); ?>" alt="Foto de perfil">
                             <?php else: ?>
                                 <?php echo htmlspecialchars($iniciales); ?>
                             <?php endif; ?>
@@ -168,7 +169,8 @@ function oldValue($key, $default, $old)
                     </div>
                 </div>
 
-                <form action="../procesos/estudiante/guardar_perfil_estudiante.php" method="POST" class="profile-form" novalidate>
+                <form action="../procesos/estudiante/guardar_perfil_estudiante.php" method="POST" enctype="multipart/form-data" class="profile-form" novalidate>
+                    <input type="hidden" name="foto_url_actual" value="<?php echo htmlspecialchars($estudiante['foto_url'] ?? ''); ?>">
 
                     <div class="profile-section">
                         <h3>Datos personales</h3>
@@ -210,10 +212,11 @@ function oldValue($key, $default, $old)
                             </div>
 
                             <div class="form-group full">
-                                <label for="foto_url">URL de foto de perfil</label>
-                                <input type="url" id="foto_url" name="foto_url" maxlength="255"
-                                    value="<?php echo oldValue('foto_url', $estudiante['foto_url'], $old); ?>">
+                                <label for="foto_perfil">Foto de perfil</label>
+                                <input type="file" id="foto_perfil" name="foto_perfil" accept="image/jpeg,image/png,image/webp">
+                                <small>JPG, PNG o WEBP. Máximo 2 MB.</small>
                             </div>
+
                         </div>
                     </div>
 

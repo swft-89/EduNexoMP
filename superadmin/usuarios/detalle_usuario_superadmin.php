@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../includes/session_superadmin.php';
 require_once __DIR__ . '/../../config/conexion.php';
+require_once __DIR__ . '/../../includes/profile_photo.php';
 
 $idUsuario = (int) ($_GET['id'] ?? 0);
 
@@ -38,12 +39,14 @@ $stmtUsuario = $pdo->prepare("
         e.semestre,
         e.curp,
         e.telefono,
+        e.foto_url AS est_foto_url,
 
         o.nombre_empresa,
         o.rfc,
         o.sector,
         o.representante,
         o.telefono_contacto,
+        o.foto_url AS org_foto_url,
 
         a.nombre AS adm_nombre,
         a.apellido_paterno AS adm_apellido_paterno,
@@ -53,6 +56,7 @@ $stmtUsuario = $pdo->prepare("
         a.tipo_admin,
         a.estado_solicitud,
         a.fecha_autorizacion,
+        a.foto_url AS adm_foto_url,
 
         d.pais,
         d.estado AS dir_estado,
@@ -107,6 +111,7 @@ unset($_SESSION['success'], $_SESSION['error']);
 
 $esYo = ((int) $usuario['id_usuario'] === (int) $_SESSION['usuario_id']);
 $esSuperadminObjetivo = (($usuario['tipo_admin'] ?? '') === 'superadmin');
+$fotoPerfil = $usuario['est_foto_url'] ?? $usuario['org_foto_url'] ?? $usuario['adm_foto_url'] ?? null;
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -185,6 +190,14 @@ $esSuperadminObjetivo = (($usuario['tipo_admin'] ?? '') === 'superadmin');
 
         <section class="superadmin-panel-card full-card">
             <div class="detail-user-header">
+                <div class="profile-avatar">
+                    <?php if (!empty($fotoPerfil)): ?>
+                        <img src="<?php echo htmlspecialchars(edunexo_asset_url($fotoPerfil)); ?>" alt="Foto de perfil">
+                    <?php else: ?>
+                        <?php echo htmlspecialchars(strtoupper(substr($nombreMostrar ?: 'U', 0, 1))); ?>
+                    <?php endif; ?>
+                </div>
+
                 <div>
                     <h2><?php echo htmlspecialchars($nombreMostrar ?: 'Sin nombre'); ?></h2>
                     <p><?php echo htmlspecialchars($usuario['correo_electronico']); ?></p>
@@ -256,6 +269,16 @@ $esSuperadminObjetivo = (($usuario['tipo_admin'] ?? '') === 'superadmin');
                 </div>
 
                 <div class="detail-actions">
+                    <form action="../../procesos/actualizar_foto_usuario.php" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="id_usuario" value="<?php echo (int) $usuario['id_usuario']; ?>">
+                        <input type="hidden" name="redirect" value="../superadmin/usuarios/detalle_usuario_superadmin.php?id=<?php echo (int) $usuario['id_usuario']; ?>">
+                        <div class="filter-group">
+                            <label for="foto_perfil">Foto de perfil</label>
+                            <input type="file" id="foto_perfil" name="foto_perfil" accept="image/jpeg,image/png,image/webp" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Actualizar foto</button>
+                    </form>
+
                     <?php if (!$esYo && !$esSuperadminObjetivo): ?>
                         <?php if (($usuario['estado'] ?? '') === 'suspendido'): ?>
                             <form action="../../procesos/cambiar_estado_usuario.php" method="POST">
