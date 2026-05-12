@@ -11,7 +11,7 @@ if (!$idUsuario) {
 
 /* Datos del estudiante */
 $stmt = $pdo->prepare("
-    SELECT 
+    SELECT
         e.id_estudiante,
         e.nombre,
         e.apellido_paterno,
@@ -47,10 +47,10 @@ $stmt = $pdo->prepare("
         eh.nivel,
         eh.fecha_registro
     FROM estudiante_habilidad eh
-    INNER JOIN habilidad h 
+    INNER JOIN habilidad h
         ON h.id_habilidad = eh.id_habilidad
     WHERE eh.id_estudiante = :id_estudiante
-    ORDER BY 
+    ORDER BY
         COALESCE(h.categoria_habilidad, 'General') ASC,
         h.nombre ASC
 ");
@@ -115,7 +115,7 @@ unset($_SESSION['success'], $_SESSION['error']);
     <link rel="stylesheet" href="../assets/css/dark.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    
+
 </head>
 <body>
 <div class="app-layout">
@@ -149,6 +149,7 @@ unset($_SESSION['success'], $_SESSION['error']);
     </aside>
 
     <main class="app-content">
+        <?php include __DIR__ . '/../includes/app_topbar.php'; ?>
         <div class="skills-page">
 
             <section class="skills-hero">

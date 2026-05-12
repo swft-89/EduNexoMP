@@ -11,7 +11,7 @@ if ($idDesafio <= 0) {
 }
 
 $stmt = $pdo->prepare("
-    SELECT 
+    SELECT
         d.id_desafio,
         d.titulo,
         d.descripcion,
@@ -96,6 +96,7 @@ unset($_SESSION['error_form'], $_SESSION['old_propuesta']);
     </aside>
 
     <section class="app-content">
+        <?php include __DIR__ . '/../includes/app_topbar.php'; ?>
         <div class="propuesta-wrap">
 
             <div class="propuesta-header">

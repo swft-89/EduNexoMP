@@ -60,7 +60,7 @@ $totalAdmins = (int) $pdo->query("
 
 /* Desafios por vencer */
 $stmtDesafios = $pdo->query("
-    SELECT 
+    SELECT
         d.id_desafio,
         d.titulo,
         d.fecha_limite,
@@ -164,18 +164,7 @@ unset($_SESSION['success'], $_SESSION['error']);
     </aside>
 
     <section class="app-content superadmin-content">
-        <div class="superadmin-topbar">
-            <div></div>
-
-            <div class="superadmin-topbar-right">
-                <button class="superadmin-icon-btn" type="button">
-                    <i class="bi bi-bell"></i>
-                </button>
-                <div class="superadmin-avatar">
-                    <?php echo htmlspecialchars($inicialAdmin); ?>
-                </div>
-            </div>
-        </div>
+        <?php include __DIR__ . '/../includes/app_topbar.php'; ?>
 
         <div class="superadmin-header">
             <div>
@@ -488,5 +477,6 @@ unset($_SESSION['success'], $_SESSION['error']);
     </section>
 </div>
 
+<script src="../assets/js/main.js"></script>
 </body>
 </html>

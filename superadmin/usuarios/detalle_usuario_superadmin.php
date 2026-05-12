@@ -23,7 +23,7 @@ $adminSesion = $stmtAdmin->fetch(PDO::FETCH_ASSOC);
 $inicialAdmin = strtoupper(substr($adminSesion['nombre'] ?? 'U', 0, 1));
 
 $stmtUsuario = $pdo->prepare("
-    SELECT 
+    SELECT
         u.id_usuario,
         u.correo_electronico,
         u.rol,
@@ -66,7 +66,7 @@ $stmtUsuario = $pdo->prepare("
     LEFT JOIN estudiante e ON e.id_estudiante = u.id_usuario
     LEFT JOIN organizacion o ON o.id_organizacion = u.id_usuario
     LEFT JOIN administrador a ON a.id_admin = u.id_usuario
-    LEFT JOIN direccion d 
+    LEFT JOIN direccion d
         ON d.id_direccion = COALESCE(e.id_direccion, o.id_direccion)
     WHERE u.id_usuario = :id_usuario
     LIMIT 1
@@ -155,17 +155,7 @@ $esSuperadminObjetivo = (($usuario['tipo_admin'] ?? '') === 'superadmin');
     </aside>
 
     <section class="app-content superadmin-content">
-        <div class="superadmin-topbar">
-            <div></div>
-            <div class="superadmin-topbar-right">
-                <button class="superadmin-icon-btn" type="button">
-                    <i class="bi bi-bell"></i>
-                </button>
-                <div class="superadmin-avatar">
-                    <?php echo htmlspecialchars($inicialAdmin); ?>
-                </div>
-            </div>
-        </div>
+        <?php include __DIR__ . '/../../includes/app_topbar.php'; ?>
 
         <div class="superadmin-header">
             <div>
@@ -362,5 +352,6 @@ $esSuperadminObjetivo = (($usuario['tipo_admin'] ?? '') === 'superadmin');
         </section>
     </section>
 </div>
+<script src="../../assets/js/main.js"></script>
 </body>
 </html>

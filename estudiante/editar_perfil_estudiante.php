@@ -31,7 +31,7 @@ $stmt = $pdo->prepare("
         d.calle,
         d.num_exterior
     FROM estudiante e
-    INNER JOIN usuario u 
+    INNER JOIN usuario u
         ON u.id_usuario = e.id_estudiante
     LEFT JOIN direccion d
         ON d.id_direccion = e.id_direccion
@@ -127,6 +127,7 @@ function oldValue($key, $default, $old)
     </aside>
 
     <main class="app-content">
+        <?php include __DIR__ . '/../includes/app_topbar.php'; ?>
         <div class="profile-page">
 
             <section class="profile-hero">

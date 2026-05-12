@@ -27,12 +27,21 @@ document.addEventListener("DOMContentLoaded", function () {
     const rolSeleccionado = document.getElementById("rolSeleccionado");
 
     const savedTheme = localStorage.getItem("theme");
+
+    function setThemeButtonIcon(theme) {
+        if (!toggleTheme) return;
+
+        toggleTheme.innerHTML = theme === "dark"
+            ? '<i class="bi bi-sun"></i>'
+            : '<i class="bi bi-moon-stars"></i>';
+    }
+
     if (savedTheme === "dark") {
         document.documentElement.setAttribute("data-theme", "dark");
-        if (toggleTheme) toggleTheme.textContent = "☀️";
+        setThemeButtonIcon("dark");
     } else {
         document.documentElement.setAttribute("data-theme", "light");
-        if (toggleTheme) toggleTheme.textContent = "🌙";
+        setThemeButtonIcon("light");
     }
 
     if (toggleTheme) {
@@ -42,11 +51,11 @@ document.addEventListener("DOMContentLoaded", function () {
             if (currentTheme === "dark") {
                 document.documentElement.setAttribute("data-theme", "light");
                 localStorage.setItem("theme", "light");
-                toggleTheme.textContent = "🌙";
+                setThemeButtonIcon("light");
             } else {
                 document.documentElement.setAttribute("data-theme", "dark");
                 localStorage.setItem("theme", "dark");
-                toggleTheme.textContent = "☀️";
+                setThemeButtonIcon("dark");
             }
         });
     }

@@ -228,3 +228,29 @@
 :root[data-theme="dark"] .btn-outline-dark {
     border-color: #475569;
 }
+
+:root[data-theme="dark"] .app-topbar,
+:root[data-theme="dark"] .org-topbar,
+:root[data-theme="dark"] .superadmin-topbar {
+    background: #111827;
+    border-bottom-color: #334155;
+}
+
+:root[data-theme="dark"] .app-icon-btn,
+:root[data-theme="dark"] .org-icon-btn,
+:root[data-theme="dark"] .superadmin-icon-btn {
+    color: var(--text);
+}
+
+:root[data-theme="dark"] .app-icon-btn:hover,
+:root[data-theme="dark"] .org-icon-btn:hover,
+:root[data-theme="dark"] .superadmin-icon-btn:hover {
+    background: #1e293b;
+    color: var(--primary-light);
+}
+
+:root[data-theme="dark"] .app-notification-btn::after,
+:root[data-theme="dark"] .org-icon-btn::after,
+:root[data-theme="dark"] .superadmin-icon-btn::after {
+    border-color: #111827;
+}

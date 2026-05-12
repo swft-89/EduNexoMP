@@ -74,6 +74,7 @@ unset($_SESSION['success'], $_SESSION['error']);
     </aside>
 
     <section class="app-content">
+        <?php include __DIR__ . '/../includes/app_topbar.php'; ?>
         <div class="content-header">
             <div>
                 <h1>Mis favoritos</h1>
@@ -81,7 +82,6 @@ unset($_SESSION['success'], $_SESSION['error']);
             </div>
 
             <div class="user-box">
-                <button class="btn btn-theme" id="toggleTheme" type="button">🌙</button>
                 <a href="dashboard_estudiante.php" class="btn btn-nav">Volver</a>
             </div>
         </div>

@@ -6,7 +6,7 @@ $idUsuario = $_SESSION['usuario_id'];
 
 /* Datos del estudiante */
 $stmt = $pdo->prepare("
-    SELECT 
+    SELECT
         u.correo_electronico,
         e.id_estudiante,
         e.nombre,
@@ -25,9 +25,9 @@ $stmt = $pdo->prepare("
         d.calle,
         d.num_exterior
     FROM usuario u
-    INNER JOIN estudiante e 
+    INNER JOIN estudiante e
         ON u.id_usuario = e.id_estudiante
-    LEFT JOIN direccion d 
+    LEFT JOIN direccion d
         ON e.id_direccion = d.id_direccion
     WHERE u.id_usuario = :id
     LIMIT 1
@@ -54,7 +54,7 @@ $primerNombre = explode(' ', trim($estudiante['nombre']))[0] ?? $estudiante['nom
 
 // Propuestas enviadas
 $stmt = $pdo->prepare("
-    SELECT COUNT(*) 
+    SELECT COUNT(*)
     FROM propuesta
     WHERE id_estudiante = :id
 ");
@@ -63,7 +63,7 @@ $totalPropuestas = (int) $stmt->fetchColumn();
 
 // Favoritos
 $stmt = $pdo->prepare("
-    SELECT COUNT(*) 
+    SELECT COUNT(*)
     FROM favoritos
     WHERE id_estudiante = :id
 ");
@@ -74,9 +74,9 @@ $totalFavoritos = (int) $stmt->fetchColumn();
 $stmt = $pdo->prepare("
     SELECT COUNT(m.id_mensaje)
     FROM mensaje m
-    INNER JOIN conversacion c 
+    INNER JOIN conversacion c
         ON m.id_conversacion = c.id_conversacion
-    INNER JOIN propuesta p 
+    INNER JOIN propuesta p
         ON c.id_propuesta = p.id_propuesta
     WHERE p.id_estudiante = :id
 ");
@@ -85,7 +85,7 @@ $totalMensajes = (int) $stmt->fetchColumn();
 
 /* Desafios recomendados */
 $stmt = $pdo->prepare("
-    SELECT 
+    SELECT
         d.id_desafio,
         d.titulo,
         d.descripcion,
@@ -98,7 +98,7 @@ $stmt = $pdo->prepare("
         END AS es_favorito,
 
         COUNT(DISTINCT dh.id_habilidad) AS total_habilidades_desafio,
-        COUNT(DISTINCT CASE 
+        COUNT(DISTINCT CASE
             WHEN eh.id_habilidad IS NOT NULL THEN dh.id_habilidad
         END) AS habilidades_coincidentes,
         CASE
@@ -109,17 +109,17 @@ $stmt = $pdo->prepare("
             )
         END AS match_porcentaje
     FROM desafio d
-    INNER JOIN organizacion o 
+    INNER JOIN organizacion o
         ON d.id_organizacion = o.id_organizacion
     LEFT JOIN favoritos f
         ON d.id_desafio = f.id_desafio
         AND f.id_estudiante = :id_estudiante_fav
-    LEFT JOIN desafio_habilidad dh 
+    LEFT JOIN desafio_habilidad dh
         ON d.id_desafio = dh.id_desafio
-    LEFT JOIN estudiante_habilidad eh 
+    LEFT JOIN estudiante_habilidad eh
         ON eh.id_habilidad = dh.id_habilidad
         AND eh.id_estudiante = :id_estudiante
-    GROUP BY 
+    GROUP BY
         d.id_desafio,
         d.titulo,
         d.descripcion,
@@ -143,11 +143,11 @@ if (!empty($desafioIds)) {
     $placeholders = implode(',', array_fill(0, count($desafioIds), '?'));
 
     $stmt = $pdo->prepare("
-        SELECT 
+        SELECT
             dh.id_desafio,
             h.nombre
         FROM desafio_habilidad dh
-        INNER JOIN habilidad h 
+        INNER JOIN habilidad h
             ON dh.id_habilidad = h.id_habilidad
         WHERE dh.id_desafio IN ($placeholders)
         ORDER BY dh.id_desafio, h.nombre
@@ -245,18 +245,13 @@ unset($_SESSION['success'], $_SESSION['error']);
 
     <!-- Contenido -->
     <section class="app-content">
+        <?php include __DIR__ . '/../includes/app_topbar.php'; ?>
         <div class="content-header">
             <div>
                 <h1>Desafíos recomendados</h1>
                 <p>Proyectos que coinciden con tu perfil y habilidades</p>
             </div>
 
-            <div class="user-box">
-                <button class="btn btn-theme" id="toggleTheme" type="button">🌙</button>
-                <div class="avatar">
-                    <?php echo htmlspecialchars(strtoupper(substr($estudiante['nombre'], 0, 1))); ?>
-                </div>
-            </div>
         </div>
 
         <!-- Resumen del estudiante -->

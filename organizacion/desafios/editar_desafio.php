@@ -144,6 +144,7 @@ $valores = [
     </aside>
 
     <section class="app-content org-content">
+        <?php include __DIR__ . '/../../includes/app_topbar.php'; ?>
         <div class="crear-desafio-wrap">
             <div class="crear-desafio-head">
                 <div>
@@ -377,7 +378,7 @@ window.edunexoFormErrors = <?php echo json_encode($errorForm); ?>;
 <?php endif; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="assets/js/main.js"></script>
+<script src="../../assets/js/main.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     if (window.edunexoFormErrors && window.edunexoFormErrors.length > 0) {

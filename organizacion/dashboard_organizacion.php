@@ -174,17 +174,7 @@ unset($_SESSION['success'], $_SESSION['error']);
     </aside>
 
     <section class="app-content org-content">
-        <div class="org-topbar">
-            <div></div>
-            <div class="org-topbar-right">
-                <button class="org-icon-btn" type="button">
-                    <i class="bi bi-bell"></i>
-                </button>
-                <div class="org-avatar">
-                    <?php echo htmlspecialchars(strtoupper(substr($organizacion['nombre_empresa'], 0, 1))); ?>
-                </div>
-            </div>
-        </div>
+        <?php include __DIR__ . '/../includes/app_topbar.php'; ?>
 
         <div class="org-header">
             <div>

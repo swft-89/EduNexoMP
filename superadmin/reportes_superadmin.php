@@ -69,17 +69,7 @@ $totalPendientesAdmin = (int) $pdo->query("SELECT COUNT(*) FROM administrador WH
     </aside>
 
     <section class="app-content superadmin-content">
-        <div class="superadmin-topbar">
-            <div></div>
-            <div class="superadmin-topbar-right">
-                <button class="superadmin-icon-btn" type="button">
-                    <i class="bi bi-bell"></i>
-                </button>
-                <div class="superadmin-avatar">
-                    <?php echo htmlspecialchars($inicialAdmin); ?>
-                </div>
-            </div>
-        </div>
+        <?php include __DIR__ . '/../includes/app_topbar.php'; ?>
 
         <div class="superadmin-header">
             <div>
@@ -161,5 +151,6 @@ $totalPendientesAdmin = (int) $pdo->query("SELECT COUNT(*) FROM administrador WH
         </section>
     </section>
 </div>
+<script src="../assets/js/main.js"></script>
 </body>
 </html>

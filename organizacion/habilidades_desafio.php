@@ -105,6 +105,7 @@ unset($_SESSION['success'], $_SESSION['error']);
     </aside>
 
     <section class="app-content org-content">
+        <?php include __DIR__ . '/../includes/app_topbar.php'; ?>
         <div class="crear-desafio-wrap">
             <div class="crear-desafio-head">
                 <div>

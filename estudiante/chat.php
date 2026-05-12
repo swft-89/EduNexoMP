@@ -145,6 +145,7 @@ unset($_SESSION['success'], $_SESSION['error']);
     </aside>
 
     <section class="app-content chat-page">
+        <?php include __DIR__ . '/../includes/app_topbar.php'; ?>
         <div class="chat-shell">
             <aside class="chat-list-panel">
                 <div class="chat-list-header">

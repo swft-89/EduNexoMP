@@ -117,6 +117,7 @@ unset($_SESSION['success'], $_SESSION['error']);
     </aside>
 
 <section class="app-content org-content">
+        <?php include __DIR__ . '/../../includes/app_topbar.php'; ?>
     <div class="org-detail-wrap">
 
         <div class="org-detail-header">

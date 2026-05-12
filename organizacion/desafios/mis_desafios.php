@@ -82,15 +82,7 @@ unset($_SESSION['success'], $_SESSION['error']);
     </aside>
 
     <section class="app-content org-content">
-        <div class="org-topbar">
-            <div></div>
-            <div class="org-topbar-right">
-                <button class="org-icon-btn" type="button">
-                    <i class="bi bi-bell"></i>
-                </button>
-                <div class="org-avatar">O</div>
-            </div>
-        </div>
+        <?php include __DIR__ . '/../../includes/app_topbar.php'; ?>
 
         <div class="org-page-wrap">
             <div class="org-page-head">
@@ -209,6 +201,6 @@ window.edunexoError = <?php echo json_encode($error); ?>;
 <?php endif; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="assets/js/main.js"></script>
+<script src="../../assets/js/main.js"></script>
 </body>
 </html>

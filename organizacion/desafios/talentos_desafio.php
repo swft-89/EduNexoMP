@@ -12,7 +12,7 @@ if ($idDesafio <= 0) {
 
 /* Validar desafío */
 $stmt = $pdo->prepare("
-    SELECT 
+    SELECT
         d.id_desafio,
         d.titulo,
         d.descripcion,
@@ -197,6 +197,7 @@ unset($_SESSION['success'], $_SESSION['error']);
     </aside>
 
     <section class="app-content org-content">
+        <?php include __DIR__ . '/../../includes/app_topbar.php'; ?>
         <div class="org-page-wrap">
             <div class="org-page-head">
                 <div>
@@ -319,6 +320,6 @@ window.edunexoError = <?php echo json_encode($error); ?>;
 <?php endif; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="assets/js/main.js"></script>
+<script src="../../assets/js/main.js"></script>
 </body>
 </html>

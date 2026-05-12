@@ -11,7 +11,7 @@ if (!$idUsuario) {
 
 /*Datos del estudiante*/
 $stmt = $pdo->prepare("
-    SELECT 
+    SELECT
         e.id_estudiante,
         e.nombre,
         e.apellido_paterno,
@@ -151,6 +151,7 @@ unset($_SESSION['success'], $_SESSION['error']);
     </aside>
 
     <main class="app-content">
+        <?php include __DIR__ . '/../includes/app_topbar.php'; ?>
         <div class="skills-edit-page">
 
             <section class="skills-edit-hero">
@@ -236,7 +237,7 @@ unset($_SESSION['success'], $_SESSION['error']);
                                 $seleccionada = isset($habilidadesMap[$idHabilidad]);
                                 $nivelSeleccionado = $seleccionada ? ($habilidadesMap[$idHabilidad]['nivel'] ?? '') : '';
                             ?>
-                            <article 
+                            <article
                                 class="skill-option <?php echo $seleccionada ? 'is-checked' : ''; ?>"
                                 data-skill-name="<?php echo htmlspecialchars(mb_strtolower($habilidad['nombre'])); ?>"
                                 data-skill-category="<?php echo htmlspecialchars($categoria); ?>"
