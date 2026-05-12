@@ -87,6 +87,17 @@ try {
     }
 
     $stmt = $pdo->prepare("
+        SELECT titulo, id_organizacion
+        FROM desafio
+        WHERE id_desafio = :id_desafio
+        LIMIT 1
+    ");
+    $stmt->execute([
+        ':id_desafio' => $idDesafio
+    ]);
+    $desafioNotificacion = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $stmt = $pdo->prepare("
         SELECT 1
         FROM propuesta
         WHERE id_estudiante = :id_estudiante
@@ -194,6 +205,25 @@ try {
     $stmt->execute([
         ':id_propuesta' => $idPropuesta
     ]);
+
+    if ($desafioNotificacion) {
+        $stmt = $pdo->prepare("
+            INSERT INTO notificacion (
+                tipo,
+                mensaje,
+                id_usuario
+            )
+            VALUES (
+                'propuesta_recibida',
+                :mensaje,
+                :id_usuario
+            )
+        ");
+        $stmt->execute([
+            ':mensaje' => 'Recibiste una nueva propuesta para el desafío "' . $desafioNotificacion['titulo'] . '". ID_PROPUESTA:' . $idPropuesta,
+            ':id_usuario' => $desafioNotificacion['id_organizacion']
+        ]);
+    }
 
     $pdo->commit();
 

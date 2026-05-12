@@ -23,7 +23,7 @@ if ($idConversacion <= 0 || $contenido === '') {
 }
 
 $stmt = $pdo->prepare("
-    SELECT 1
+    SELECT p.id_estudiante, d.titulo
     FROM conversacion c
     INNER JOIN propuesta p
         ON c.id_propuesta = p.id_propuesta
@@ -37,8 +37,9 @@ $stmt->execute([
     ':id_conversacion' => $idConversacion,
     ':id_organizacion' => $idUsuario
 ]);
+$conversacion = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if (!$stmt->fetchColumn()) {
+if (!$conversacion) {
     $_SESSION['error'] = 'Conversación no válida.';
     header('Location: ../organizacion/chat_organizacion.php');
     exit;
@@ -61,6 +62,23 @@ try {
         ':contenido' => $contenido,
         ':id_conversacion' => $idConversacion,
         ':id_emisor' => $idUsuario
+    ]);
+
+    $stmt = $pdo->prepare("
+        INSERT INTO notificacion (
+            tipo,
+            mensaje,
+            id_usuario
+        )
+        VALUES (
+            'mensaje_chat',
+            :mensaje,
+            :id_usuario
+        )
+    ");
+    $stmt->execute([
+        ':mensaje' => 'Tienes un nuevo mensaje sobre el desafío "' . $conversacion['titulo'] . '". ID_CONVERSACION:' . $idConversacion,
+        ':id_usuario' => $conversacion['id_estudiante']
     ]);
 
     header('Location: ../organizacion/chat_organizacion.php?id=' . $idConversacion);

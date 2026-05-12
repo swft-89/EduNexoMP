@@ -33,7 +33,10 @@ if (mb_strlen($feedback) > 1000) {
 
 try {
     $stmt = $pdo->prepare("
-        SELECT 1
+        SELECT
+            p.id_estudiante,
+            p.estado AS estado_actual,
+            d.titulo AS titulo_desafio
         FROM propuesta p
         INNER JOIN desafio d
             ON p.id_desafio = d.id_desafio
@@ -46,7 +49,9 @@ try {
         ':id_organizacion' => $idOrganizacion
     ]);
 
-    if (!$stmt->fetchColumn()) {
+    $propuesta = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$propuesta) {
         $_SESSION['error'] = 'La propuesta no pertenece a tu organización.';
         header('Location: ../organizacion/propuestas_organizacion.php');
         exit;
@@ -63,6 +68,23 @@ try {
         ':estado' => $nuevoEstado,
         ':feedback' => $feedback !== '' ? $feedback : null,
         ':id_propuesta' => $idPropuesta
+    ]);
+
+    $stmt = $pdo->prepare("
+        INSERT INTO notificacion (
+            tipo,
+            mensaje,
+            id_usuario
+        )
+        VALUES (
+            'propuesta_actualizada',
+            :mensaje,
+            :id_usuario
+        )
+    ");
+    $stmt->execute([
+        ':mensaje' => 'Tu propuesta para el desafío "' . $propuesta['titulo_desafio'] . '" cambió a "' . $nuevoEstado . '". ID_PROPUESTA:' . $idPropuesta,
+        ':id_usuario' => $propuesta['id_estudiante']
     ]);
 
     $_SESSION['success'] = 'Propuesta actualizada correctamente.';
