@@ -1221,6 +1221,10 @@ body {
     z-index: 2100;
 }
 
+.swal2-container {
+    z-index: 200000 !important;
+}
+
 .org-content .app-topbar,
 .superadmin-content .app-topbar {
     margin: 0;

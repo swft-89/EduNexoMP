@@ -144,12 +144,12 @@ unset($_SESSION['success'], $_SESSION['error']);
             </div>
 
             <div class="superadmin-actions">
-                <a href="#" class="btn superadmin-btn-light">
+                <a href="../procesos/reportes/exportar_reporte.php" class="btn superadmin-btn-light">
                     <i class="bi bi-download"></i>
                     Exportar reporte
                 </a>
 
-                <a href="#" class="btn btn-primary superadmin-btn-main">
+                <a href="reportes_superadmin.php" class="btn btn-primary superadmin-btn-main">
                     <i class="bi bi-eye"></i>
                     Ver todos los reportes
                 </a>

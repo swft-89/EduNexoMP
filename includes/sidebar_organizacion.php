@@ -33,6 +33,12 @@ $orgSidebarItems = [
         'active' => ['organizacion/propuestas_organizacion.php'],
     ],
     [
+        'href' => 'organizacion/reportes_organizacion.php',
+        'icon' => 'bi-bar-chart-line',
+        'label' => 'Reportes',
+        'active' => ['organizacion/reportes_organizacion.php'],
+    ],
+    [
         'href' => 'organizacion/chat_organizacion.php',
         'icon' => 'bi-chat',
         'label' => 'Chat',

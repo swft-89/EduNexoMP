@@ -21,6 +21,12 @@ $studentSidebarItems = [
         'active' => ['estudiante/mis_favoritos.php'],
     ],
     [
+        'href' => 'estudiante/reportes_estudiante.php',
+        'icon' => 'bi-bar-chart-line',
+        'label' => 'Reportes',
+        'active' => ['estudiante/reportes_estudiante.php'],
+    ],
+    [
         'href' => 'estudiante/chat.php',
         'icon' => 'bi-chat',
         'label' => 'Chat',

@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '../../includes/session_admin.php';
-require_once __DIR__ . '../../config/conexion.php';
+require_once __DIR__ . '/../includes/session_admin.php';
+require_once __DIR__ . '/../config/conexion.php';
 
 $stmt = $pdo->prepare("
     SELECT a.nombre, a.apellido_paterno, a.apellido_materno, a.puesto, a.departamento, a.tipo_admin
@@ -21,7 +21,7 @@ $nombreCompleto = trim(($admin['nombre'] ?? '') . ' ' . ($admin['apellido_patern
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard administrador | EduNexo MP</title>
-    <link rel="stylesheet" href="../../assets/css/admin/dashboard_admin.css">
+    <link rel="stylesheet" href="../assets/css/admin/dashboard_admin.css">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/org/dashboard_organizacion.css">
     <link rel="stylesheet" href="../assets/css/dark.css?v=dark-fix-2">
@@ -63,11 +63,11 @@ $nombreCompleto = trim(($admin['nombre'] ?? '') . ' ' . ($admin['apellido_patern
             <article class="admin-card">
                 <h3>Reportes</h3>
                 <p>Visualiza métricas generales de estudiantes, organizaciones y desafíos.</p>
-                <a href="#">Ver reportes</a>
+                <a href="reportes_admin.php">Ver reportes</a>
             </article>
         </section>
     </main>
 
-    <?php include '../../includes/footer.php'; ?>
+    <?php include '../includes/footer.php'; ?>
 </body>
 </html>

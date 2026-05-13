@@ -1,7 +1,20 @@
 <?php
 require_once __DIR__ . '/sidebar_helpers.php';
 
-$adminSidebarItems = [
+$isSuperadminSidebar = true;
+if (isset($pdo, $_SESSION['usuario_id']) && ($_SESSION['rol'] ?? '') === 'administrador') {
+    $stmtSidebarAdmin = $pdo->prepare("
+        SELECT tipo_admin
+        FROM administrador
+        WHERE id_admin = :id_admin
+        LIMIT 1
+    ");
+    $stmtSidebarAdmin->execute([':id_admin' => $_SESSION['usuario_id']]);
+    $tipoAdminSidebar = $stmtSidebarAdmin->fetchColumn();
+    $isSuperadminSidebar = $tipoAdminSidebar === 'superadmin';
+}
+
+$adminSidebarItems = $isSuperadminSidebar ? [
     [
         'href' => 'superadmin/dashboard_superadmin.php',
         'icon' => 'bi-bar-chart-line',
@@ -43,6 +56,19 @@ $adminSidebarItems = [
         'icon' => 'bi-tags',
         'label' => 'Categorías',
         'active' => ['superadmin/categorias_superadmin.php'],
+    ],
+] : [
+    [
+        'href' => 'admin/dashboard_admin.php',
+        'icon' => 'bi-bar-chart-line',
+        'label' => 'Dashboard',
+        'active' => ['admin/dashboard_admin.php'],
+    ],
+    [
+        'href' => 'admin/reportes_admin.php',
+        'icon' => 'bi-clipboard-data',
+        'label' => 'Reportes',
+        'active' => ['admin/reportes_admin.php'],
     ],
 ];
 ?>
