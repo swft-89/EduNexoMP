@@ -646,6 +646,15 @@
     color: #ffffff !important;
 }
 
+:root[data-theme="dark"] .sidebar-help {
+    color: var(--text) !important;
+}
+
+:root[data-theme="dark"] .sidebar-help:hover {
+    background: #172033 !important;
+    color: var(--primary-light) !important;
+}
+
 :root[data-theme="dark"] .logo-mini {
     background: var(--primary) !important;
     color: #ffffff !important;
@@ -1085,5 +1094,50 @@
 :root[data-theme="dark"] .skills-catalog-callout p,
 :root[data-theme="dark"] .student-skills-modal-head p,
 :root[data-theme="dark"] .skills-helper {
+    color: var(--text-soft) !important;
+}
+
+/* Ayuda y sugerencias */
+:root[data-theme="dark"] .help-hero,
+:root[data-theme="dark"] .help-card,
+:root[data-theme="dark"] .help-admin,
+:root[data-theme="dark"] .help-alert,
+:root[data-theme="dark"] .help-empty {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    box-shadow: none !important;
+}
+
+:root[data-theme="dark"] .help-item,
+:root[data-theme="dark"] .help-review-card {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+}
+
+:root[data-theme="dark"] .help-field input,
+:root[data-theme="dark"] .help-field select,
+:root[data-theme="dark"] .help-field textarea,
+:root[data-theme="dark"] .help-review-form textarea {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+    color: var(--text) !important;
+}
+
+:root[data-theme="dark"] .help-hero h1,
+:root[data-theme="dark"] .help-card h2,
+:root[data-theme="dark"] .help-section-head h2,
+:root[data-theme="dark"] .help-field label,
+:root[data-theme="dark"] .help-item strong,
+:root[data-theme="dark"] .help-review-main h3 {
+    color: var(--text) !important;
+}
+
+:root[data-theme="dark"] .help-hero p,
+:root[data-theme="dark"] .help-card p,
+:root[data-theme="dark"] .help-section-head p,
+:root[data-theme="dark"] .help-item p,
+:root[data-theme="dark"] .help-review-main p,
+:root[data-theme="dark"] .help-review-main small,
+:root[data-theme="dark"] .help-empty {
     color: var(--text-soft) !important;
 }

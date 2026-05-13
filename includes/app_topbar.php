@@ -100,6 +100,7 @@ $topbarInicial = strtoupper(substr($topbarNombre, 0, 1));
 $topbarFotoSrc = edunexo_asset_url($topbarFoto);
 $topbarNotificacionUrl = edunexo_topbar_asset('procesos/ver_notificacion.php');
 $topbarLogoutUrl = edunexo_topbar_asset('procesos/logout.php');
+$topbarHelpUrl = edunexo_topbar_asset('ayuda.php');
 $topbarRolLabel = [
     'estudiante' => 'Estudiante',
     'organizacion' => 'Organizacion',
@@ -621,12 +622,39 @@ document.addEventListener('click', function (event) {
 document.addEventListener('DOMContentLoaded', function () {
     const unreadNotifications = <?php echo (int) $topbarNotificacionesNoLeidas; ?>;
     const sidebarTop = document.querySelector('.sidebar-top');
+    const sidebarMenu = document.querySelector('.sidebar-menu');
 
     if (unreadNotifications > 0 && sidebarTop && !sidebarTop.querySelector('.sidebar-notification-dot')) {
         const dot = document.createElement('span');
         dot.className = 'sidebar-notification-dot';
         dot.title = unreadNotifications + ' notificaciones nuevas';
         sidebarTop.appendChild(dot);
+    }
+
+    if (sidebarMenu && !sidebarMenu.querySelector('.sidebar-help')) {
+        const utility = document.createElement('div');
+        utility.className = 'sidebar-utility';
+
+        const help = document.createElement('a');
+        help.className = 'sidebar-help';
+        help.href = <?php echo json_encode($topbarHelpUrl); ?>;
+        help.innerHTML = '<i class="bi bi-question-circle"></i><span>Ayuda</span>';
+        utility.appendChild(help);
+
+        if (!sidebarMenu.querySelector('.sidebar-logout')) {
+            const logout = document.createElement('a');
+            logout.className = 'sidebar-logout';
+            logout.href = <?php echo json_encode($topbarLogoutUrl); ?>;
+            logout.innerHTML = '<i class="bi bi-box-arrow-right"></i><span>Cerrar sesion</span>';
+            utility.appendChild(logout);
+        }
+
+        const existingBottom = sidebarMenu.querySelector('.sidebar-bottom');
+        if (existingBottom) {
+            sidebarMenu.insertBefore(utility, existingBottom);
+        } else {
+            sidebarMenu.appendChild(utility);
+        }
     }
 });
 </script>

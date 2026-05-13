@@ -1137,6 +1137,10 @@ body {
     display: flex;
     flex-direction: column;
     gap: 24px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
 }
 
 .sidebar-top {
@@ -1195,6 +1199,7 @@ body {
 
 .app-content {
     padding: 28px 28px 40px;
+    min-width: 0;
 }
 
 .app-topbar,
@@ -1211,6 +1216,9 @@ body {
 
 .app-topbar {
     margin: -28px -28px 28px;
+    position: sticky;
+    top: 0;
+    z-index: 2100;
 }
 
 .org-content .app-topbar,
@@ -1548,6 +1556,10 @@ body {
     .sidebar {
         border-right: none;
         border-bottom: 1px solid #e5e7eb;
+        position: static;
+        height: auto;
+        max-height: none;
+        overflow: visible;
     }
 
     .filters-bar {
@@ -1592,13 +1604,21 @@ body {
     flex: 1;
 }
 
-.sidebar-bottom {
+.sidebar-bottom,
+.sidebar-utility {
     margin-top: auto;
     padding-top: 18px;
     border-top: 1px solid rgba(255,255,255,0.08);
 }
 
-.sidebar-logout {
+.sidebar-utility {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sidebar-logout,
+.sidebar-help {
     height: 52px;
     border-radius: 16px;
 
@@ -1626,4 +1646,14 @@ body {
 
 .sidebar-logout i {
     font-size: 1.1rem;
+}
+
+.sidebar-help {
+    color: var(--text);
+}
+
+.sidebar-help:hover {
+    background: #eef2ff;
+    color: var(--primary);
+    transform: translateX(2px);
 }
