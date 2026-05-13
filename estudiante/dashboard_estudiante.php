@@ -373,32 +373,6 @@ unset($_SESSION['success'], $_SESSION['error']);
                 </article>
             <?php endif; ?>
         </div>
-
-        <div class="dashboard-bottom-actions">
-            <a href="habilidades_estudiante.php" class="quick-link-card">
-                <i class="bi bi-stars"></i>
-                <div>
-                    <strong>Mis habilidades</strong>
-                    <p>Administra las habilidades que se usarán para tu match</p>
-                </div>
-            </a>
-
-            <a href="editar_perfil_estudiante.php" class="quick-link-card">
-                <i class="bi bi-person"></i>
-                <div>
-                    <strong>Editar perfil</strong>
-                    <p>Actualiza tu información personal y académica</p>
-                </div>
-            </a>
-
-            <a href="../procesos/logout.php" class="quick-link-card">
-                <i class="bi bi-box-arrow-right"></i>
-                <div>
-                    <strong>Cerrar sesión</strong>
-                    <p>Salir del panel del estudiante</p>
-                </div>
-            </a>
-        </div>
     </section>
 </div>
 

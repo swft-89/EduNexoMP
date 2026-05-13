@@ -67,6 +67,9 @@ unset($_SESSION['success'], $_SESSION['error']);
             <a href="chat.php">
                 <i class="bi bi-chat"></i> Chat
             </a>
+            <a href="habilidades_estudiante.php">
+                <i class="bi bi-stars"></i> Mis habilidades
+            </a>
             <a href="editar_perfil_estudiante.php">
                 <i class="bi bi-person"></i> Perfil
             </a>

@@ -27,10 +27,11 @@ $stmt = $pdo->prepare("
     FROM ayuda_sugerencia
     WHERE id_usuario = :id_usuario
     ORDER BY fecha_creacion DESC
-    LIMIT 8
+    LIMIT 50
 ");
 $stmt->execute([':id_usuario' => $idUsuario]);
 $misSugerencias = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$misSugerenciasPreview = array_slice($misSugerencias, 0, 3);
 
 if ($esAdmin) {
     $stmt = $pdo->query("
@@ -151,66 +152,78 @@ function ayuda_tipo_label(string $tipo): string
             <div class="help-alert error"><?php echo htmlspecialchars($error); ?></div>
         <?php endif; ?>
 
-        <section class="help-grid">
-            <article class="help-card">
-                <h2>Enviar solicitud</h2>
-                <p>Usa este formulario para sugerir catalogos o para pedir ayuda general.</p>
+        <?php if (!$esAdmin): ?>
+            <section class="help-grid">
+                <article class="help-card">
+                    <h2>Enviar solicitud</h2>
+                    <p>Usa este formulario para sugerir catalogos o para pedir ayuda general.</p>
 
-                <form action="procesos/guardar_sugerencia_ayuda.php" method="POST" class="help-form">
-                    <div class="help-field">
-                        <label for="tipo">Tipo</label>
-                        <select id="tipo" name="tipo" required>
-                            <option value="ayuda_general" <?php echo (($old['tipo'] ?? '') === 'ayuda_general') ? 'selected' : ''; ?>>Ayuda general</option>
-                            <option value="habilidad" <?php echo (($old['tipo'] ?? '') === 'habilidad') ? 'selected' : ''; ?>>Sugerir habilidad</option>
-                            <option value="categoria" <?php echo (($old['tipo'] ?? '') === 'categoria') ? 'selected' : ''; ?>>Sugerir categoria</option>
-                        </select>
+                    <form action="procesos/guardar_sugerencia_ayuda.php" method="POST" class="help-form">
+                        <div class="help-field">
+                            <label for="tipo">Tipo</label>
+                            <select id="tipo" name="tipo" required>
+                                <option value="ayuda_general" <?php echo (($old['tipo'] ?? '') === 'ayuda_general') ? 'selected' : ''; ?>>Ayuda general</option>
+                                <option value="habilidad" <?php echo (($old['tipo'] ?? '') === 'habilidad') ? 'selected' : ''; ?>>Sugerir habilidad</option>
+                                <option value="categoria" <?php echo (($old['tipo'] ?? '') === 'categoria') ? 'selected' : ''; ?>>Sugerir categoria</option>
+                            </select>
+                        </div>
+
+                        <div class="help-field">
+                            <label for="titulo">Titulo</label>
+                            <input type="text" id="titulo" name="titulo" maxlength="150" value="<?php echo htmlspecialchars($old['titulo'] ?? ''); ?>" required>
+                        </div>
+
+                        <div class="help-field help-skill-category-field" id="helpSkillCategoryField">
+                            <label for="categoria_habilidad">Categoria de habilidad</label>
+                            <input type="text" id="categoria_habilidad" name="categoria_habilidad" maxlength="100" placeholder="Solo aplica para sugerencias de habilidad" value="<?php echo htmlspecialchars($old['categoria_habilidad'] ?? ''); ?>">
+                        </div>
+
+                        <div class="help-field">
+                            <label for="descripcion">Descripcion</label>
+                            <textarea id="descripcion" name="descripcion" rows="6" maxlength="2000"><?php echo htmlspecialchars($old['descripcion'] ?? ''); ?></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Enviar sugerencia</button>
+                    </form>
+                </article>
+
+                <article class="help-card">
+                    <div class="help-card-head">
+                        <div>
+                            <h2>Mis solicitudes recientes</h2>
+                            <p>Consulta el estado de lo que has enviado.</p>
+                        </div>
+
+                        <?php if (count($misSugerencias) > 3): ?>
+                            <button type="button" class="btn help-more-btn" id="openHelpHistory">
+                                Mostrar mas
+                            </button>
+                        <?php endif; ?>
                     </div>
 
-                    <div class="help-field">
-                        <label for="titulo">Titulo</label>
-                        <input type="text" id="titulo" name="titulo" maxlength="150" value="<?php echo htmlspecialchars($old['titulo'] ?? ''); ?>" required>
-                    </div>
-
-                    <div class="help-field">
-                        <label for="categoria_habilidad">Categoria de habilidad</label>
-                        <input type="text" id="categoria_habilidad" name="categoria_habilidad" maxlength="100" placeholder="Solo aplica para sugerencias de habilidad" value="<?php echo htmlspecialchars($old['categoria_habilidad'] ?? ''); ?>">
-                    </div>
-
-                    <div class="help-field">
-                        <label for="descripcion">Descripcion</label>
-                        <textarea id="descripcion" name="descripcion" rows="6" maxlength="2000"><?php echo htmlspecialchars($old['descripcion'] ?? ''); ?></textarea>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Enviar sugerencia</button>
-                </form>
-            </article>
-
-            <article class="help-card">
-                <h2>Mis solicitudes recientes</h2>
-                <p>Consulta el estado de lo que has enviado.</p>
-
-                <?php if (!empty($misSugerencias)): ?>
-                    <div class="help-list">
-                        <?php foreach ($misSugerencias as $sugerencia): ?>
-                            <div class="help-item">
-                                <div>
-                                    <span><?php echo htmlspecialchars(ayuda_tipo_label($sugerencia['tipo'])); ?></span>
-                                    <strong><?php echo htmlspecialchars($sugerencia['titulo']); ?></strong>
-                                    <?php if (!empty($sugerencia['respuesta_admin'])): ?>
-                                        <p><?php echo htmlspecialchars($sugerencia['respuesta_admin']); ?></p>
-                                    <?php endif; ?>
+                    <?php if (!empty($misSugerenciasPreview)): ?>
+                        <div class="help-list">
+                            <?php foreach ($misSugerenciasPreview as $sugerencia): ?>
+                                <div class="help-item">
+                                    <div>
+                                        <span><?php echo htmlspecialchars(ayuda_tipo_label($sugerencia['tipo'])); ?></span>
+                                        <strong><?php echo htmlspecialchars($sugerencia['titulo']); ?></strong>
+                                        <?php if (!empty($sugerencia['respuesta_admin'])): ?>
+                                            <p><?php echo htmlspecialchars($sugerencia['respuesta_admin']); ?></p>
+                                        <?php endif; ?>
+                                    </div>
+                                    <em class="status-<?php echo htmlspecialchars($sugerencia['estado']); ?>">
+                                        <?php echo htmlspecialchars($sugerencia['estado']); ?>
+                                    </em>
                                 </div>
-                                <em class="status-<?php echo htmlspecialchars($sugerencia['estado']); ?>">
-                                    <?php echo htmlspecialchars($sugerencia['estado']); ?>
-                                </em>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                <?php else: ?>
-                    <div class="help-empty">Aun no has enviado solicitudes.</div>
-                <?php endif; ?>
-            </article>
-        </section>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php else: ?>
+                        <div class="help-empty">Aun no has enviado solicitudes.</div>
+                    <?php endif; ?>
+                </article>
+            </section>
+        <?php endif; ?>
 
         <?php if ($esAdmin): ?>
             <section class="help-admin">
@@ -279,7 +292,99 @@ function ayuda_tipo_label(string $tipo): string
     </main>
 </div>
 
+<?php if (!$esAdmin && count($misSugerencias) > 3): ?>
+    <div class="help-history-modal" id="helpHistoryModal" aria-hidden="true">
+        <div class="help-history-backdrop" data-help-history-close></div>
+        <section class="help-history-panel" role="dialog" aria-modal="true" aria-labelledby="helpHistoryTitle">
+            <div class="help-history-head">
+                <div>
+                    <span>Historial</span>
+                    <h2 id="helpHistoryTitle">Todas mis solicitudes</h2>
+                </div>
+                <button type="button" class="help-history-close" data-help-history-close aria-label="Cerrar historial">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+
+            <div class="help-history-body">
+                <div class="help-list">
+                    <?php foreach ($misSugerencias as $sugerencia): ?>
+                        <div class="help-item">
+                            <div>
+                                <span><?php echo htmlspecialchars(ayuda_tipo_label($sugerencia['tipo'])); ?></span>
+                                <strong><?php echo htmlspecialchars($sugerencia['titulo']); ?></strong>
+                                <?php if (!empty($sugerencia['respuesta_admin'])): ?>
+                                    <p><?php echo htmlspecialchars($sugerencia['respuesta_admin']); ?></p>
+                                <?php endif; ?>
+                            </div>
+                            <em class="status-<?php echo htmlspecialchars($sugerencia['estado']); ?>">
+                                <?php echo htmlspecialchars($sugerencia['estado']); ?>
+                            </em>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+    </div>
+<?php endif; ?>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="assets/js/main.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const tipo = document.getElementById('tipo');
+    const categoriaField = document.getElementById('helpSkillCategoryField');
+    const categoriaInput = document.getElementById('categoria_habilidad');
+
+    function toggleCategoriaField() {
+        const mostrar = tipo && tipo.value === 'habilidad';
+
+        if (categoriaField) {
+            categoriaField.hidden = !mostrar;
+        }
+
+        if (!mostrar && categoriaInput) {
+            categoriaInput.value = '';
+        }
+    }
+
+    if (tipo) {
+        tipo.addEventListener('change', toggleCategoriaField);
+        toggleCategoriaField();
+    }
+
+    const historyModal = document.getElementById('helpHistoryModal');
+    const openHistory = document.getElementById('openHelpHistory');
+    const closeHistoryButtons = document.querySelectorAll('[data-help-history-close]');
+
+    function closeHistory() {
+        if (!historyModal) {
+            return;
+        }
+
+        historyModal.classList.remove('is-open');
+        historyModal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('help-modal-open');
+    }
+
+    if (openHistory && historyModal) {
+        openHistory.addEventListener('click', function () {
+            historyModal.classList.add('is-open');
+            historyModal.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('help-modal-open');
+        });
+    }
+
+    closeHistoryButtons.forEach(button => {
+        button.addEventListener('click', closeHistory);
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+            closeHistory();
+        }
+    });
+});
+</script>
 </body>
 </html>

@@ -1101,6 +1101,8 @@
 :root[data-theme="dark"] .help-hero,
 :root[data-theme="dark"] .help-card,
 :root[data-theme="dark"] .help-admin,
+:root[data-theme="dark"] .help-history-panel,
+:root[data-theme="dark"] .help-history-head,
 :root[data-theme="dark"] .help-alert,
 :root[data-theme="dark"] .help-empty {
     background: #1e293b !important;
@@ -1123,9 +1125,17 @@
     color: var(--text) !important;
 }
 
+:root[data-theme="dark"] .help-more-btn,
+:root[data-theme="dark"] .help-history-close {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+    color: var(--text) !important;
+}
+
 :root[data-theme="dark"] .help-hero h1,
 :root[data-theme="dark"] .help-card h2,
 :root[data-theme="dark"] .help-section-head h2,
+:root[data-theme="dark"] .help-history-head h2,
 :root[data-theme="dark"] .help-field label,
 :root[data-theme="dark"] .help-item strong,
 :root[data-theme="dark"] .help-review-main h3 {
