@@ -182,13 +182,13 @@ unset($_SESSION['error_form'], $_SESSION['old_propuesta']);
                                     type="file"
                                     id="archivo_propuesta"
                                     name="archivo_propuesta"
-                                    accept=".pdf,.doc,.docx,.ppt,.pptx"
+                                    accept=".pdf,.ppt,.pptx"
                                 >
                             </div>
 
                             <small class="upload-help">
                                 Formatos permitidos:
-                                PDF, DOC, DOCX, PPT, PPTX · Máximo 5 MB
+                                PDF, PPT, PPTX · Máximo 5 MB
                             </small>
                         </div>
 

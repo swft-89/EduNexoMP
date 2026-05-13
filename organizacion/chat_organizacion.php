@@ -42,6 +42,8 @@ $stmt = $pdo->prepare("
           AND leido = FALSE
     ) nr ON TRUE
     WHERE d.id_organizacion = :id_organizacion
+      AND c.activa = TRUE
+      AND LOWER(COALESCE(p.estado, '')) = 'aceptada'
     ORDER BY m.fecha_hora DESC NULLS LAST, c.id_conversacion DESC
 ");
 $stmt->execute([
@@ -73,6 +75,8 @@ if ($idConversacion > 0) {
             ON p.id_estudiante = e.id_estudiante
         WHERE c.id_conversacion = :id_conversacion
           AND d.id_organizacion = :id_organizacion
+          AND c.activa = TRUE
+          AND LOWER(COALESCE(p.estado, '')) = 'aceptada'
         LIMIT 1
     ");
     $stmt->execute([

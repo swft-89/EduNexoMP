@@ -34,6 +34,8 @@ $stmt = $pdo->prepare("
         ON p.id_estudiante = e.id_estudiante
     LEFT JOIN conversacion c
         ON p.id_propuesta = c.id_propuesta
+        AND c.activa = TRUE
+        AND LOWER(COALESCE(p.estado, '')) = 'aceptada'
     WHERE d.id_organizacion = :id_organizacion
     ORDER BY p.fecha_envio DESC
 ");

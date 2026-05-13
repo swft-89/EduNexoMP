@@ -31,6 +31,8 @@ $stmt = $pdo->prepare("
         ON p.id_desafio = d.id_desafio
     WHERE c.id_conversacion = :id_conversacion
       AND d.id_organizacion = :id_organizacion
+      AND c.activa = TRUE
+      AND LOWER(COALESCE(p.estado, '')) = 'aceptada'
     LIMIT 1
 ");
 $stmt->execute([

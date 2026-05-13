@@ -63,21 +63,7 @@ try {
         ':estado' => 'en revisión'
     ]);
 
-    $idPropuesta = (int) $stmt->fetchColumn();
-
-    $stmt = $pdo->prepare("
-        INSERT INTO conversacion (
-            id_propuesta,
-            activa
-        )
-        VALUES (
-            :id_propuesta,
-            TRUE
-        )
-    ");
-    $stmt->execute([
-        ':id_propuesta' => $idPropuesta
-    ]);
+    $stmt->fetchColumn();
 
     $pdo->commit();
 

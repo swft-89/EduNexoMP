@@ -113,7 +113,17 @@
 
 .propuesta-actions {
     display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
     justify-content: flex-end;
+}
+
+.delete-propuesta-form {
+    margin: 0;
+}
+
+.delete-propuesta-form .btn {
+    height: 100%;
 }
 
 .btn-outline-dark {
@@ -179,10 +189,13 @@
     }
 
     .propuesta-actions {
+        flex-direction: column;
         justify-content: stretch;
     }
 
-    .btn-outline-dark {
+    .btn-outline-dark,
+    .delete-propuesta-form,
+    .delete-propuesta-form .btn {
         width: 100%;
     }
 }

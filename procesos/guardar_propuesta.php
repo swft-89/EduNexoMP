@@ -55,10 +55,10 @@ if (empty($_FILES['archivo_propuesta']['name'])) {
     }
 
     $extension = strtolower(pathinfo($archivo['name'], PATHINFO_EXTENSION));
-    $extensionesPermitidas = ['pdf', 'doc', 'docx', 'ppt', 'pptx'];
+    $extensionesPermitidas = ['pdf', 'ppt', 'pptx'];
 
     if (!in_array($extension, $extensionesPermitidas, true)) {
-        $errores[] = 'El formato del archivo no está permitido.';
+        $errores[] = 'Solo se permiten archivos PDF, PPT o PPTX.';
     }
 }
 
@@ -186,23 +186,6 @@ try {
         ':tipo_archivo' => $archivo['type'],
         ':url_archivo' => $rutaBD,
         ':tamano_bytes' => $archivo['size'],
-        ':id_propuesta' => $idPropuesta
-    ]);
-
-    $stmt = $pdo->prepare("
-        INSERT INTO conversacion (
-            fecha_inicio,
-            activa,
-            id_propuesta
-        )
-        VALUES (
-            CURRENT_TIMESTAMP,
-            TRUE,
-            :id_propuesta
-        )
-    ");
-
-    $stmt->execute([
         ':id_propuesta' => $idPropuesta
     ]);
 

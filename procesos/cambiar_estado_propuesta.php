@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once '../config/conexion.php';
+require_once '../includes/propuesta_utils.php';
 
 if (!isset($_SESSION['usuario_id']) || !isset($_SESSION['rol']) || $_SESSION['rol'] !== 'organizacion') {
     header('Location: ../index.php');
@@ -14,16 +15,23 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $idOrganizacion = (int) $_SESSION['usuario_id'];
 $idPropuesta = isset($_POST['id_propuesta']) ? (int) $_POST['id_propuesta'] : 0;
-$nuevoEstado = trim($_POST['estado'] ?? '');
+$estadoRecibido = trim($_POST['estado'] ?? '');
 $feedback = trim($_POST['feedback'] ?? '');
 
-$estadosValidos = ['en revisión', 'aceptada', 'rechazada'];
+$estadoNormalizado = edunexo_normalize_estado_propuesta($estadoRecibido);
+$estadosValidos = [
+    'en revision' => 'en revisión',
+    'aceptada' => 'aceptada',
+    'rechazada' => 'rechazada'
+];
 
-if ($idPropuesta <= 0 || !in_array($nuevoEstado, $estadosValidos, true)) {
+if ($idPropuesta <= 0 || !isset($estadosValidos[$estadoNormalizado])) {
     $_SESSION['error'] = 'No se pudo actualizar la propuesta.';
     header('Location: ../organizacion/propuestas_organizacion.php');
     exit;
 }
+
+$nuevoEstado = $estadosValidos[$estadoNormalizado];
 
 if (mb_strlen($feedback) > 1000) {
     $_SESSION['error'] = 'El feedback no puede exceder 1000 caracteres.';
@@ -36,6 +44,7 @@ try {
         SELECT
             p.id_estudiante,
             p.estado AS estado_actual,
+            d.id_desafio,
             d.titulo AS titulo_desafio
         FROM propuesta p
         INNER JOIN desafio d
@@ -52,10 +61,12 @@ try {
     $propuesta = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$propuesta) {
-        $_SESSION['error'] = 'La propuesta no pertenece a tu organización.';
+        $_SESSION['error'] = 'La propuesta no pertenece a tu organizaciÃ³n.';
         header('Location: ../organizacion/propuestas_organizacion.php');
         exit;
     }
+
+    $pdo->beginTransaction();
 
     $stmt = $pdo->prepare("
         UPDATE propuesta
@@ -70,6 +81,58 @@ try {
         ':id_propuesta' => $idPropuesta
     ]);
 
+    if ($nuevoEstado === 'aceptada') {
+        $stmt = $pdo->prepare("
+            UPDATE desafio
+            SET estado = 'cerrado'
+            WHERE id_desafio = :id_desafio
+              AND id_organizacion = :id_organizacion
+        ");
+        $stmt->execute([
+            ':id_desafio' => $propuesta['id_desafio'],
+            ':id_organizacion' => $idOrganizacion
+        ]);
+
+        $stmt = $pdo->prepare("
+            SELECT id_conversacion
+            FROM conversacion
+            WHERE id_propuesta = :id_propuesta
+            LIMIT 1
+        ");
+        $stmt->execute([':id_propuesta' => $idPropuesta]);
+        $idConversacion = $stmt->fetchColumn();
+
+        if ($idConversacion) {
+            $stmt = $pdo->prepare("
+                UPDATE conversacion
+                SET activa = TRUE
+                WHERE id_conversacion = :id_conversacion
+            ");
+            $stmt->execute([':id_conversacion' => $idConversacion]);
+        } else {
+            $stmt = $pdo->prepare("
+                INSERT INTO conversacion (
+                    fecha_inicio,
+                    activa,
+                    id_propuesta
+                )
+                VALUES (
+                    CURRENT_TIMESTAMP,
+                    TRUE,
+                    :id_propuesta
+                )
+            ");
+            $stmt->execute([':id_propuesta' => $idPropuesta]);
+        }
+    } else {
+        $stmt = $pdo->prepare("
+            UPDATE conversacion
+            SET activa = FALSE
+            WHERE id_propuesta = :id_propuesta
+        ");
+        $stmt->execute([':id_propuesta' => $idPropuesta]);
+    }
+
     $stmt = $pdo->prepare("
         INSERT INTO notificacion (
             tipo,
@@ -83,16 +146,21 @@ try {
         )
     ");
     $stmt->execute([
-        ':mensaje' => 'Tu propuesta para el desafío "' . $propuesta['titulo_desafio'] . '" cambió a "' . $nuevoEstado . '". ID_PROPUESTA:' . $idPropuesta,
+        ':mensaje' => 'Tu propuesta para el desafÃ­o "' . $propuesta['titulo_desafio'] . '" cambiÃ³ a "' . $nuevoEstado . '". ID_PROPUESTA:' . $idPropuesta,
         ':id_usuario' => $propuesta['id_estudiante']
     ]);
+
+    $pdo->commit();
 
     $_SESSION['success'] = 'Propuesta actualizada correctamente.';
     header('Location: ../organizacion/propuestas_organizacion.php');
     exit;
+} catch (Throwable $e) {
+    if ($pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
 
-} catch (PDOException $e) {
-    $_SESSION['error'] = 'Ocurrió un error al actualizar la propuesta.';
+    $_SESSION['error'] = 'OcurriÃ³ un error al actualizar la propuesta.';
     header('Location: ../organizacion/propuestas_organizacion.php');
     exit;
 }

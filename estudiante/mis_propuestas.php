@@ -1,6 +1,7 @@
 <?php
 require_once '../includes/session_estudiante.php';
 require_once '../config/conexion.php';
+require_once '../includes/propuesta_utils.php';
 
 $idUsuario = $_SESSION['usuario_id'];
 
@@ -50,7 +51,7 @@ unset($_SESSION['success'], $_SESSION['error']);
     <title>Mis propuestas - EduNexo MP</title>
 
     <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/estudiante/mis_propuestas.css">
+    <link rel="stylesheet" href="../assets/css/estudiante/mis_propuestas.css?v=proposal-actions-1">
     <link rel="stylesheet" href="../assets/css/dark.css?v=dark-fix-2">
     <link rel="stylesheet" href="../assets/css/estudiante/modal_propuesta.css?v=dark-fix-2">
 
@@ -103,6 +104,7 @@ unset($_SESSION['success'], $_SESSION['error']);
                 <?php foreach ($propuestas as $propuesta): ?>
                     <?php
                     $estadoClase = strtolower(str_replace(' ', '-', $propuesta['estado'] ?? ''));
+                    $puedeEditar = edunexo_propuesta_editable($propuesta['estado'] ?? '') && empty($propuesta['fecha_respuesta']);
                     ?>
                     <article class="propuesta-card">
                         <div class="propuesta-header">
@@ -168,6 +170,19 @@ unset($_SESSION['success'], $_SESSION['error']);
                             <a href="detalle_desafio.php?id=<?php echo (int) $propuesta['id_desafio']; ?>" class="btn btn-outline-dark">
                                 Ver desafío
                             </a>
+
+                            <?php if ($puedeEditar): ?>
+                                <a href="editar_propuesta.php?id=<?php echo (int) $propuesta['id_propuesta']; ?>" class="btn btn-outline-dark">
+                                    Editar
+                                </a>
+
+                                <form action="../procesos/estudiante/eliminar_propuesta.php" method="POST" class="delete-propuesta-form">
+                                    <input type="hidden" name="id_propuesta" value="<?php echo (int) $propuesta['id_propuesta']; ?>">
+                                    <button type="submit" class="btn btn-outline-dark">
+                                        Eliminar
+                                    </button>
+                                </form>
+                            <?php endif; ?>
                         </div>
                     </article>
 
@@ -293,6 +308,14 @@ document.addEventListener('DOMContentLoaded', function () {
         overlay.addEventListener('click', function (e) {
             if (e.target === this) {
                 this.classList.remove('active');
+            }
+        });
+    });
+
+    document.querySelectorAll('.delete-propuesta-form').forEach(form => {
+        form.addEventListener('submit', function (event) {
+            if (!confirm('Esta accion eliminara la propuesta en revision. Deseas continuar?')) {
+                event.preventDefault();
             }
         });
     });
