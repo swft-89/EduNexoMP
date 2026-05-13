@@ -639,6 +639,9 @@ document.addEventListener('DOMContentLoaded', function () {
         help.className = 'sidebar-help';
         help.href = <?php echo json_encode($topbarHelpUrl); ?>;
         help.innerHTML = '<i class="bi bi-question-circle"></i><span>Ayuda</span>';
+        if (window.location.pathname.replace(/\\/g, '/').endsWith('/ayuda.php')) {
+            help.classList.add('active');
+        }
         utility.appendChild(help);
 
         if (!sidebarMenu.querySelector('.sidebar-logout')) {

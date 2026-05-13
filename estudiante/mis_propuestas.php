@@ -61,30 +61,7 @@ unset($_SESSION['success'], $_SESSION['error']);
 <body>
 
 <div class="app-layout">
-    <aside class="sidebar">
-        <div class="sidebar-top">
-            <div class="logo-mini"><i class="bi bi-mortarboard"></i></div>
-            <span>EduNexo MP</span>
-        </div>
-
-        <nav class="sidebar-menu">
-            <a href="dashboard_estudiante.php">
-                <i class="bi bi-house-door"></i> Inicio
-            </a>
-            <a href="mis_propuestas.php" class="active">
-                <i class="bi bi-file-earmark-text"></i> Mis propuestas
-            </a>
-            <a href="mis_favoritos.php">
-                <i class="bi bi-heart"></i> Favoritos
-            </a>
-            <a href="chat.php">
-                <i class="bi bi-chat"></i> Chat
-            </a>
-            <a href="editar_perfil_estudiante.php">
-                <i class="bi bi-person"></i> Perfil
-            </a>
-        </nav>
-    </aside>
+    <?php include __DIR__ . '/../includes/sidebar_estudiante.php'; ?>
 
     <section class="app-content">
         <?php include __DIR__ . '/../includes/app_topbar.php'; ?>

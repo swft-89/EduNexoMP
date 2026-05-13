@@ -79,36 +79,7 @@ unset($_SESSION['success'], $_SESSION['error']);
 </head>
 <body>
 <div class="app-layout">
-    <aside class="sidebar">
-        <div class="sidebar-top">
-            <div class="logo-mini"><i class="bi bi-mortarboard"></i></div>
-            <span>EduNexo MP</span>
-        </div>
-
-        <nav class="sidebar-menu">
-            <a href="../dashboard_superadmin.php" class="active">
-                <i class="bi bi-bar-chart-line"></i> Dashboard
-            </a>
-            <a href="../usuarios/usuarios_superadmin.php">
-                <i class="bi bi-people"></i> Usuarios
-            </a>
-            <a href="../usuarios/solicitudes_admin.php">
-                <i class="bi bi-person-check"></i> Solicitudes admin
-            </a>
-            <a href="../reportes_superadmin.php">
-                <i class="bi bi-clipboard-data"></i> Reportes
-            </a>
-            <a href="../desafios/desafios_superadmin.php">
-                <i class="bi bi-file-earmark-text"></i> Desafíos
-            </a>
-            <a href="../propuestas/propuestas_superadmin.php">
-                <i class="bi bi-send"></i> Propuestas
-            </a>
-            <a href="../categorias_superadmin.php">
-                <i class="bi bi-tags"></i> Categorías
-            </a>
-        </nav>
-    </aside>
+    <?php include __DIR__ . '/../../includes/sidebar_admin.php'; ?>
 
     <section class="app-content superadmin-content">
         <?php include __DIR__ . '/../../includes/app_topbar.php'; ?>

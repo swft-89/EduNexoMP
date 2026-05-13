@@ -60,36 +60,6 @@ if ($esAdmin) {
     $sugerenciasRecientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-$sidebarLinks = [
-    'estudiante' => [
-        ['estudiante/dashboard_estudiante.php', 'bi-house-door', 'Inicio'],
-        ['estudiante/mis_propuestas.php', 'bi-file-earmark-text', 'Mis propuestas'],
-        ['estudiante/mis_favoritos.php', 'bi-heart', 'Favoritos'],
-        ['estudiante/chat.php', 'bi-chat', 'Chat'],
-        ['estudiante/habilidades_estudiante.php', 'bi-stars', 'Mis habilidades'],
-        ['estudiante/editar_perfil_estudiante.php', 'bi-person', 'Perfil'],
-    ],
-    'organizacion' => [
-        ['organizacion/dashboard_organizacion.php', 'bi-house-door', 'Inicio'],
-        ['organizacion/desafios/crear_desafio.php', 'bi-plus-circle', 'Crear desafio'],
-        ['organizacion/desafios/mis_desafios.php', 'bi-briefcase', 'Mis desafios'],
-        ['organizacion/propuestas_organizacion.php', 'bi-file-earmark-text', 'Propuestas'],
-        ['organizacion/chat_organizacion.php', 'bi-chat', 'Chat'],
-        ['organizacion/editar_perfil_organizacion.php', 'bi-building', 'Perfil'],
-    ],
-    'administrador' => [
-        ['superadmin/dashboard_superadmin.php', 'bi-bar-chart-line', 'Dashboard'],
-        ['superadmin/usuarios/usuarios_superadmin.php', 'bi-people', 'Usuarios'],
-        ['superadmin/usuarios/solicitudes_admin.php', 'bi-person-check', 'Solicitudes admin'],
-        ['superadmin/reportes_superadmin.php', 'bi-clipboard-data', 'Reportes'],
-        ['superadmin/desafio/desafios_superadmin.php', 'bi-file-earmark-text', 'Desafios'],
-        ['superadmin/propuestas/propuestas_superadmin.php', 'bi-send', 'Propuestas'],
-        ['superadmin/categorias_superadmin.php', 'bi-tags', 'Categorias'],
-    ],
-];
-
-$links = $sidebarLinks[$rol] ?? [];
-
 function ayuda_tipo_label(string $tipo): string
 {
     return [
@@ -113,25 +83,15 @@ function ayuda_tipo_label(string $tipo): string
 </head>
 <body>
 <div class="app-layout">
-    <aside class="sidebar">
-        <div class="sidebar-top">
-            <div class="logo-mini"><i class="bi bi-mortarboard"></i></div>
-            <span>EduNexo MP</span>
-        </div>
-
-        <nav class="sidebar-menu">
-            <?php foreach ($links as $link): ?>
-                <a href="<?php echo htmlspecialchars($link[0]); ?>">
-                    <i class="bi <?php echo htmlspecialchars($link[1]); ?>"></i>
-                    <?php echo htmlspecialchars($link[2]); ?>
-                </a>
-            <?php endforeach; ?>
-            <a href="ayuda.php" class="active">
-                <i class="bi bi-question-circle"></i>
-                Ayuda
-            </a>
-        </nav>
-    </aside>
+    <?php
+    if (($rol ?? '') === 'estudiante') {
+        include __DIR__ . '/includes/sidebar_estudiante.php';
+    } elseif (($rol ?? '') === 'organizacion') {
+        include __DIR__ . '/includes/sidebar_organizacion.php';
+    } else {
+        include __DIR__ . '/includes/sidebar_admin.php';
+    }
+    ?>
 
     <main class="app-content help-page">
         <?php include __DIR__ . '/includes/app_topbar.php'; ?>

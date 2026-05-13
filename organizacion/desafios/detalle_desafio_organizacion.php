@@ -88,35 +88,9 @@ unset($_SESSION['success'], $_SESSION['error']);
 <body>
 
 <div class="app-layout">
-    <aside class="sidebar">
-        <div class="sidebar-top">
-            <div class="logo-mini"><i class="bi bi-mortarboard"></i></div>
-            <span>EduNexo MP</span>
-        </div>
+    <?php include __DIR__ . '/../../includes/sidebar_organizacion.php'; ?>
 
-        <nav class="sidebar-menu">
-            <a href="../dashboard_organizacion.php">
-                <i class="bi bi-house-door"></i> Inicio
-            </a>
-            <a href="crear_desafio.php">
-                <i class="bi bi-plus-circle"></i> Crear desafío
-            </a>
-            <a href="mis_desafios.php" class="active">
-                <i class="bi bi-briefcase"></i> Mis desafíos
-            </a>
-            <a href="../propuestas_recibidas.php">
-                <i class="bi bi-file-earmark-text"></i> Propuestas
-            </a>
-            <a href="../chat_organizacion.php">
-                <i class="bi bi-chat"></i> Chat
-            </a>
-            <a href="../editar_perfil_organizacion.php">
-                <i class="bi bi-building"></i> Perfil
-            </a>
-        </nav>
-    </aside>
-
-<section class="app-content org-content">
+    <section class="app-content org-content">
         <?php include __DIR__ . '/../../includes/app_topbar.php'; ?>
     <div class="org-detail-wrap">
 
