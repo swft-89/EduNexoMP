@@ -51,8 +51,8 @@ unset($_SESSION['success'], $_SESSION['error']);
 
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/estudiante/mis_propuestas.css">
-    <link rel="stylesheet" href="../assets/css/dark.css">
-    <link rel="stylesheet" href="../assets/css/estudiante/modal_propuesta.css">
+    <link rel="stylesheet" href="../assets/css/dark.css?v=dark-fix-2">
+    <link rel="stylesheet" href="../assets/css/estudiante/modal_propuesta.css?v=dark-fix-2">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">

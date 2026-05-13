@@ -73,3 +73,36 @@
     background: #f1f5f9 !important;
     cursor: pointer !important;
 }
+
+:root[data-theme="dark"] .propuesta-modal {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.52) !important;
+}
+
+:root[data-theme="dark"] .propuesta-modal-head {
+    border-bottom-color: #334155 !important;
+}
+
+:root[data-theme="dark"] .propuesta-modal-head h2,
+:root[data-theme="dark"] .modal-section strong,
+:root[data-theme="dark"] .modal-file {
+    color: #e5e7eb !important;
+}
+
+:root[data-theme="dark"] .propuesta-modal-head p,
+:root[data-theme="dark"] .modal-section span,
+:root[data-theme="dark"] .modal-section p {
+    color: #94a3b8 !important;
+}
+
+:root[data-theme="dark"] .modal-section {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+}
+
+:root[data-theme="dark"] .propuesta-modal-close {
+    background: #0f172a !important;
+    color: #e5e7eb !important;
+    border: 1px solid #334155 !important;
+}

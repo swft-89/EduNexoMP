@@ -24,7 +24,7 @@ $nombreCompleto = trim(($admin['nombre'] ?? '') . ' ' . ($admin['apellido_patern
     <link rel="stylesheet" href="../../assets/css/admin/dashboard_admin.css">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/org/dashboard_organizacion.css">
-    <link rel="stylesheet" href="../assets/css/dark.css">
+    <link rel="stylesheet" href="../assets/css/dark.css?v=dark-fix-2">
 </head>
 <body>
     <?php include '../includes/header.php'; ?>

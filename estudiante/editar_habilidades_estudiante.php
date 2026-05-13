@@ -115,8 +115,8 @@ unset($_SESSION['success'], $_SESSION['error']);
     <title>Editar habilidades | EduNexo MP</title>
 
     <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/estudiante/habilidades_estudiante.css">
-    <link rel="stylesheet" href="../assets/css/dark.css">
+    <link rel="stylesheet" href="../assets/css/estudiante/habilidades_estudiante.css?v=student-skills-modal-1">
+    <link rel="stylesheet" href="../assets/css/dark.css?v=dark-fix-5">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
@@ -205,6 +205,32 @@ unset($_SESSION['success'], $_SESSION['error']);
             <section class="skills-edit-card">
                 <form action="../procesos/estudiante/guardar_habilidades_estudiante.php" method="POST" id="formHabilidadesEstudiante">
 
+                    <div class="skills-catalog-callout">
+                        <div>
+                            <h2>Cat&aacute;logo de habilidades</h2>
+                            <p>Selecciona las habilidades que forman parte de tu perfil y define tu nivel en cada una.</p>
+                        </div>
+
+                        <button type="button" class="btn-en btn-en-primary" id="openSkillsCatalog">
+                            <i class="bi bi-grid"></i>
+                            Abrir cat&aacute;logo
+                        </button>
+                    </div>
+
+                    <div class="student-skills-modal-overlay" id="studentSkillsModal" aria-hidden="true">
+                        <div class="student-skills-modal">
+                            <div class="student-skills-modal-head">
+                                <div>
+                                    <h2>Cat&aacute;logo de habilidades</h2>
+                                    <p>Selecciona habilidades adicionales para tu perfil.</p>
+                                </div>
+
+                                <button type="button" class="student-skills-modal-close" id="closeSkillsCatalog" aria-label="Cerrar cat&aacute;logo">
+                                    <i class="bi bi-x-lg"></i>
+                                </button>
+                            </div>
+
+                            <div class="student-skills-modal-body">
                     <div class="skills-toolbar">
                         <div class="search-box">
                             <i class="bi bi-search"></i>
@@ -294,6 +320,16 @@ unset($_SESSION['success'], $_SESSION['error']);
                         No se encontraron habilidades con esos filtros.
                     </div>
 
+                            </div>
+
+                            <div class="student-skills-modal-actions">
+                                <button type="button" class="btn-en btn-en-primary" id="applySkillsCatalog">
+                                    Listo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="skills-footer">
                         <div class="skills-footer-note">
                             Puedes seleccionar solo las habilidades que realmente forman parte de tu perfil.
@@ -342,7 +378,37 @@ document.addEventListener('DOMContentLoaded', function () {
     const checkboxes = Array.from(document.querySelectorAll('.checkbox-habilidad'));
     const contadorSeleccionadas = document.getElementById('contadorSeleccionadas');
     const contadorPendientes = document.getElementById('contadorPendientes');
+    const skillsModal = document.getElementById('studentSkillsModal');
+    const openSkillsCatalog = document.getElementById('openSkillsCatalog');
+    const closeSkillsCatalog = document.getElementById('closeSkillsCatalog');
+    const applySkillsCatalog = document.getElementById('applySkillsCatalog');
     const totalCatalogo = <?php echo (int)$totalCatalogo; ?>;
+
+    function abrirCatalogo() {
+        if (!skillsModal) {
+            return;
+        }
+
+        skillsModal.classList.add('active');
+        skillsModal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('skills-modal-open');
+
+        window.setTimeout(() => {
+            if (searchInput) {
+                searchInput.focus();
+            }
+        }, 80);
+    }
+
+    function cerrarCatalogo() {
+        if (!skillsModal) {
+            return;
+        }
+
+        skillsModal.classList.remove('active');
+        skillsModal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('skills-modal-open');
+    }
 
     function actualizarContadores() {
         const seleccionadas = checkboxes.filter(cb => cb.checked).length;
@@ -394,8 +460,39 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    searchInput.addEventListener('input', aplicarFiltros);
-    categoryFilter.addEventListener('change', aplicarFiltros);
+    if (searchInput) {
+        searchInput.addEventListener('input', aplicarFiltros);
+    }
+
+    if (categoryFilter) {
+        categoryFilter.addEventListener('change', aplicarFiltros);
+    }
+
+    if (openSkillsCatalog) {
+        openSkillsCatalog.addEventListener('click', abrirCatalogo);
+    }
+
+    if (closeSkillsCatalog) {
+        closeSkillsCatalog.addEventListener('click', cerrarCatalogo);
+    }
+
+    if (applySkillsCatalog) {
+        applySkillsCatalog.addEventListener('click', cerrarCatalogo);
+    }
+
+    if (skillsModal) {
+        skillsModal.addEventListener('click', function (event) {
+            if (event.target === skillsModal) {
+                cerrarCatalogo();
+            }
+        });
+    }
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && skillsModal && skillsModal.classList.contains('active')) {
+            cerrarCatalogo();
+        }
+    });
 
     actualizarContadores();
     aplicarFiltros();
