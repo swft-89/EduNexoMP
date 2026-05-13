@@ -2,6 +2,7 @@
 session_start();
 require_once '../../config/conexion.php';
 require_once '../../includes/profile_photo.php';
+require_once '../../includes/student_schema.php';
 
 if (!isset($_SESSION['usuario_id']) || !isset($_SESSION['rol']) || $_SESSION['rol'] !== 'estudiante') {
     header('Location: ../index.php');
@@ -21,6 +22,7 @@ $apellidoMaterno = trim($_POST['apellido_materno'] ?? '');
 $carrera = trim($_POST['carrera'] ?? '');
 $noControl = trim($_POST['no_control'] ?? '');
 $semestre = (int) ($_POST['semestre'] ?? 0);
+$intereses = trim($_POST['intereses'] ?? '');
 $curp = strtoupper(trim($_POST['curp'] ?? ''));
 $telefono = trim($_POST['telefono'] ?? '');
 $fotoUrlActual = trim($_POST['foto_url_actual'] ?? '');
@@ -57,6 +59,8 @@ if (!filter_var($correoElectronico, FILTER_VALIDATE_EMAIL)) {
 }
 
 try {
+    edunexo_ensure_student_interests_column($pdo);
+
     $fotoSubida = edunexo_upload_profile_photo('foto_perfil', 'estudiante_' . $idEstudiante);
 
     if ($fotoSubida !== null) {
@@ -220,6 +224,7 @@ try {
             carrera = :carrera,
             no_control = :no_control,
             semestre = :semestre,
+            intereses = :intereses,
             curp = :curp,
             telefono = :telefono,
             foto_url = :foto_url,
@@ -233,6 +238,7 @@ try {
         ':carrera' => $carrera,
         ':no_control' => $noControl,
         ':semestre' => $semestre,
+        ':intereses' => $intereses !== '' ? $intereses : null,
         ':curp' => $curp !== '' ? $curp : null,
         ':telefono' => $telefono !== '' ? $telefono : null,
         ':foto_url' => $fotoUrl !== '' ? $fotoUrl : null,

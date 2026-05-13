@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../config/conexion.php';
+require_once __DIR__ . '/../includes/student_schema.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ../index.php');
@@ -31,6 +32,10 @@ if ($correo === '' || $contrasena === '') {
 }
 
 try {
+    if ($rol === 'estudiante') {
+        edunexo_ensure_student_interests_column($pdo);
+    }
+
     $pdo->beginTransaction();
 
     $stmt = $pdo->prepare("
@@ -89,6 +94,7 @@ try {
         $carrera = limpiar($_POST['est_carrera'] ?? '');
         $noControl = limpiar($_POST['est_no_control'] ?? '');
         $semestre = (int) limpiar($_POST['est_semestre'] ?? '');
+        $intereses = limpiar($_POST['est_intereses'] ?? '');
         $curp = limpiar($_POST['est_curp'] ?? '');
         $telefono = limpiar($_POST['est_telefono'] ?? '');
 
@@ -145,6 +151,7 @@ try {
                 carrera,
                 no_control,
                 semestre,
+                intereses,
                 curp,
                 telefono,
                 id_direccion
@@ -156,6 +163,7 @@ try {
                 :carrera,
                 :no_control,
                 :semestre,
+                :intereses,
                 :curp,
                 :telefono,
                 :id_direccion
@@ -169,6 +177,7 @@ try {
             ':carrera' => $carrera,
             ':no_control' => $noControl,
             ':semestre' => $semestre,
+            ':intereses' => $intereses !== '' ? $intereses : null,
             ':curp' => $curp !== '' ? $curp : null,
             ':telefono' => $telefono !== '' ? $telefono : null,
             ':id_direccion' => $idDireccion ?: null

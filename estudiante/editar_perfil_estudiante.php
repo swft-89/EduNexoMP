@@ -2,6 +2,7 @@
 require_once '../includes/session_estudiante.php';
 require_once '../config/conexion.php';
 require_once '../includes/profile_photo.php';
+require_once '../includes/student_schema.php';
 
 $idUsuario = $_SESSION['usuario_id'] ?? null;
 
@@ -9,6 +10,8 @@ if (!$idUsuario) {
     header('Location: ../index.php');
     exit;
 }
+
+edunexo_ensure_student_interests_column($pdo);
 
 $stmt = $pdo->prepare("
     SELECT
@@ -19,6 +22,7 @@ $stmt = $pdo->prepare("
         e.carrera,
         e.no_control,
         e.semestre,
+        e.intereses,
         e.curp,
         e.telefono,
         e.foto_url,
@@ -91,8 +95,8 @@ function oldValue($key, $default, $old)
     <title>Editar perfil | EduNexo MP</title>
 
     <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/estudiante/perfil_estudiante.css">
-    <link rel="stylesheet" href="../assets/css/dark.css?v=dark-fix-2">
+    <link rel="stylesheet" href="../assets/css/estudiante/perfil_estudiante.css?v=student-interests-1">
+    <link rel="stylesheet" href="../assets/css/dark.css?v=dark-fix-6">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
@@ -239,6 +243,12 @@ function oldValue($key, $default, $old)
                                 <label for="semestre">Semestre</label>
                                 <input type="number" id="semestre" name="semestre" min="1" max="20" required
                                     value="<?php echo oldValue('semestre', $estudiante['semestre'], $old); ?>">
+                            </div>
+
+                            <div class="form-group full">
+                                <label for="intereses">Intereses</label>
+                                <textarea id="intereses" name="intereses" maxlength="1000" placeholder="Ej. an&aacute;lisis de datos, desarrollo web, inteligencia artificial, dise&ntilde;o de interfaces"><?php echo oldValue('intereses', $estudiante['intereses'] ?? '', $old); ?></textarea>
+                                <small>Separa tus intereses con comas para que sean f&aacute;ciles de leer en tu perfil.</small>
                             </div>
                         </div>
                     </div>

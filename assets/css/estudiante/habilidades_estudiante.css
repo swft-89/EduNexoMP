@@ -216,6 +216,66 @@
     color: var(--text-soft);
 }
 
+.interests-panel {
+    display: grid;
+    grid-template-columns: minmax(240px, 0.85fr) minmax(280px, 1.15fr);
+    gap: 18px;
+    align-items: start;
+    margin-bottom: 24px;
+    padding: 22px;
+    border: 1px solid var(--border-soft);
+    border-radius: 24px;
+    background:
+        radial-gradient(circle at top right, rgba(77, 136, 245, 0.10), transparent 30%),
+        #f8fbff;
+}
+
+.interests-panel h2 {
+    margin: 0 0 8px;
+    color: var(--text);
+    font-size: 1.3rem;
+    font-weight: 800;
+}
+
+.interests-panel p {
+    margin: 0;
+    color: var(--text-soft);
+    line-height: 1.6;
+}
+
+.interest-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.interest-tags span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 38px;
+    padding: 8px 13px;
+    border-radius: 999px;
+    background: #e8f0ff;
+    color: var(--primary);
+    font-size: 0.92rem;
+    font-weight: 800;
+}
+
+.empty-interest {
+    padding: 16px;
+    border: 1px dashed #c9d4ea;
+    border-radius: 18px;
+    background: #ffffff;
+    color: var(--text-soft);
+    line-height: 1.55;
+}
+
+.empty-interest a {
+    color: var(--primary);
+    font-weight: 800;
+    text-decoration: none;
+}
+
 /* ================= GRID DE HABILIDADES ================= */
 
 .skills-grid {
@@ -674,6 +734,10 @@
 
     .skills-stats {
         grid-template-columns: 1fr 1fr;
+    }
+
+    .interests-panel {
+        grid-template-columns: 1fr;
     }
 
     .skills-grid {

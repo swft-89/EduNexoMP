@@ -364,6 +364,7 @@
 :root[data-theme="dark"] .form-group select,
 :root[data-theme="dark"] .form-group textarea,
 :root[data-theme="dark"] .auth-group input,
+:root[data-theme="dark"] .auth-group textarea,
 :root[data-theme="dark"] .auth-group select,
 :root[data-theme="dark"] .profile-section input,
 :root[data-theme="dark"] .profile-section select,
@@ -439,11 +440,13 @@
 :root[data-theme="dark"] .skills-edit-hero,
 :root[data-theme="dark"] .skills-main-card,
 :root[data-theme="dark"] .skills-edit-card,
+:root[data-theme="dark"] .interests-panel,
 :root[data-theme="dark"] .summary-card,
 :root[data-theme="dark"] .stat-card,
 :root[data-theme="dark"] .skill-card,
 :root[data-theme="dark"] .skill-option,
 :root[data-theme="dark"] .empty-skills,
+:root[data-theme="dark"] .empty-interest,
 :root[data-theme="dark"] .empty-icon,
 :root[data-theme="dark"] .no-results,
 :root[data-theme="dark"] .favorito-card,
@@ -481,6 +484,12 @@
     color: var(--text) !important;
 }
 
+:root[data-theme="dark"] .interest-tags span {
+    background: #0f172a !important;
+    border: 1px solid #334155 !important;
+    color: var(--primary-light) !important;
+}
+
 :root[data-theme="dark"] .profile-card-head h2,
 :root[data-theme="dark"] .profile-section label,
 :root[data-theme="dark"] .org-profile-card-head h2,
@@ -508,6 +517,7 @@
 :root[data-theme="dark"] .skill-modal-check strong,
 :root[data-theme="dark"] .skills-modal-head h3,
 :root[data-theme="dark"] .skill-name,
+:root[data-theme="dark"] .interests-panel h2,
 :root[data-theme="dark"] .summary-value,
 :root[data-theme="dark"] .stat-value,
 :root[data-theme="dark"] .empty-skills h3,
@@ -563,6 +573,8 @@
 :root[data-theme="dark"] .summary-label,
 :root[data-theme="dark"] .stat-label,
 :root[data-theme="dark"] .skill-meta,
+:root[data-theme="dark"] .interests-panel p,
+:root[data-theme="dark"] .empty-interest,
 :root[data-theme="dark"] .empty-skills p,
 :root[data-theme="dark"] .empty-favoritos p,
 :root[data-theme="dark"] .favorito-meta,
@@ -792,17 +804,20 @@
 }
 
 :root[data-theme="dark"] .auth-group input,
+:root[data-theme="dark"] .auth-group textarea,
 :root[data-theme="dark"] .auth-group select {
     background: #0f172a !important;
     border-color: #334155 !important;
     color: var(--text) !important;
 }
 
-:root[data-theme="dark"] .auth-group input::placeholder {
+:root[data-theme="dark"] .auth-group input::placeholder,
+:root[data-theme="dark"] .auth-group textarea::placeholder {
     color: #64748b !important;
 }
 
 :root[data-theme="dark"] .auth-group input:focus,
+:root[data-theme="dark"] .auth-group textarea:focus,
 :root[data-theme="dark"] .auth-group select:focus {
     border-color: var(--primary-light) !important;
     box-shadow: 0 0 0 4px rgba(77, 136, 245, 0.16) !important;
@@ -996,6 +1011,7 @@
 :root[data-theme="dark"] .org-profile-missing,
 :root[data-theme="dark"] .org-preview-header span,
 :root[data-theme="dark"] .org-preview-item,
+:root[data-theme="dark"] .profile-section .form-group small,
 :root[data-theme="dark"] .org-profile-section .form-group small {
     color: var(--text-soft) !important;
 }

@@ -165,6 +165,12 @@
     resize: vertical;
 }
 
+.profile-section small {
+    color: var(--text-soft);
+    font-size: 0.86rem;
+    line-height: 1.45;
+}
+
 .profile-section input:focus,
 .profile-section select:focus,
 .profile-section textarea:focus {

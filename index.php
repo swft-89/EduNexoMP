@@ -220,6 +220,11 @@ unset($_SESSION['success'], $_SESSION['error']);
                         <input type="number" id="est_semestre" name="est_semestre" placeholder="8">
                     </div>
 
+                    <div class="auth-group full">
+                        <label for="est_intereses">Intereses</label>
+                        <textarea id="est_intereses" name="est_intereses" maxlength="1000" placeholder="An&aacute;lisis de datos, desarrollo web, inteligencia artificial"></textarea>
+                    </div>
+
                     <div class="auth-group">
                         <label for="est_curp">CURP</label>
                         <input type="text" id="est_curp" name="est_curp" placeholder="PEGJ040815HCHRRNA9">

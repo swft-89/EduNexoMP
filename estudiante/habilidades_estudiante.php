@@ -2,6 +2,7 @@
 require_once '../includes/session_estudiante.php';
 require_once '../config/conexion.php';
 require_once '../includes/profile_photo.php';
+require_once '../includes/student_schema.php';
 
 $idUsuario = $_SESSION['usuario_id'] ?? null;
 
@@ -9,6 +10,8 @@ if (!$idUsuario) {
     header('Location: ../index.php');
     exit;
 }
+
+edunexo_ensure_student_interests_column($pdo);
 
 /* Datos del estudiante */
 $stmt = $pdo->prepare("
@@ -19,6 +22,7 @@ $stmt = $pdo->prepare("
         e.apellido_materno,
         e.carrera,
         e.semestre,
+        e.intereses,
         e.foto_url
     FROM estudiante e
     WHERE e.id_estudiante = :id_estudiante
@@ -38,6 +42,9 @@ $nombreCompleto = trim(
     ($estudiante['apellido_paterno'] ?? '') . ' ' .
     ($estudiante['apellido_materno'] ?? '')
 );
+
+$interesesTexto = trim($estudiante['intereses'] ?? '');
+$intereses = array_values(array_filter(array_map('trim', preg_split('/[,;\r\n]+/', $interesesTexto))));
 
 /*Habilidades*/
 $stmt = $pdo->prepare("
@@ -112,8 +119,8 @@ unset($_SESSION['success'], $_SESSION['error']);
     <title>Mis habilidades | EduNexo MP</title>
 
     <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/estudiante/habilidades_estudiante.css">
-    <link rel="stylesheet" href="../assets/css/dark.css?v=dark-fix-2">
+    <link rel="stylesheet" href="../assets/css/estudiante/habilidades_estudiante.css?v=student-interests-1">
+    <link rel="stylesheet" href="../assets/css/dark.css?v=dark-fix-6">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
@@ -210,6 +217,26 @@ unset($_SESSION['success'], $_SESSION['error']);
             </section>
 
             <section class="skills-main-card">
+                <div class="interests-panel">
+                    <div>
+                        <h2>Intereses del perfil</h2>
+                        <p>Estos intereses complementan tus habilidades y ayudan a describir mejor las oportunidades que buscas.</p>
+                    </div>
+
+                    <?php if (!empty($intereses)): ?>
+                        <div class="interest-tags">
+                            <?php foreach ($intereses as $interes): ?>
+                                <span><?php echo htmlspecialchars($interes); ?></span>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php else: ?>
+                        <div class="empty-interest">
+                            A&uacute;n no has registrado intereses.
+                            <a href="editar_perfil_estudiante.php">Agregarlos en mi perfil</a>
+                        </div>
+                    <?php endif; ?>
+                </div>
+
                 <div class="skills-main-head">
                     <div>
                         <h2>Resumen de habilidades</h2>
