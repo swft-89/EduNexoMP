@@ -162,7 +162,7 @@ unset($_SESSION['success'], $_SESSION['error']);
 
     <link rel="stylesheet" href="../../assets/css/style.css">
     <link rel="stylesheet" href="../../assets/css/dashboard_organizacion.css">
-    <link rel="stylesheet" href="../../assets/css/org/talentos.css">
+    <link rel="stylesheet" href="../../assets/css/org/talentos.css?v=talentos-layout-2">
     <link rel="stylesheet" href="../../assets/css/dark.css?v=dark-fix-2">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -176,7 +176,7 @@ unset($_SESSION['success'], $_SESSION['error']);
     <section class="app-content org-content org-page-content">
         <?php include __DIR__ . '/../../includes/app_topbar.php'; ?>
         <div class="org-page-wrap">
-            <div class="org-page-head">
+            <div class="org-page-head talentos-page-head">
                 <div>
                     <h1>Talentos compatibles</h1>
                     <p>
@@ -186,7 +186,8 @@ unset($_SESSION['success'], $_SESSION['error']);
                     </p>
                 </div>
 
-                <a href="detalle_desafio_organizacion.php?id=<?php echo (int) $idDesafio; ?>" class="btn btn-nav">
+                <a href="detalle_desafio_organizacion.php?id=<?php echo (int) $idDesafio; ?>" class="btn btn-nav talentos-back-btn">
+                    <i class="bi bi-arrow-left"></i>
                     Volver
                 </a>
             </div>

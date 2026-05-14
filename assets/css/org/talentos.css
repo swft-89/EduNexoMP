@@ -1,3 +1,50 @@
+.org-page-wrap {
+    padding: 36px 40px 40px;
+}
+
+.org-page-head.talentos-page-head {
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    gap: 24px !important;
+    margin-bottom: 24px !important;
+}
+
+.org-page-head.talentos-page-head > div {
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+.org-page-head.talentos-page-head h1 {
+    margin: 0;
+    color: var(--text);
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.05;
+    font-weight: 800;
+}
+
+.org-page-head.talentos-page-head p {
+    margin: 8px 0 0;
+    color: var(--text-soft);
+    font-size: 1.02rem;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.org-page-head .talentos-back-btn {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    min-width: 0 !important;
+    min-height: 44px !important;
+    height: 44px !important;
+    padding: 0 18px !important;
+    border-radius: 12px !important;
+    gap: 8px !important;
+    box-shadow: none !important;
+    font-size: 0.95rem !important;
+    line-height: 1 !important;
+}
+
 .talentos-filter-panel {
     display: grid;
     grid-template-columns: minmax(280px, 1fr) minmax(180px, 220px) minmax(170px, 210px);
@@ -281,6 +328,22 @@
     .talentos-grid,
     .talentos-filter-panel {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 900px) {
+    .org-page-wrap {
+        padding: 24px 22px 30px;
+    }
+
+    .org-page-head.talentos-page-head {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 14px !important;
+    }
+
+    .org-page-head .talentos-back-btn {
+        width: auto !important;
     }
 }
 
