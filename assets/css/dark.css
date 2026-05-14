@@ -406,6 +406,31 @@
     border-color: #334155;
 }
 
+:root[data-theme="dark"] .profile-info-item,
+:root[data-theme="dark"] .org-profile-info-item,
+:root[data-theme="dark"] .profile-account-card,
+:root[data-theme="dark"] .profile-activity-card,
+:root[data-theme="dark"] .org-profile-account-card,
+:root[data-theme="dark"] .org-profile-activity-card {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+}
+
+:root[data-theme="dark"] .profile-quick-list div,
+:root[data-theme="dark"] .profile-mini-stats article,
+:root[data-theme="dark"] .org-profile-quick-list div,
+:root[data-theme="dark"] .org-profile-mini-stats article {
+    background: #111827 !important;
+    border-color: #334155 !important;
+}
+
+:root[data-theme="dark"] .profile-chip-list span,
+:root[data-theme="dark"] .profile-quick-list i,
+:root[data-theme="dark"] .org-profile-quick-list i {
+    background: #172033 !important;
+    color: var(--primary-light) !important;
+}
+
 :root[data-theme="dark"] .superadmin-summary-card,
 :root[data-theme="dark"] .superadmin-panel-card,
 :root[data-theme="dark"] .upcoming-card,
@@ -532,6 +557,21 @@
     color: var(--text) !important;
 }
 
+:root[data-theme="dark"] .profile-info-item strong,
+:root[data-theme="dark"] .org-profile-info-item strong,
+:root[data-theme="dark"] .profile-account-card h2,
+:root[data-theme="dark"] .profile-quick-list span,
+:root[data-theme="dark"] .profile-mini-stats strong,
+:root[data-theme="dark"] .profile-activity-table td,
+:root[data-theme="dark"] .profile-activity-table td strong,
+:root[data-theme="dark"] .org-profile-account-card h2,
+:root[data-theme="dark"] .org-profile-quick-list span,
+:root[data-theme="dark"] .org-profile-mini-stats strong,
+:root[data-theme="dark"] .org-profile-activity-table td,
+:root[data-theme="dark"] .org-profile-activity-table td strong {
+    color: var(--text) !important;
+}
+
 :root[data-theme="dark"] .superadmin-summary-card strong,
 :root[data-theme="dark"] .panel-card-head h2,
 :root[data-theme="dark"] .distribution-label,
@@ -587,6 +627,72 @@
 :root[data-theme="dark"] .meta-line span,
 :root[data-theme="dark"] .feedback-box span,
 :root[data-theme="dark"] .empty-state p {
+    color: var(--text-soft) !important;
+}
+
+:root[data-theme="dark"] .profile-info-item span,
+:root[data-theme="dark"] .org-profile-info-item span,
+:root[data-theme="dark"] .profile-account-card p,
+:root[data-theme="dark"] .profile-mini-stats span,
+:root[data-theme="dark"] .profile-activity-table th,
+:root[data-theme="dark"] .profile-activity-table td span,
+:root[data-theme="dark"] .profile-empty-activity,
+:root[data-theme="dark"] .org-profile-account-card p,
+:root[data-theme="dark"] .org-profile-mini-stats span,
+:root[data-theme="dark"] .org-profile-activity-table th,
+:root[data-theme="dark"] .org-profile-activity-table td span,
+:root[data-theme="dark"] .org-profile-empty-activity {
+    color: var(--text-soft) !important;
+}
+
+:root[data-theme="dark"] .profile-activity-table th,
+:root[data-theme="dark"] .profile-activity-table td,
+:root[data-theme="dark"] .org-profile-activity-table th,
+:root[data-theme="dark"] .org-profile-activity-table td {
+    border-color: #334155 !important;
+}
+
+:root[data-theme="dark"] .profile-activity-table tbody tr:hover,
+:root[data-theme="dark"] .org-profile-activity-table tbody tr:hover {
+    background: #172033 !important;
+}
+
+:root[data-theme="dark"] .talentos-filter-panel,
+:root[data-theme="dark"] .talento-card,
+:root[data-theme="dark"] .talentos-no-results {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+}
+
+:root[data-theme="dark"] .talentos-search,
+:root[data-theme="dark"] .talentos-filter-group select,
+:root[data-theme="dark"] .talento-info {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+    color: var(--text) !important;
+}
+
+:root[data-theme="dark"] .talentos-search input {
+    color: var(--text) !important;
+}
+
+:root[data-theme="dark"] .talento-match strong,
+:root[data-theme="dark"] .talento-tags span {
+    background: #172033 !important;
+    color: var(--primary-light) !important;
+}
+
+:root[data-theme="dark"] .talentos-filter-group label,
+:root[data-theme="dark"] .talento-header h3,
+:root[data-theme="dark"] .talentos-no-results h3 {
+    color: var(--text) !important;
+}
+
+:root[data-theme="dark"] .talentos-search i,
+:root[data-theme="dark"] .talento-header p,
+:root[data-theme="dark"] .talento-info p,
+:root[data-theme="dark"] .talentos-no-results,
+:root[data-theme="dark"] .talentos-no-results p {
     color: var(--text-soft) !important;
 }
 

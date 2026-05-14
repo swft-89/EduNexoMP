@@ -39,10 +39,10 @@ $studentSidebarItems = [
         'active' => ['estudiante/habilidades_estudiante.php', 'estudiante/editar_habilidades_estudiante.php'],
     ],
     [
-        'href' => 'estudiante/editar_perfil_estudiante.php',
+        'href' => 'estudiante/perfil_estudiante.php',
         'icon' => 'bi-person',
         'label' => 'Perfil',
-        'active' => ['estudiante/editar_perfil_estudiante.php'],
+        'active' => ['estudiante/perfil_estudiante.php', 'estudiante/editar_perfil_estudiante.php'],
     ],
 ];
 ?>

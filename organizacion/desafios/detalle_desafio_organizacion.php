@@ -90,7 +90,7 @@ unset($_SESSION['success'], $_SESSION['error']);
 <div class="app-layout">
     <?php include __DIR__ . '/../../includes/sidebar_organizacion.php'; ?>
 
-    <section class="app-content org-content">
+    <section class="app-content org-content org-page-content">
         <?php include __DIR__ . '/../../includes/app_topbar.php'; ?>
     <div class="org-detail-wrap">
 

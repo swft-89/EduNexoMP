@@ -131,7 +131,7 @@ function oldValue($key, $default, $old)
                     </div>
 
                     <div class="profile-hero-actions">
-                        <a href="dashboard_estudiante.php" class="btn btn-nav">
+                        <a href="perfil_estudiante.php" class="btn btn-nav">
                             <i class="bi bi-arrow-left"></i>
                             Volver
                         </a>
@@ -275,7 +275,7 @@ function oldValue($key, $default, $old)
                     </div>
 
                     <div class="profile-actions">
-                        <a href="dashboard_estudiante.php" class="btn btn-nav">Cancelar</a>
+                        <a href="perfil_estudiante.php" class="btn btn-nav">Cancelar</a>
                         <button type="submit" class="btn btn-primary">
                             <i class="bi bi-check2-circle"></i>
                             Guardar cambios

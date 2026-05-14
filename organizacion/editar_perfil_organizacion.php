@@ -161,7 +161,7 @@ unset($_SESSION['success'], $_SESSION['error'], $_SESSION['old']);
                     </div>
 
                     <div class="org-profile-hero-actions">
-                        <a href="dashboard_organizacion.php" class="btn btn-nav">
+                        <a href="perfil_organizacion.php" class="btn btn-nav">
                             <i class="bi bi-arrow-left"></i>
                             Volver
                         </a>
@@ -427,7 +427,7 @@ unset($_SESSION['success'], $_SESSION['error'], $_SESSION['old']);
                     </div>
 
                     <div class="org-profile-actions">
-                        <a href="dashboard_organizacion.php" class="btn btn-nav">Cancelar</a>
+                        <a href="perfil_organizacion.php" class="btn btn-nav">Cancelar</a>
                         <button type="submit" class="btn btn-primary">
                             <i class="bi bi-check2-circle"></i>
                             Guardar cambios

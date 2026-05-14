@@ -1230,6 +1230,10 @@ body {
     margin: 0;
 }
 
+.org-page-content .app-topbar {
+    margin: -28px -28px 28px;
+}
+
 .app-topbar-right,
 .org-topbar-right,
 .superadmin-topbar-right {
@@ -1584,6 +1588,10 @@ body {
     .org-content .app-topbar,
     .superadmin-content .app-topbar {
         margin: 0;
+    }
+
+    .org-page-content .app-topbar {
+        margin: -20px -16px 24px;
     }
 
     .cards-grid,

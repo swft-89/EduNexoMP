@@ -45,10 +45,10 @@ $orgSidebarItems = [
         'active' => ['organizacion/chat_organizacion.php'],
     ],
     [
-        'href' => 'organizacion/editar_perfil_organizacion.php',
+        'href' => 'organizacion/perfil_organizacion.php',
         'icon' => 'bi-building',
         'label' => 'Perfil',
-        'active' => ['organizacion/editar_perfil_organizacion.php'],
+        'active' => ['organizacion/perfil_organizacion.php', 'organizacion/editar_perfil_organizacion.php'],
     ],
 ];
 ?>

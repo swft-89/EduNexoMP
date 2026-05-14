@@ -173,7 +173,7 @@ unset($_SESSION['success'], $_SESSION['error']);
 <div class="app-layout org-layout">
     <?php include __DIR__ . '/../../includes/sidebar_organizacion.php'; ?>
 
-    <section class="app-content org-content">
+    <section class="app-content org-content org-page-content">
         <?php include __DIR__ . '/../../includes/app_topbar.php'; ?>
         <div class="org-page-wrap">
             <div class="org-page-head">
@@ -202,6 +202,33 @@ unset($_SESSION['success'], $_SESSION['error']);
             <?php endif; ?>
 
             <?php if (!empty($talentos)): ?>
+                <div class="talentos-filter-panel">
+                    <div class="talentos-search">
+                        <i class="bi bi-search"></i>
+                        <input type="text" id="talentoSearch" placeholder="Buscar por nombre, carrera o habilidad...">
+                    </div>
+
+                    <div class="talentos-filter-group">
+                        <label for="talentoMatchFilter">Compatibilidad</label>
+                        <select id="talentoMatchFilter">
+                            <option value="0">Todos</option>
+                            <option value="25">25% o mas</option>
+                            <option value="50">50% o mas</option>
+                            <option value="75">75% o mas</option>
+                        </select>
+                    </div>
+
+                    <div class="talentos-filter-group">
+                        <label for="talentoStatusFilter">Estado</label>
+                        <select id="talentoStatusFilter">
+                            <option value="todos">Todos</option>
+                            <option value="disponible">Disponibles</option>
+                            <option value="postulado">Ya postulados</option>
+                            <option value="invitado">Invitados</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="talentos-grid">
                     <?php foreach ($talentos as $talento): ?>
                         <?php
@@ -213,9 +240,18 @@ unset($_SESSION['success'], $_SESSION['error']);
 
                         $match = (int) $talento['match_porcentaje'];
                         $tags = $habilidadesCoincidentes[$talento['id_estudiante']] ?? [];
+                        $estadoTalento = !empty($talento['ya_postulado'])
+                            ? 'postulado'
+                            : (!empty($talento['ya_invitado']) ? 'invitado' : 'disponible');
+                        $textoBusqueda = mb_strtolower(trim($nombreCompleto . ' ' . ($talento['carrera'] ?? '') . ' ' . implode(' ', $tags)));
                         ?>
 
-                        <article class="talento-card">
+                        <article
+                            class="talento-card"
+                            data-search="<?php echo htmlspecialchars($textoBusqueda); ?>"
+                            data-match="<?php echo $match; ?>"
+                            data-status="<?php echo htmlspecialchars($estadoTalento); ?>"
+                        >
                             <div class="talento-header">
                                 <div class="talento-avatar">
                                     <?php if (!empty($talento['foto_url'])): ?>
@@ -277,6 +313,12 @@ unset($_SESSION['success'], $_SESSION['error']);
 
                     <?php endforeach; ?>
                 </div>
+
+                <div class="talentos-no-results" id="talentosNoResults">
+                    <i class="bi bi-search"></i>
+                    <h3>No hay talentos con esos filtros</h3>
+                    <p>Prueba con otro nombre, carrera o rango de compatibilidad.</p>
+                </div>
             <?php else: ?>
                 <div class="org-empty-card">
                     <i class="bi bi-people"></i>
@@ -302,5 +344,44 @@ window.edunexoError = <?php echo json_encode($error); ?>;
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../../assets/js/main.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const searchInput = document.getElementById('talentoSearch');
+    const matchFilter = document.getElementById('talentoMatchFilter');
+    const statusFilter = document.getElementById('talentoStatusFilter');
+    const cards = Array.from(document.querySelectorAll('.talento-card'));
+    const emptyState = document.getElementById('talentosNoResults');
+
+    function filterTalentos() {
+        const search = (searchInput?.value || '').trim().toLowerCase();
+        const minMatch = Number(matchFilter?.value || 0);
+        const status = statusFilter?.value || 'todos';
+        let visible = 0;
+
+        cards.forEach(card => {
+            const text = card.dataset.search || '';
+            const match = Number(card.dataset.match || 0);
+            const cardStatus = card.dataset.status || 'disponible';
+            const show =
+                (search === '' || text.includes(search)) &&
+                match >= minMatch &&
+                (status === 'todos' || cardStatus === status);
+
+            card.style.display = show ? '' : 'none';
+            if (show) {
+                visible++;
+            }
+        });
+
+        if (emptyState) {
+            emptyState.classList.toggle('is-visible', visible === 0);
+        }
+    }
+
+    searchInput?.addEventListener('input', filterTalentos);
+    matchFilter?.addEventListener('change', filterTalentos);
+    statusFilter?.addEventListener('change', filterTalentos);
+});
+</script>
 </body>
 </html>

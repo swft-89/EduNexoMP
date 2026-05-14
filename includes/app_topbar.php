@@ -107,8 +107,8 @@ $topbarRolLabel = [
     'administrador' => 'Administrador',
 ][$topbarRol] ?? 'Usuario';
 $topbarPerfilPath = [
-    'estudiante' => 'estudiante/editar_perfil_estudiante.php',
-    'organizacion' => 'organizacion/editar_perfil_organizacion.php',
+    'estudiante' => 'estudiante/perfil_estudiante.php',
+    'organizacion' => 'organizacion/perfil_organizacion.php',
 ][$topbarRol] ?? '';
 $topbarPerfilUrl = $topbarPerfilPath !== '' ? edunexo_topbar_asset($topbarPerfilPath) : '';
 ?>
@@ -127,6 +127,10 @@ $topbarPerfilUrl = $topbarPerfilPath !== '' ? edunexo_topbar_asset($topbarPerfil
     .org-content .app-topbar,
     .superadmin-content .app-topbar {
         margin: 0;
+    }
+
+    .org-page-content .app-topbar {
+        margin: -28px -28px 28px;
     }
 
     .app-topbar-right {
@@ -482,6 +486,10 @@ $topbarPerfilUrl = $topbarPerfilPath !== '' ? edunexo_topbar_asset($topbarPerfil
         .org-content .app-topbar,
         .superadmin-content .app-topbar {
             margin: 0;
+        }
+
+        .org-page-content .app-topbar {
+            margin: -20px -16px 24px;
         }
 
         .app-notification-menu {
