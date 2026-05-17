@@ -370,6 +370,12 @@ document.addEventListener('click', function (event) {
         const modal = document.getElementById(trigger.dataset.modalTarget);
 
         if (modal) {
+            document.querySelectorAll('.app-notification-menu, .app-user-menu').forEach(function (menu) {
+                menu.classList.remove('is-open');
+            });
+            document.querySelectorAll('#appNotificationToggle, #appUserToggle').forEach(function (button) {
+                button.setAttribute('aria-expanded', 'false');
+            });
             modal.classList.add('is-open');
             modal.setAttribute('aria-hidden', 'false');
             document.body.classList.add('org-modal-open');

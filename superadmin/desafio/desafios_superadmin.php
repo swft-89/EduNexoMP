@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '../../includes/session_superadmin.php';
-require_once __DIR__ . '../../config/conexion.php';
+require_once __DIR__ . '/../../includes/session_superadmin.php';
+require_once __DIR__ . '/../../config/conexion.php';
 
 $stmtAdmin = $pdo->prepare("
     SELECT nombre
@@ -99,11 +99,15 @@ unset($_SESSION['success'], $_SESSION['error']);
         </div>
 
         <?php if ($success): ?>
-            <div class="superadmin-alert success"><?php echo htmlspecialchars($success); ?></div>
+            <script>
+                window.edunexoSuccess = <?php echo json_encode($success); ?>;
+            </script>
         <?php endif; ?>
 
         <?php if ($error): ?>
-            <div class="superadmin-alert error"><?php echo htmlspecialchars($error); ?></div>
+            <script>
+                window.edunexoError = <?php echo json_encode($error); ?>;
+            </script>
         <?php endif; ?>
 
         <section class="superadmin-panel-card full-card">
@@ -244,6 +248,7 @@ unset($_SESSION['success'], $_SESSION['error']);
         </section>
     </section>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../../assets/js/main.js"></script>
 </body>
 </html>

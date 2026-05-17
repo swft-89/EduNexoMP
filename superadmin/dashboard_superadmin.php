@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '../../includes/session_superadmin.php';
-require_once __DIR__ . '../../config/conexion.php';
+require_once __DIR__ . '/../includes/session_superadmin.php';
+require_once __DIR__ . '/../config/conexion.php';
 
 /* Datos */
 $stmt = $pdo->prepare("

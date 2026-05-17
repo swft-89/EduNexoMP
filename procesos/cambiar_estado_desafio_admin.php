@@ -3,7 +3,7 @@ require_once __DIR__ . '/../config/conexion.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../desafios_superadmin.php');
+    header('Location: ../superadmin/desafio/desafios_superadmin.php');
     exit;
 }
 
@@ -20,7 +20,7 @@ $estadosPermitidos = ['activo', 'pausado', 'cerrado'];
 
 if ($idDesafio <= 0 || !in_array($nuevoEstado, $estadosPermitidos, true)) {
     $_SESSION['error'] = 'Solicitud inválida.';
-    header('Location: ../superadmin/desafios/desafios_superadmin.php');
+    header('Location: ../superadmin/desafio/desafios_superadmin.php');
     exit;
 }
 

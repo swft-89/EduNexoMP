@@ -281,7 +281,7 @@
 .help-history-modal {
     position: fixed;
     inset: 0;
-    z-index: 3000;
+    z-index: 5000;
     display: none;
     align-items: center;
     justify-content: center;

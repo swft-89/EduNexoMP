@@ -57,6 +57,12 @@ $adminSidebarItems = $isSuperadminSidebar ? [
         'label' => 'Categorías',
         'active' => ['superadmin/categorias_superadmin.php'],
     ],
+    [
+        'href' => 'admin/perfil_admin.php',
+        'icon' => 'bi-person',
+        'label' => 'Perfil',
+        'active' => ['admin/perfil_admin.php', 'admin/editar_perfil_admin.php'],
+    ],
 ] : [
     [
         'href' => 'admin/dashboard_admin.php',
@@ -69,6 +75,12 @@ $adminSidebarItems = $isSuperadminSidebar ? [
         'icon' => 'bi-clipboard-data',
         'label' => 'Reportes',
         'active' => ['admin/reportes_admin.php'],
+    ],
+    [
+        'href' => 'admin/perfil_admin.php',
+        'icon' => 'bi-person',
+        'label' => 'Perfil',
+        'active' => ['admin/perfil_admin.php', 'admin/editar_perfil_admin.php'],
     ],
 ];
 ?>

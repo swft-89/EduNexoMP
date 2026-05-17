@@ -109,6 +109,7 @@ $topbarRolLabel = [
 $topbarPerfilPath = [
     'estudiante' => 'estudiante/perfil_estudiante.php',
     'organizacion' => 'organizacion/perfil_organizacion.php',
+    'administrador' => 'admin/perfil_admin.php',
 ][$topbarRol] ?? '';
 $topbarPerfilUrl = $topbarPerfilPath !== '' ? edunexo_topbar_asset($topbarPerfilPath) : '';
 ?>
@@ -122,6 +123,18 @@ $topbarPerfilUrl = $topbarPerfilPath !== '' ? edunexo_topbar_asset($topbarPerfil
         justify-content: space-between;
         padding: 0 28px;
         margin: -28px -28px 28px;
+    }
+
+    body.org-modal-open .app-topbar,
+    body.modal-open .app-topbar,
+    body.skills-modal-open .app-topbar,
+    body:has(.org-propuesta-modal.is-open) .app-topbar,
+    body:has(.propuesta-modal-overlay.active) .app-topbar,
+    body:has(.skills-modal-overlay.active) .app-topbar,
+    body:has(.student-skills-modal-overlay.active) .app-topbar,
+    body:has(.modal-overlay.active) .app-topbar,
+    body:has(.help-history-modal.is-open) .app-topbar {
+        z-index: 1 !important;
     }
 
     .org-content .app-topbar,
@@ -195,7 +208,7 @@ $topbarPerfilUrl = $topbarPerfilPath !== '' ? edunexo_topbar_asset($topbarPerfil
         border-radius: 18px;
         box-shadow: 0 24px 60px rgba(15, 23, 42, 0.16);
         overflow: hidden;
-        z-index: 2500;
+        z-index: 1300;
         display: none;
     }
 
@@ -318,7 +331,7 @@ $topbarPerfilUrl = $topbarPerfilPath !== '' ? edunexo_topbar_asset($topbarPerfil
         border-radius: 18px;
         box-shadow: 0 24px 60px rgba(15, 23, 42, 0.16);
         overflow: hidden;
-        z-index: 2600;
+        z-index: 1300;
         display: none;
     }
 

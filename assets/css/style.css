@@ -1218,11 +1218,38 @@ body {
     margin: -28px -28px 28px;
     position: sticky;
     top: 0;
-    z-index: 2100;
+    z-index: 900;
 }
 
 .swal2-container {
     z-index: 200000 !important;
+}
+
+.app-notification-menu,
+.app-user-menu {
+    z-index: 1300 !important;
+}
+
+.auth-overlay,
+.modal-overlay,
+.skills-modal-overlay,
+.student-skills-modal-overlay,
+.propuesta-modal-overlay,
+.org-propuesta-modal,
+.help-history-modal {
+    z-index: 5000 !important;
+}
+
+body.org-modal-open .app-topbar,
+body.modal-open .app-topbar,
+body.skills-modal-open .app-topbar,
+body:has(.org-propuesta-modal.is-open) .app-topbar,
+body:has(.propuesta-modal-overlay.active) .app-topbar,
+body:has(.skills-modal-overlay.active) .app-topbar,
+body:has(.student-skills-modal-overlay.active) .app-topbar,
+body:has(.modal-overlay.active) .app-topbar,
+body:has(.help-history-modal.is-open) .app-topbar {
+    z-index: 1 !important;
 }
 
 .org-content .app-topbar,
