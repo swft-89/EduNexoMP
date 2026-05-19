@@ -50,6 +50,11 @@ $nombreCompleto = trim(
 
 $primerNombre = explode(' ', trim($estudiante['nombre']))[0] ?? $estudiante['nombre'];
 
+$busqueda = trim($_GET['q'] ?? '');
+$categoriaFiltro = (int) ($_GET['categoria'] ?? 0);
+$modalidadFiltro = trim($_GET['modalidad'] ?? '');
+$hayFiltrosActivos = $busqueda !== '' || $categoriaFiltro > 0 || $modalidadFiltro !== '';
+
 /* Metricas*/
 
 // Propuestas enviadas
@@ -84,12 +89,60 @@ $stmt->execute([':id' => $idUsuario]);
 $totalMensajes = (int) $stmt->fetchColumn();
 
 /* Desafios recomendados */
+$stmt = $pdo->query("
+    SELECT id_categoria, nombre_categoria
+    FROM categoria
+    ORDER BY nombre_categoria ASC
+");
+$categoriasFiltro = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$stmt = $pdo->query("
+    SELECT DISTINCT modalidad
+    FROM desafio
+    WHERE modalidad IS NOT NULL
+      AND TRIM(modalidad) <> ''
+    ORDER BY modalidad ASC
+");
+$modalidadesFiltro = array_column($stmt->fetchAll(PDO::FETCH_ASSOC), 'modalidad');
+
+$whereDesafios = [];
+$paramsDesafios = [
+    ':id_estudiante' => $idUsuario,
+    ':id_estudiante_fav' => $idUsuario
+];
+
+if ($busqueda !== '') {
+    $whereDesafios[] = "(
+        LOWER(d.titulo) LIKE LOWER(:busqueda)
+        OR LOWER(COALESCE(d.descripcion, '')) LIKE LOWER(:busqueda)
+        OR LOWER(o.nombre_empresa) LIKE LOWER(:busqueda)
+    )";
+    $paramsDesafios[':busqueda'] = '%' . $busqueda . '%';
+}
+
+if ($categoriaFiltro > 0) {
+    $whereDesafios[] = "d.id_categoria = :categoria";
+    $paramsDesafios[':categoria'] = $categoriaFiltro;
+}
+
+if ($modalidadFiltro !== '') {
+    $whereDesafios[] = "d.modalidad = :modalidad";
+    $paramsDesafios[':modalidad'] = $modalidadFiltro;
+}
+
+$whereSql = !empty($whereDesafios)
+    ? 'WHERE ' . implode(' AND ', $whereDesafios)
+    : '';
+
 $stmt = $pdo->prepare("
     SELECT
         d.id_desafio,
         d.titulo,
         d.descripcion,
         d.fecha_limite,
+        d.modalidad,
+        d.id_categoria,
+        c.nombre_categoria,
         o.nombre_empresa,
 
         CASE
@@ -111,6 +164,8 @@ $stmt = $pdo->prepare("
     FROM desafio d
     INNER JOIN organizacion o
         ON d.id_organizacion = o.id_organizacion
+    INNER JOIN categoria c
+        ON d.id_categoria = c.id_categoria
     LEFT JOIN favoritos f
         ON d.id_desafio = f.id_desafio
         AND f.id_estudiante = :id_estudiante_fav
@@ -119,20 +174,21 @@ $stmt = $pdo->prepare("
     LEFT JOIN estudiante_habilidad eh
         ON eh.id_habilidad = dh.id_habilidad
         AND eh.id_estudiante = :id_estudiante
+    $whereSql
     GROUP BY
         d.id_desafio,
         d.titulo,
         d.descripcion,
         d.fecha_limite,
+        d.modalidad,
+        d.id_categoria,
+        c.nombre_categoria,
         o.nombre_empresa,
         f.id_desafio
     ORDER BY match_porcentaje DESC, d.fecha_publicacion DESC
     LIMIT 6
 ");
-$stmt->execute([
-    ':id_estudiante' => $idUsuario,
-    ':id_estudiante_fav' => $idUsuario
-]);
+$stmt->execute($paramsDesafios);
 $desafiosRecomendados = $stmt->fetchAll();
 
 /* Habilidades por desafio*/
@@ -255,15 +311,34 @@ unset($_SESSION['success'], $_SESSION['error']);
         </div>
 
         <!-- Filtros -->
-        <div class="filters-bar">
-            <input type="text" placeholder="Buscar proyectos o empresas...">
-            <select>
-                <option>Todas las categorías</option>
+        <form class="filters-bar" method="GET" action="dashboard_estudiante.php" id="dashboardFilters">
+            <input
+                type="search"
+                name="q"
+                value="<?php echo htmlspecialchars($busqueda); ?>"
+                placeholder="Buscar proyectos o empresas..."
+                aria-label="Buscar proyectos o empresas">
+
+            <select name="categoria" aria-label="Filtrar por categoría">
+                <option value="">Todas las categorías</option>
+                <?php foreach ($categoriasFiltro as $categoria): ?>
+                    <option
+                        value="<?php echo (int) $categoria['id_categoria']; ?>"
+                        <?php echo $categoriaFiltro === (int) $categoria['id_categoria'] ? 'selected' : ''; ?>>
+                        <?php echo htmlspecialchars($categoria['nombre_categoria']); ?>
+                    </option>
+                <?php endforeach; ?>
             </select>
-            <select>
-                <option>Todas</option>
+
+            <select name="modalidad" aria-label="Filtrar por modalidad">
+                <option value="">Todas</option>
+                <?php foreach ($modalidadesFiltro as $modalidad): ?>
+                    <option value="<?php echo htmlspecialchars($modalidad); ?>" <?php echo $modalidadFiltro === $modalidad ? 'selected' : ''; ?>>
+                        <?php echo htmlspecialchars($modalidad); ?>
+                    </option>
+                <?php endforeach; ?>
             </select>
-        </div>
+        </form>
 
         <!-- Cards de desafios -->
         <div class="cards-grid">
@@ -327,11 +402,15 @@ unset($_SESSION['success'], $_SESSION['error']);
             <?php else: ?>
                 <article class="challenge-card">
                     <div class="challenge-card-header">
-                        <h3>Sin recomendaciones aún</h3>
+                        <h3><?php echo $hayFiltrosActivos ? 'Sin resultados' : 'Sin recomendaciones aún'; ?></h3>
                     </div>
 
                     <p class="empresa">
-                        Aún no hay desafíos compatibles o faltan habilidades registradas para calcular coincidencias.
+                        <?php if ($hayFiltrosActivos): ?>
+                            No encontramos desafíos que coincidan con los filtros seleccionados.
+                        <?php else: ?>
+                            Aún no hay desafíos compatibles o faltan habilidades registradas para calcular coincidencias.
+                        <?php endif; ?>
                     </p>
 
                     <div class="tags">
@@ -364,5 +443,22 @@ unset($_SESSION['success'], $_SESSION['error']);
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../assets/js/main.js"></script>
+<script>
+    const dashboardFilters = document.getElementById('dashboardFilters');
+
+    if (dashboardFilters) {
+        dashboardFilters.querySelectorAll('select').forEach((select) => {
+            select.addEventListener('change', () => dashboardFilters.submit());
+        });
+
+        const searchInput = dashboardFilters.querySelector('input[name="q"]');
+        let searchTimer = null;
+
+        searchInput?.addEventListener('input', () => {
+            window.clearTimeout(searchTimer);
+            searchTimer = window.setTimeout(() => dashboardFilters.submit(), 550);
+        });
+    }
+</script>
 </body>
 </html>
