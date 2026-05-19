@@ -2,6 +2,7 @@
 session_start();
 require_once '../config/conexion.php';
 require_once '../includes/profile_photo.php';
+require_once '../includes/validation.php';
 
 if (!isset($_SESSION['usuario_id']) || !isset($_SESSION['rol']) || $_SESSION['rol'] !== 'organizacion') {
     header('Location: ../index.php');
@@ -16,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $idOrganizacion = (int) $_SESSION['usuario_id'];
 
 $nombreEmpresa = trim($_POST['nombre_empresa'] ?? '');
-$rfc = trim($_POST['rfc'] ?? '');
+$rfc = strtoupper(trim($_POST['rfc'] ?? ''));
 $sector = trim($_POST['sector'] ?? '');
 $representante = trim($_POST['representante'] ?? '');
 $telefonoContacto = trim($_POST['telefono_contacto'] ?? '');
@@ -42,6 +43,21 @@ if ($nombreEmpresa === '' || $correoElectronico === '') {
 
 if (!filter_var($correoElectronico, FILTER_VALIDATE_EMAIL)) {
     $_SESSION['error'] = 'El correo electrónico no es válido.';
+    header('Location: ../organizacion/editar_perfil_organizacion.php');
+    exit;
+}
+
+$validationErrors = [];
+edunexo_add_error_if(!edunexo_is_valid_email($correoElectronico), $validationErrors, 'El correo electronico no es valido.');
+edunexo_add_error_if(!edunexo_is_valid_public_name($nombreEmpresa), $validationErrors, 'El nombre de la empresa contiene caracteres no validos.');
+edunexo_add_error_if($rfc !== '' && !edunexo_is_valid_rfc($rfc), $validationErrors, 'El RFC no tiene un formato valido.');
+edunexo_add_error_if($sector !== '' && !edunexo_is_valid_simple_text($sector, 100), $validationErrors, 'El sector contiene caracteres no validos.');
+edunexo_add_error_if($representante !== '' && !edunexo_is_valid_person_name($representante), $validationErrors, 'El representante solo debe contener letras y espacios.');
+edunexo_add_error_if($telefonoContacto !== '' && !edunexo_is_valid_phone($telefonoContacto), $validationErrors, 'El telefono de contacto no tiene un formato valido.');
+edunexo_add_error_if($codigoPostal !== '' && !edunexo_is_valid_postal_code($codigoPostal), $validationErrors, 'El codigo postal debe tener 5 digitos.');
+
+if (!empty($validationErrors)) {
+    $_SESSION['error'] = implode(' ', $validationErrors);
     header('Location: ../organizacion/editar_perfil_organizacion.php');
     exit;
 }

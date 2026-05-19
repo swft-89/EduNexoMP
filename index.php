@@ -1,14 +1,19 @@
 <?php
 session_start();
+require_once __DIR__ . '/includes/carreras.php';
 
 $success = $_SESSION['success'] ?? null;
 $error = $_SESSION['error'] ?? null;
+$authModal = $_SESSION['auth_modal'] ?? null;
+$mostrarSplash = empty($success) && empty($error);
 
-unset($_SESSION['success'], $_SESSION['error']);
+unset($_SESSION['success'], $_SESSION['error'], $_SESSION['auth_modal']);
 ?>
 
 <?php include 'includes/header.php'; ?>
-<?php include 'includes/splash.php'; ?>
+<?php if ($mostrarSplash): ?>
+    <?php include 'includes/splash.php'; ?>
+<?php endif; ?>
 
 <main>
     <section class="hero" id="inicio">
@@ -119,7 +124,7 @@ unset($_SESSION['success'], $_SESSION['error']);
 
         <form class="auth-form" method="POST" action="procesos/login.php">
             <div class="auth-group">
-                <label for="login_email">Email</label>
+                <label for="login_email">Email <span class="required-mark" aria-hidden="true">*</span></label>
                 <input
                     type="email"
                     id="login_email"
@@ -130,14 +135,19 @@ unset($_SESSION['success'], $_SESSION['error']);
             </div>
 
             <div class="auth-group">
-                <label for="login_password">Contraseña</label>
-                <input
+                <label for="login_password">Contraseña <span class="required-mark" aria-hidden="true">*</span></label>
+                <div class="password-field">
+                    <input
                     type="password"
                     id="login_password"
                     name="contrasena"
                     placeholder="••••••••"
                     required
                 >
+                    <button type="button" class="password-toggle" data-password-toggle="login_password" aria-label="Mostrar contraseña">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </div>
             </div>
 
             <label class="auth-check">
@@ -191,12 +201,12 @@ unset($_SESSION['success'], $_SESSION['error']);
             <div class="role-panel active" id="panel-estudiante">
                 <div class="form-grid-2">
                     <div class="auth-group">
-                        <label for="est_nombre">Nombre(s)</label>
+                        <label for="est_nombre">Nombre(s) <span class="required-mark" aria-hidden="true">*</span></label>
                         <input type="text" id="est_nombre" name="est_nombre" placeholder="Juan Carlos">
                     </div>
 
                     <div class="auth-group">
-                        <label for="est_apellido_paterno">Apellido paterno</label>
+                        <label for="est_apellido_paterno">Apellido paterno <span class="required-mark" aria-hidden="true">*</span></label>
                         <input type="text" id="est_apellido_paterno" name="est_apellido_paterno" placeholder="Pérez">
                     </div>
 
@@ -206,17 +216,30 @@ unset($_SESSION['success'], $_SESSION['error']);
                     </div>
 
                     <div class="auth-group">
-                        <label for="est_no_control">Número de control</label>
+                        <label for="est_no_control">Número de control <span class="required-mark" aria-hidden="true">*</span></label>
                         <input type="text" id="est_no_control" name="est_no_control" placeholder="23111420">
                     </div>
 
                     <div class="auth-group">
-                        <label for="est_carrera">Carrera</label>
-                        <input type="text" id="est_carrera" name="est_carrera" placeholder="Ingeniería en Sistemas">
+                        <label for="est_carrera">Carrera <span class="required-mark" aria-hidden="true">*</span></label>
+                        <select id="est_carrera" name="est_carrera">
+                            <option value="">Selecciona tu carrera</option>
+                            <?php foreach (edunexo_carreras_estudiante() as $carreraOpcion): ?>
+                                <option value="<?php echo htmlspecialchars($carreraOpcion); ?>">
+                                    <?php echo htmlspecialchars($carreraOpcion); ?>
+                                </option>
+                            <?php endforeach; ?>
+                            <option value="<?php echo htmlspecialchars(edunexo_carrera_otra_value()); ?>">Otra</option>
+                        </select>
+                    </div>
+
+                    <div class="auth-group is-hidden" id="est_carrera_otra_group">
+                        <label for="est_carrera_otra">Especifica tu carrera <span class="required-mark" aria-hidden="true">*</span></label>
+                        <input type="text" id="est_carrera_otra" name="est_carrera_otra" maxlength="120" placeholder="Escribe tu carrera">
                     </div>
 
                     <div class="auth-group">
-                        <label for="est_semestre">Semestre</label>
+                        <label for="est_semestre">Semestre <span class="required-mark" aria-hidden="true">*</span></label>
                         <input type="number" id="est_semestre" name="est_semestre" placeholder="8">
                     </div>
 
@@ -282,7 +305,7 @@ unset($_SESSION['success'], $_SESSION['error']);
             <div class="role-panel" id="panel-organizacion">
                 <div class="form-grid-2">
                     <div class="auth-group">
-                        <label for="org_nombre_empresa">Nombre de la empresa</label>
+                        <label for="org_nombre_empresa">Nombre de la empresa <span class="required-mark" aria-hidden="true">*</span></label>
                         <input type="text" id="org_nombre_empresa" name="org_nombre_empresa" placeholder="Empresa ejemplo">
                     </div>
 
@@ -308,7 +331,7 @@ unset($_SESSION['success'], $_SESSION['error']);
                 </div>
 
                 <div class="register-section">
-                    <h3>Ubicación</h3>
+                    <h3>Ubicación <span class="optional-note">(opcional)</span></h3>
 
                     <div class="form-grid-2">
                         <div class="auth-group">
@@ -353,12 +376,12 @@ unset($_SESSION['success'], $_SESSION['error']);
             <div class="role-panel" id="panel-administrador">
                 <div class="form-grid-2">
                     <div class="auth-group">
-                        <label for="adm_nombre">Nombre(s)</label>
+                        <label for="adm_nombre">Nombre(s) <span class="required-mark" aria-hidden="true">*</span></label>
                         <input type="text" id="adm_nombre" name="adm_nombre" placeholder="Nombre">
                     </div>
 
                     <div class="auth-group">
-                        <label for="adm_apellido_paterno">Apellido paterno</label>
+                        <label for="adm_apellido_paterno">Apellido paterno <span class="required-mark" aria-hidden="true">*</span></label>
                         <input type="text" id="adm_apellido_paterno" name="adm_apellido_paterno" placeholder="Apellido paterno">
                     </div>
 
@@ -385,13 +408,18 @@ unset($_SESSION['success'], $_SESSION['error']);
 
                 <div class="form-grid-2">
                     <div class="auth-group">
-                        <label for="correo">Correo electrónico</label>
+                        <label for="correo">Correo electrónico <span class="required-mark" aria-hidden="true">*</span></label>
                         <input type="email" id="correo" name="correo" placeholder="nombre@correo.com" required>
                     </div>
 
                     <div class="auth-group">
-                        <label for="contrasena">Contraseña</label>
-                        <input type="password" id="contrasena" name="contrasena" placeholder="Crea una contraseña" required>
+                        <label for="contrasena">Contraseña <span class="required-mark" aria-hidden="true">*</span></label>
+                        <div class="password-field">
+                            <input type="password" id="contrasena" name="contrasena" placeholder="Crea una contraseña" required>
+                            <button type="button" class="password-toggle" data-password-toggle="contrasena" aria-label="Mostrar contraseña">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -417,6 +445,7 @@ unset($_SESSION['success'], $_SESSION['error']);
 <?php if ($error): ?>
 <script>
     window.edunexoError = <?php echo json_encode($error); ?>;
+    window.edunexoAuthModal = <?php echo json_encode($authModal); ?>;
 </script>
 <?php endif; ?>
 

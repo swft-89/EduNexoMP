@@ -85,14 +85,7 @@ $camposPerfil = [
     'Sector' => $organizacion['sector'] ?? '',
     'Representante' => $organizacion['representante'] ?? '',
     'Teléfono de contacto' => $organizacion['telefono_contacto'] ?? '',
-    'Logo o imagen' => $organizacion['foto_url'] ?? '',
-    'País' => $organizacion['pais'] ?? '',
-    'Estado' => $organizacion['estado'] ?? '',
-    'Ciudad' => $organizacion['ciudad'] ?? '',
-    'Colonia' => $organizacion['colonia'] ?? '',
-    'Código postal' => $organizacion['codigo_postal'] ?? '',
-    'Calle' => $organizacion['calle'] ?? '',
-    'Número exterior' => $organizacion['num_exterior'] ?? ''
+    'Logo o imagen' => $organizacion['foto_url'] ?? ''
 ];
 
 $totalCamposPerfil = count($camposPerfil);
@@ -276,7 +269,7 @@ unset($_SESSION['success'], $_SESSION['error'], $_SESSION['old']);
 
                         <div class="form-grid-2">
                             <div class="form-group">
-                                <label for="nombre_empresa">Nombre de la empresa</label>
+                                <label for="nombre_empresa">Nombre de la empresa <span class="required-mark" aria-hidden="true">*</span></label>
                                 <input
                                     type="text"
                                     id="nombre_empresa"
@@ -327,7 +320,7 @@ unset($_SESSION['success'], $_SESSION['error'], $_SESSION['old']);
                             </div>
 
                             <div class="form-group">
-                                <label for="correo_electronico">Correo electrónico</label>
+                                <label for="correo_electronico">Correo electrónico <span class="required-mark" aria-hidden="true">*</span></label>
                                 <input
                                     type="email"
                                     id="correo_electronico"
@@ -351,7 +344,7 @@ unset($_SESSION['success'], $_SESSION['error'], $_SESSION['old']);
                     </div>
 
                     <div class="org-profile-section">
-                        <h3>Ubicación</h3>
+                        <h3>Ubicación <span class="optional-note">(opcional)</span></h3>
 
                         <div class="form-grid-2">
                             <div class="form-group">

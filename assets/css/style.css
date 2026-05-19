@@ -914,6 +914,21 @@ body {
     color: var(--text);
 }
 
+.required-mark {
+    color: #dc2626;
+    font-weight: 800;
+}
+
+.optional-note {
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.is-hidden {
+    display: none !important;
+}
+
 .auth-group input,
 .auth-group select,
 .auth-group textarea {
@@ -926,6 +941,51 @@ body {
     font-family: inherit;
     background: #ffffff;
     color: var(--text);
+}
+
+.password-field {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.auth-group .password-field input {
+    padding-right: 56px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.password-field .password-toggle {
+    appearance: none;
+    -webkit-appearance: none;
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    width: 40px;
+    height: 40px;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+    color: #475569;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.05rem;
+    transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    transform: translateY(-50%);
+}
+
+.password-field .password-toggle:hover,
+.password-field .password-toggle:focus-visible {
+    background: #e0e7ff;
+    border-color: rgba(37, 99, 235, 0.18);
+    color: var(--primary);
+    outline: none;
+    transform: translateY(-50%) scale(1.03);
+}
+
+.password-field:focus-within .password-toggle {
+    color: var(--primary);
 }
 
 .auth-group textarea {

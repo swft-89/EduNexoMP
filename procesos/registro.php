@@ -2,6 +2,8 @@
 session_start();
 require_once __DIR__ . '/../config/conexion.php';
 require_once __DIR__ . '/../includes/student_schema.php';
+require_once __DIR__ . '/../includes/validation.php';
+require_once __DIR__ . '/../includes/carreras.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ../index.php');
@@ -21,12 +23,25 @@ $rolesValidos = ['estudiante', 'organizacion', 'administrador'];
 
 if (!in_array($rol, $rolesValidos, true)) {
     $_SESSION['error'] = "Rol no válido.";
+    $_SESSION['auth_modal'] = 'register';
     header('Location: ../index.php');
     exit;
 }
 
 if ($correo === '' || $contrasena === '') {
     $_SESSION['error'] = "Correo y contraseña obligatorios.";
+    $_SESSION['auth_modal'] = 'register';
+    header('Location: ../index.php');
+    exit;
+}
+
+$validationErrors = [];
+edunexo_add_error_if(!edunexo_is_valid_email($correo), $validationErrors, 'El correo electronico no es valido.');
+edunexo_add_error_if(!edunexo_is_valid_password($contrasena), $validationErrors, 'La contrasena debe tener al menos 8 caracteres e incluir letras y numeros.');
+
+if (!empty($validationErrors)) {
+    $_SESSION['error'] = implode(' ', $validationErrors);
+    $_SESSION['auth_modal'] = 'register';
     header('Location: ../index.php');
     exit;
 }
@@ -91,11 +106,13 @@ try {
         $nombre = limpiar($_POST['est_nombre'] ?? '');
         $apellidoPaterno = limpiar($_POST['est_apellido_paterno'] ?? '');
         $apellidoMaterno = limpiar($_POST['est_apellido_materno'] ?? '');
-        $carrera = limpiar($_POST['est_carrera'] ?? '');
+        $carreraSeleccionada = limpiar($_POST['est_carrera'] ?? '');
+        $carreraOtra = limpiar($_POST['est_carrera_otra'] ?? '');
+        $carrera = $carreraSeleccionada === edunexo_carrera_otra_value() ? $carreraOtra : $carreraSeleccionada;
         $noControl = limpiar($_POST['est_no_control'] ?? '');
         $semestre = (int) limpiar($_POST['est_semestre'] ?? '');
         $intereses = limpiar($_POST['est_intereses'] ?? '');
-        $curp = limpiar($_POST['est_curp'] ?? '');
+        $curp = strtoupper(limpiar($_POST['est_curp'] ?? ''));
         $telefono = limpiar($_POST['est_telefono'] ?? '');
 
         $pais = limpiar($_POST['est_pais'] ?? '');
@@ -108,6 +125,39 @@ try {
 
         if ($nombre === '' || $apellidoPaterno === '' || $carrera === '' || $noControl === '' || $semestre <= 0) {
             throw new Exception("Completa correctamente los campos obligatorios del estudiante.");
+        }
+
+        $validationErrors = [];
+        edunexo_add_error_if(!edunexo_is_valid_person_name($nombre), $validationErrors, 'El nombre solo debe contener letras y espacios.');
+        edunexo_add_error_if(!edunexo_is_valid_person_name($apellidoPaterno), $validationErrors, 'El apellido paterno solo debe contener letras y espacios.');
+        edunexo_add_error_if($apellidoMaterno !== '' && !edunexo_is_valid_person_name($apellidoMaterno), $validationErrors, 'El apellido materno solo debe contener letras y espacios.');
+        edunexo_add_error_if(
+            $carreraSeleccionada !== edunexo_carrera_otra_value() && !edunexo_carrera_estudiante_valida($carreraSeleccionada),
+            $validationErrors,
+            'Selecciona una carrera valida.'
+        );
+        edunexo_add_error_if(
+            $carreraSeleccionada === edunexo_carrera_otra_value() && !edunexo_is_valid_simple_text($carreraOtra, 120),
+            $validationErrors,
+            'Escribe una carrera valida.'
+        );
+        edunexo_add_error_if(!edunexo_is_valid_control_number($noControl), $validationErrors, 'El numero de control solo puede contener letras, numeros o guion, de 4 a 20 caracteres.');
+        edunexo_add_error_if($semestre < 1 || $semestre > 12, $validationErrors, 'El semestre debe estar entre 1 y 12.');
+        edunexo_add_error_if($curp !== '' && !edunexo_is_valid_curp($curp), $validationErrors, 'La CURP no tiene un formato valido.');
+        edunexo_add_error_if($telefono !== '' && !edunexo_is_valid_phone($telefono), $validationErrors, 'El telefono solo debe contener numeros y puede incluir espacios, parentesis, guion o +.');
+        edunexo_add_error_if($codigoPostal !== '' && !edunexo_is_valid_postal_code($codigoPostal), $validationErrors, 'El codigo postal debe tener 5 digitos.');
+        edunexo_throw_validation_errors($validationErrors);
+
+        $stmt = $pdo->prepare("
+            SELECT id_estudiante
+            FROM estudiante
+            WHERE no_control = :no_control
+            LIMIT 1
+        ");
+        $stmt->execute([':no_control' => $noControl]);
+
+        if ($stmt->fetch()) {
+            throw new Exception('Ese numero de control ya esta registrado.');
         }
 
         $stmt = $pdo->prepare("
@@ -191,7 +241,7 @@ try {
 
     if ($rol === 'organizacion') {
         $nombreEmpresa = limpiar($_POST['org_nombre_empresa'] ?? '');
-        $rfc = limpiar($_POST['org_rfc'] ?? '');
+        $rfc = strtoupper(limpiar($_POST['org_rfc'] ?? ''));
         $sector = limpiar($_POST['org_sector'] ?? '');
         $representante = limpiar($_POST['org_representante'] ?? '');
         $telefonoContacto = limpiar($_POST['org_telefono_contacto'] ?? '');
@@ -207,6 +257,15 @@ try {
         if ($nombreEmpresa === '') {
             throw new Exception("El nombre de la empresa es obligatorio.");
         }
+
+        $validationErrors = [];
+        edunexo_add_error_if(!edunexo_is_valid_public_name($nombreEmpresa), $validationErrors, 'El nombre de la empresa contiene caracteres no validos.');
+        edunexo_add_error_if($rfc !== '' && !edunexo_is_valid_rfc($rfc), $validationErrors, 'El RFC no tiene un formato valido.');
+        edunexo_add_error_if($sector !== '' && !edunexo_is_valid_simple_text($sector, 100), $validationErrors, 'El sector contiene caracteres no validos.');
+        edunexo_add_error_if($representante !== '' && !edunexo_is_valid_person_name($representante), $validationErrors, 'El representante solo debe contener letras y espacios.');
+        edunexo_add_error_if($telefonoContacto !== '' && !edunexo_is_valid_phone($telefonoContacto), $validationErrors, 'El telefono de contacto no tiene un formato valido.');
+        edunexo_add_error_if($codigoPostal !== '' && !edunexo_is_valid_postal_code($codigoPostal), $validationErrors, 'El codigo postal debe tener 5 digitos.');
+        edunexo_throw_validation_errors($validationErrors);
 
         $stmt = $pdo->prepare("
             INSERT INTO direccion (
@@ -285,6 +344,14 @@ try {
         if ($nombre === '' || $apellidoPaterno === '') {
             throw new Exception("Completa correctamente los campos obligatorios del administrador.");
         }
+
+        $validationErrors = [];
+        edunexo_add_error_if(!edunexo_is_valid_person_name($nombre), $validationErrors, 'El nombre solo debe contener letras y espacios.');
+        edunexo_add_error_if(!edunexo_is_valid_person_name($apellidoPaterno), $validationErrors, 'El apellido paterno solo debe contener letras y espacios.');
+        edunexo_add_error_if($apellidoMaterno !== '' && !edunexo_is_valid_person_name($apellidoMaterno), $validationErrors, 'El apellido materno solo debe contener letras y espacios.');
+        edunexo_add_error_if($puesto !== '' && !edunexo_is_valid_simple_text($puesto, 100), $validationErrors, 'El puesto contiene caracteres no validos.');
+        edunexo_add_error_if($departamento !== '' && !edunexo_is_valid_simple_text($departamento, 100), $validationErrors, 'El departamento contiene caracteres no validos.');
+        edunexo_throw_validation_errors($validationErrors);
 
         $stmt = $pdo->prepare("
             INSERT INTO administrador (
@@ -365,6 +432,7 @@ try {
     }
 
     $_SESSION['error'] = $e->getMessage();
+    $_SESSION['auth_modal'] = 'register';
     header('Location: ../index.php');
     exit;
 }

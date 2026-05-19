@@ -2,6 +2,7 @@
 session_start();
 require_once __DIR__ . '/../../config/conexion.php';
 require_once __DIR__ . '/../../includes/profile_photo.php';
+require_once __DIR__ . '/../../includes/validation.php';
 
 if (!isset($_SESSION['usuario_id']) || ($_SESSION['rol'] ?? '') !== 'administrador') {
     header('Location: ../../index.php');
@@ -34,6 +35,20 @@ if ($nombre === '' || $apellidoPaterno === '' || $correoElectronico === '') {
 
 if (!filter_var($correoElectronico, FILTER_VALIDATE_EMAIL)) {
     $_SESSION['error'] = 'El correo electronico no es valido.';
+    header('Location: ../../admin/editar_perfil_admin.php');
+    exit;
+}
+
+$validationErrors = [];
+edunexo_add_error_if(!edunexo_is_valid_email($correoElectronico), $validationErrors, 'El correo electronico no es valido.');
+edunexo_add_error_if(!edunexo_is_valid_person_name($nombre), $validationErrors, 'El nombre solo debe contener letras y espacios.');
+edunexo_add_error_if(!edunexo_is_valid_person_name($apellidoPaterno), $validationErrors, 'El apellido paterno solo debe contener letras y espacios.');
+edunexo_add_error_if($apellidoMaterno !== '' && !edunexo_is_valid_person_name($apellidoMaterno), $validationErrors, 'El apellido materno solo debe contener letras y espacios.');
+edunexo_add_error_if($puesto !== '' && !edunexo_is_valid_simple_text($puesto, 100), $validationErrors, 'El puesto contiene caracteres no validos.');
+edunexo_add_error_if($departamento !== '' && !edunexo_is_valid_simple_text($departamento, 100), $validationErrors, 'El departamento contiene caracteres no validos.');
+
+if (!empty($validationErrors)) {
+    $_SESSION['error'] = implode(' ', $validationErrors);
     header('Location: ../../admin/editar_perfil_admin.php');
     exit;
 }

@@ -3,6 +3,7 @@ session_start();
 require_once '../../config/conexion.php';
 require_once '../../includes/profile_photo.php';
 require_once '../../includes/student_schema.php';
+require_once '../../includes/validation.php';
 
 if (!isset($_SESSION['usuario_id']) || !isset($_SESSION['rol']) || $_SESSION['rol'] !== 'estudiante') {
     header('Location: ../index.php');
@@ -54,6 +55,24 @@ if (
 
 if (!filter_var($correoElectronico, FILTER_VALIDATE_EMAIL)) {
     $_SESSION['error'] = 'El correo electrónico no es válido.';
+    header('Location: ../../estudiante/editar_perfil_estudiante.php');
+    exit;
+}
+
+$validationErrors = [];
+edunexo_add_error_if(!edunexo_is_valid_email($correoElectronico), $validationErrors, 'El correo electronico no es valido.');
+edunexo_add_error_if(!edunexo_is_valid_person_name($nombre), $validationErrors, 'El nombre solo debe contener letras y espacios.');
+edunexo_add_error_if(!edunexo_is_valid_person_name($apellidoPaterno), $validationErrors, 'El apellido paterno solo debe contener letras y espacios.');
+edunexo_add_error_if($apellidoMaterno !== '' && !edunexo_is_valid_person_name($apellidoMaterno), $validationErrors, 'El apellido materno solo debe contener letras y espacios.');
+edunexo_add_error_if(!edunexo_is_valid_simple_text($carrera, 120), $validationErrors, 'La carrera contiene caracteres no validos.');
+edunexo_add_error_if(!edunexo_is_valid_control_number($noControl), $validationErrors, 'El numero de control solo puede contener letras, numeros o guion, de 4 a 20 caracteres.');
+edunexo_add_error_if($semestre < 1 || $semestre > 12, $validationErrors, 'El semestre debe estar entre 1 y 12.');
+edunexo_add_error_if($curp !== '' && !edunexo_is_valid_curp($curp), $validationErrors, 'La CURP no tiene un formato valido.');
+edunexo_add_error_if($telefono !== '' && !edunexo_is_valid_phone($telefono), $validationErrors, 'El telefono no tiene un formato valido.');
+edunexo_add_error_if($codigoPostal !== '' && !edunexo_is_valid_postal_code($codigoPostal), $validationErrors, 'El codigo postal debe tener 5 digitos.');
+
+if (!empty($validationErrors)) {
+    $_SESSION['error'] = implode(' ', $validationErrors);
     header('Location: ../../estudiante/editar_perfil_estudiante.php');
     exit;
 }

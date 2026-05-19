@@ -938,6 +938,20 @@
     box-shadow: 0 0 0 4px rgba(77, 136, 245, 0.16) !important;
 }
 
+:root[data-theme="dark"] .password-field .password-toggle {
+    background: #172033 !important;
+    border-color: #334155 !important;
+    color: #9fb2d0 !important;
+}
+
+:root[data-theme="dark"] .password-field .password-toggle:hover,
+:root[data-theme="dark"] .password-field .password-toggle:focus-visible,
+:root[data-theme="dark"] .password-field:focus-within .password-toggle {
+    background: #1e2f4d !important;
+    border-color: rgba(77, 136, 245, 0.45) !important;
+    color: #bfdbfe !important;
+}
+
 :root[data-theme="dark"] .role-tabs {
     background: #0f172a !important;
     border: 1px solid #334155 !important;

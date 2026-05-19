@@ -12,6 +12,7 @@ $contrasena = trim($_POST['contrasena'] ?? '');
 
 if ($correo === '' || $contrasena === '') {
     $_SESSION['error'] = "Debes ingresar correo y contraseña.";
+    $_SESSION['auth_modal'] = 'login';
     header('Location: ../index.php');
     exit;
 }
@@ -94,6 +95,7 @@ try {
 
 } catch (Throwable $e) {
     $_SESSION['error'] = $e->getMessage();
+    $_SESSION['auth_modal'] = 'login';
     header('Location: ../index.php');
     exit;
 }

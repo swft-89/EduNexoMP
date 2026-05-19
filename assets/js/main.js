@@ -25,6 +25,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const roleTabs = document.querySelectorAll(".role-tab");
     const rolePanels = document.querySelectorAll(".role-panel");
     const rolSeleccionado = document.getElementById("rolSeleccionado");
+    const carreraSelect = document.getElementById("est_carrera");
+    const carreraOtraGroup = document.getElementById("est_carrera_otra_group");
+    const carreraOtraInput = document.getElementById("est_carrera_otra");
 
     const savedTheme = localStorage.getItem("theme");
 
@@ -61,10 +64,37 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (splash) {
-        setTimeout(() => {
-            splash.classList.add("hide");
-        }, 950);
+        const splashSeen = sessionStorage.getItem("edunexoSplashSeen") === "1";
+
+        if (splashSeen) {
+            splash.remove();
+        } else {
+            sessionStorage.setItem("edunexoSplashSeen", "1");
+            setTimeout(() => {
+                splash.classList.add("hide");
+            }, 950);
+        }
     }
+
+    document.addEventListener("click", function (event) {
+        const button = event.target.closest("[data-password-toggle]");
+
+        if (!button) return;
+
+        const input = document.getElementById(button.dataset.passwordToggle);
+        const icon = button.querySelector("i");
+
+        if (!input) return;
+
+        const visible = input.type === "text";
+        input.type = visible ? "password" : "text";
+        button.setAttribute("aria-label", visible ? "Mostrar contraseña" : "Ocultar contraseña");
+
+        if (icon) {
+            icon.classList.toggle("bi-eye", visible);
+            icon.classList.toggle("bi-eye-slash", !visible);
+        }
+    });
 
     openLoginButtons.forEach((button) => {
         if (button && loginModal) {
@@ -156,6 +186,22 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (roleTabs.length > 0) {
+        const toggleCarreraOtra = () => {
+            if (!carreraSelect || !carreraOtraGroup || !carreraOtraInput) return;
+
+            const estudianteActivo = rolSeleccionado?.value === "estudiante";
+            const mostrarOtra = estudianteActivo && carreraSelect.value === "Otra";
+
+            carreraOtraGroup.classList.toggle("is-hidden", !mostrarOtra);
+            carreraOtraInput.required = mostrarOtra;
+
+            if (!mostrarOtra) {
+                carreraOtraInput.value = "";
+            }
+        };
+
+        carreraSelect?.addEventListener("change", toggleCarreraOtra);
+
         roleTabs.forEach((tab) => {
             tab.addEventListener("click", function () {
                 const selectedRole = this.getAttribute("data-role");
@@ -173,8 +219,20 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (rolSeleccionado) {
                     rolSeleccionado.value = selectedRole;
                 }
+
+                toggleCarreraOtra();
             });
         });
+
+        toggleCarreraOtra();
+    }
+
+    if (window.edunexoAuthModal === "register" && registerModal) {
+        loginModal?.classList.remove("active");
+        registerModal.classList.add("active");
+    } else if (window.edunexoAuthModal === "login" && loginModal) {
+        registerModal?.classList.remove("active");
+        loginModal.classList.add("active");
     }
 });
 

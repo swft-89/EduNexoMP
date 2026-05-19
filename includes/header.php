@@ -6,7 +6,7 @@
     <title>EduNexo MP</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css?v=auth-password-2">
 
     <!-- Tipografía -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <!-- Modo oscuro -->
-     <link rel="stylesheet" href="assets/css/dark.css?v=dark-fix-2">
+     <link rel="stylesheet" href="assets/css/dark.css?v=auth-password-2">
 </head>
 <body>
 
