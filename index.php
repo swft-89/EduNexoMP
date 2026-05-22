@@ -157,7 +157,7 @@ unset($_SESSION['success'], $_SESSION['error'], $_SESSION['auth_modal']);
 
             <button type="submit" class="auth-submit">Iniciar sesión</button>
 
-            <a href="#" class="auth-link">¿Olvidaste tu contraseña?</a>
+            <a href="recuperar_password.php" class="auth-link">¿Olvidaste tu contraseña?</a>
 
             <p class="auth-switch">
                 ¿No tienes cuenta?

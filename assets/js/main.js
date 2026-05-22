@@ -253,3 +253,12 @@ if (window.edunexoError) {
         confirmButtonColor: "#2748a6"
     });
 }
+
+if (window.edunexoRecoveryCode) {
+    Swal.fire({
+        icon: "info",
+        title: "Codigo de prueba",
+        text: `Usa este codigo para restablecer tu contrasena: ${window.edunexoRecoveryCode}`,
+        confirmButtonColor: "#2748a6"
+    });
+}

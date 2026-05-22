@@ -87,6 +87,20 @@
     color: var(--text);
 }
 
+:root[data-theme="dark"] .recovery-card {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+:root[data-theme="dark"] .recovery-card h1,
+:root[data-theme="dark"] .recovery-card h2 {
+    color: var(--text);
+}
+
+:root[data-theme="dark"] .recovery-card p {
+    color: var(--text-soft);
+}
+
 :root[data-theme="dark"] .form-group input::placeholder {
     color: #94a3b8;
 }
