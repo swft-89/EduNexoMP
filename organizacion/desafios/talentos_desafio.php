@@ -301,6 +301,7 @@ unset($_SESSION['success'], $_SESSION['error']);
                                     </button>
                                 <?php else: ?>
                                     <form action="../../procesos/organizacion/invitar_estudiante.php" method="POST">
+                                        <?php echo edunexo_csrf_input(); ?>
                                         <input type="hidden" name="id_desafio" value="<?php echo (int) $idDesafio; ?>">
                                         <input type="hidden" name="id_estudiante" value="<?php echo (int) $talento['id_estudiante']; ?>">
 

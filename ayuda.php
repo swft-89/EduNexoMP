@@ -2,6 +2,7 @@
 session_start();
 require_once 'config/conexion.php';
 require_once 'includes/help_schema.php';
+require_once 'includes/csrf.php';
 
 if (!isset($_SESSION['usuario_id'])) {
     header('Location: index.php');
@@ -119,6 +120,7 @@ function ayuda_tipo_label(string $tipo): string
                     <p>Usa este formulario para sugerir catalogos o para pedir ayuda general.</p>
 
                     <form action="procesos/guardar_sugerencia_ayuda.php" method="POST" class="help-form">
+                        <?php echo edunexo_csrf_input(); ?>
                         <div class="help-field">
                             <label for="tipo">Tipo</label>
                             <select id="tipo" name="tipo" required>
@@ -210,6 +212,7 @@ function ayuda_tipo_label(string $tipo): string
                                 </div>
 
                                 <form action="procesos/admin/revisar_sugerencia_ayuda.php" method="POST" class="help-review-form">
+                                    <?php echo edunexo_csrf_input(); ?>
                                     <input type="hidden" name="id_sugerencia" value="<?php echo (int) $sugerencia['id_sugerencia']; ?>">
                                     <textarea name="respuesta_admin" rows="3" placeholder="Respuesta opcional para el usuario"></textarea>
                                     <div>

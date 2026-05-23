@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once '../config/conexion.php';
+require_once '../includes/csrf.php';
 require_once '../includes/profile_photo.php';
 require_once '../includes/validation.php';
 
@@ -13,6 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ../organizacion/editar_perfil_organizacion.php');
     exit;
 }
+
+edunexo_require_csrf('../organizacion/editar_perfil_organizacion.php');
 
 $idOrganizacion = (int) $_SESSION['usuario_id'];
 

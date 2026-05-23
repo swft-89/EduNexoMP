@@ -241,6 +241,7 @@ $fotoPerfil = $usuario['est_foto_url'] ?? $usuario['org_foto_url'] ?? $usuario['
 
                 <div class="detail-actions">
                     <form action="../../procesos/actualizar_foto_usuario.php" method="POST" enctype="multipart/form-data">
+                        <?php echo edunexo_csrf_input(); ?>
                         <input type="hidden" name="id_usuario" value="<?php echo (int) $usuario['id_usuario']; ?>">
                         <input type="hidden" name="redirect" value="../superadmin/usuarios/detalle_usuario_superadmin.php?id=<?php echo (int) $usuario['id_usuario']; ?>">
                         <div class="filter-group">
@@ -253,6 +254,7 @@ $fotoPerfil = $usuario['est_foto_url'] ?? $usuario['org_foto_url'] ?? $usuario['
                     <?php if (!$esYo && !$esSuperadminObjetivo): ?>
                         <?php if (($usuario['estado'] ?? '') === 'suspendido'): ?>
                             <form action="../../procesos/cambiar_estado_usuario.php" method="POST">
+                                <?php echo edunexo_csrf_input(); ?>
                                 <input type="hidden" name="id_usuario" value="<?php echo (int) $usuario['id_usuario']; ?>">
                                 <input type="hidden" name="nuevo_estado" value="activo">
                                 <input type="hidden" name="redirect" value="../superadmin/usuarios/detalle_usuario_superadmin.php?id=<?php echo (int) $usuario['id_usuario']; ?>">
@@ -260,6 +262,7 @@ $fotoPerfil = $usuario['est_foto_url'] ?? $usuario['org_foto_url'] ?? $usuario['
                             </form>
                         <?php else: ?>
                             <form action="../../procesos/cambiar_estado_usuario.php" method="POST">
+                                <?php echo edunexo_csrf_input(); ?>
                                 <input type="hidden" name="id_usuario" value="<?php echo (int) $usuario['id_usuario']; ?>">
                                 <input type="hidden" name="nuevo_estado" value="suspendido">
                                 <input type="hidden" name="redirect" value="../superadmin/usuarios/detalle_usuario_superadmin.php?id=<?php echo (int) $usuario['id_usuario']; ?>">

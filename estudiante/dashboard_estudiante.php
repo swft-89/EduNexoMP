@@ -348,6 +348,7 @@ unset($_SESSION['success'], $_SESSION['error']);
                         <div class="challenge-card-header">
                             <h3><?php echo htmlspecialchars($d['titulo']); ?></h3>
                             <form action="../procesos/estudiante/toggle_favorito.php" method="POST" style="margin:0;">
+                                <?php echo edunexo_csrf_input(); ?>
                                 <input type="hidden" name="id_desafio" value="<?php echo (int) $d['id_desafio']; ?>">
                                 <input type="hidden" name="redirect" value="dashboard_estudiante.php">
 

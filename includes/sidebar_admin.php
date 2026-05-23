@@ -66,9 +66,33 @@ $adminSidebarItems = $isSuperadminSidebar ? [
 ] : [
     [
         'href' => 'admin/dashboard_admin.php',
-        'icon' => 'bi-bar-chart-line',
+        'icon' => 'bi-grid-1x2',
         'label' => 'Dashboard',
         'active' => ['admin/dashboard_admin.php'],
+    ],
+    [
+        'href' => 'admin/usuarios_admin.php',
+        'icon' => 'bi-people',
+        'label' => 'Usuarios',
+        'active' => ['admin/usuarios_admin.php'],
+    ],
+    [
+        'href' => 'admin/desafios_admin.php',
+        'icon' => 'bi-file-earmark-text',
+        'label' => 'Desafios',
+        'active' => ['admin/desafios_admin.php'],
+    ],
+    [
+        'href' => 'admin/propuestas_admin.php',
+        'icon' => 'bi-send',
+        'label' => 'Propuestas',
+        'active' => ['admin/propuestas_admin.php'],
+    ],
+    [
+        'href' => 'ayuda.php',
+        'icon' => 'bi-inbox',
+        'label' => 'Sugerencias',
+        'active' => ['ayuda.php'],
     ],
     [
         'href' => 'admin/reportes_admin.php',
@@ -87,7 +111,10 @@ $adminSidebarItems = $isSuperadminSidebar ? [
 <aside class="sidebar">
     <div class="sidebar-top">
         <div class="logo-mini"><i class="bi bi-mortarboard"></i></div>
-        <span>EduNexo MP</span>
+        <div class="sidebar-brand-copy">
+            <span>EduNexo MP</span>
+            <small><?php echo $isSuperadminSidebar ? 'Superadmin' : 'Admin operativo'; ?></small>
+        </div>
     </div>
 
     <nav class="sidebar-menu">

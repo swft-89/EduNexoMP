@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/includes/carreras.php';
+require_once __DIR__ . '/includes/csrf.php';
 
 $success = $_SESSION['success'] ?? null;
 $error = $_SESSION['error'] ?? null;
@@ -123,6 +124,7 @@ unset($_SESSION['success'], $_SESSION['error'], $_SESSION['auth_modal']);
         <p class="auth-subtitle">Inicia sesión para continuar</p>
 
         <form class="auth-form" method="POST" action="procesos/login.php">
+            <?php echo edunexo_csrf_input(); ?>
             <div class="auth-group">
                 <label for="login_email">Email <span class="required-mark" aria-hidden="true">*</span></label>
                 <input
@@ -195,6 +197,7 @@ unset($_SESSION['success'], $_SESSION['error'], $_SESSION['auth_modal']);
         </div>
 
         <form class="register-form" method="POST" action="procesos/registro.php">
+            <?php echo edunexo_csrf_input(); ?>
             <input type="hidden" name="rol" id="rolSeleccionado" value="estudiante">
 
             <!-- ================= ESTUDIANTE ================= -->

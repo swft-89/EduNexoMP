@@ -94,6 +94,7 @@ unset($_SESSION['error_form'], $_SESSION['old_propuesta_edit']);
 
             <div class="propuesta-card">
                 <form action="../procesos/estudiante/actualizar_propuesta.php" method="POST" enctype="multipart/form-data" novalidate>
+                    <?php echo edunexo_csrf_input(); ?>
                     <input type="hidden" name="id_propuesta" value="<?php echo (int) $idPropuesta; ?>">
 
                     <div class="propuesta-form-grid">

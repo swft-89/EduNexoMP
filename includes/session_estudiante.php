@@ -1,13 +1,12 @@
 <?php
 session_start();
+require_once __DIR__ . '/auth_redirect.php';
+require_once __DIR__ . '/csrf.php';
 
 if (!isset($_SESSION['usuario_id'])) {
-    header('Location: index.php');
-    exit;
+    edunexo_redirect('index.php');
 }
 
 if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'estudiante') {
-    header('Location: index.php');
-    exit;
+    edunexo_redirect('index.php');
 }
-?>

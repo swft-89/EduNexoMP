@@ -4,11 +4,14 @@ require_once __DIR__ . '/../config/conexion.php';
 require_once __DIR__ . '/../includes/student_schema.php';
 require_once __DIR__ . '/../includes/validation.php';
 require_once __DIR__ . '/../includes/carreras.php';
+require_once __DIR__ . '/../includes/csrf.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ../index.php');
     exit;
 }
+
+edunexo_require_csrf('../index.php');
 
 function limpiar($valor)
 {

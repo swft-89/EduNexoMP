@@ -154,6 +154,7 @@ unset($_SESSION['success'], $_SESSION['error']);
                                 </a>
 
                                 <form action="../procesos/estudiante/eliminar_propuesta.php" method="POST" class="delete-propuesta-form">
+                                    <?php echo edunexo_csrf_input(); ?>
                                     <input type="hidden" name="id_propuesta" value="<?php echo (int) $propuesta['id_propuesta']; ?>">
                                     <button type="submit" class="btn btn-outline-dark">
                                         Eliminar

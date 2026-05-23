@@ -345,12 +345,14 @@ unset($_SESSION['success'], $_SESSION['error']);
                                 </a>
 
                                 <form action="../procesos/aprobar_admin.php" method="POST">
+                                    <?php echo edunexo_csrf_input(); ?>
                                     <input type="hidden" name="id_admin" value="<?php echo (int) $item['id_admin']; ?>">
                                     <input type="hidden" name="redirect" value="../superadmin/dashboard_superadmin.php">
                                     <button type="submit" class="btn btn-primary btn-verify">Verificar</button>
                                 </form>
 
                                 <form action="../procesos/rechazar_admin.php" method="POST">
+                                    <?php echo edunexo_csrf_input(); ?>
                                     <input type="hidden" name="id_admin" value="<?php echo (int) $item['id_admin']; ?>">
                                     <input type="hidden" name="redirect" value="../superadmin/dashboard_superadmin.php">
                                     <button type="submit" class="btn btn-reject">Rechazar</button>

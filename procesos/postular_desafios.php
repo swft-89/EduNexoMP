@@ -1,8 +1,8 @@
 <?php
 session_start();
-require_once '../config/conexion.php';
+require_once __DIR__ . '/../config/conexion.php';
 
-if (!isset($_SESSION['usuario_id'])) {
+if (!isset($_SESSION['usuario_id']) || ($_SESSION['rol'] ?? '') !== 'estudiante') {
     header('Location: ../index.php');
     exit;
 }
@@ -13,17 +13,27 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 $idEstudiante = (int) $_SESSION['usuario_id'];
-$idDesafio = isset($_POST['id_desafio']) ? (int) $_POST['id_desafio'] : 0;
-$redirect = $_POST['redirect'] ?? 'estudiante/dashboard_estudiante.php';
+$idDesafio = (int) ($_POST['id_desafio'] ?? 0);
 
 if ($idDesafio <= 0) {
-    $_SESSION['error'] = 'Desafío no válido.';
-    header('Location: ../' . $redirect);
+    $_SESSION['error'] = 'Desafio no valido.';
+    header('Location: ../estudiante/dashboard_estudiante.php');
     exit;
 }
 
 try {
-    $pdo->beginTransaction();
+    $stmt = $pdo->prepare("
+        SELECT id_desafio
+        FROM desafio
+        WHERE id_desafio = :id_desafio
+          AND LOWER(COALESCE(estado, '')) = 'activo'
+        LIMIT 1
+    ");
+    $stmt->execute([':id_desafio' => $idDesafio]);
+
+    if (!$stmt->fetchColumn()) {
+        throw new RuntimeException('Este desafio no esta disponible para recibir propuestas.');
+    }
 
     $stmt = $pdo->prepare("
         SELECT 1
@@ -38,42 +48,16 @@ try {
     ]);
 
     if ($stmt->fetchColumn()) {
-        $pdo->rollBack();
-        $_SESSION['error'] = 'Ya te postulaste a este desafío.';
-        header('Location: ../' . $redirect);
+        $_SESSION['error'] = 'Ya enviaste una propuesta para este desafio.';
+        header('Location: ../estudiante/mis_propuestas.php');
         exit;
     }
 
-    $stmt = $pdo->prepare("
-        INSERT INTO propuesta (
-            id_estudiante,
-            id_desafio,
-            estado
-        )
-        VALUES (
-            :id_estudiante,
-            :id_desafio,
-            :estado
-        )
-        RETURNING id_propuesta
-    ");
-    $stmt->execute([
-        ':id_estudiante' => $idEstudiante,
-        ':id_desafio' => $idDesafio,
-        ':estado' => 'en revisión'
-    ]);
-
-    $stmt->fetchColumn();
-
-    $pdo->commit();
-
-    $_SESSION['success'] = 'Tu postulación fue enviada correctamente.';
-} catch (PDOException $e) {
-    if ($pdo->inTransaction()) {
-        $pdo->rollBack();
-    }
-    $_SESSION['error'] = 'No se pudo registrar la postulación.';
+    $_SESSION['success'] = 'Completa el formulario para enviar tu propuesta.';
+    header('Location: ../estudiante/crear_propuesta.php?id=' . $idDesafio);
+    exit;
+} catch (Throwable $e) {
+    $_SESSION['error'] = $e->getMessage();
+    header('Location: ../estudiante/dashboard_estudiante.php');
+    exit;
 }
-
-header('Location: ../' . $redirect);
-exit;

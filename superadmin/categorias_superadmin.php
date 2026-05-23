@@ -137,6 +137,7 @@ unset(
                     </div>
 
                     <form action="../procesos/guardar_categoria.php" method="POST" class="stack-form">
+                        <?php echo edunexo_csrf_input(); ?>
                         <div class="filter-group">
                             <label for="nombre_categoria">Nombre</label>
                             <input
@@ -226,6 +227,7 @@ unset(
                                             </button>
 
                                             <form action="../procesos/eliminar_categoria.php" method="POST" onsubmit="return confirm('¿Seguro que deseas eliminar esta categoría?');">
+                                                <?php echo edunexo_csrf_input(); ?>
                                                 <input type="hidden" name="id_categoria" value="<?php echo (int) $categoria['id_categoria']; ?>">
                                                 <button type="submit" class="btn btn-reject btn-sm">Eliminar</button>
                                             </form>
@@ -261,6 +263,7 @@ unset(
                     </div>
 
                     <form action="../procesos/guardar_habilidad.php" method="POST" class="stack-form">
+                        <?php echo edunexo_csrf_input(); ?>
                         <div class="filter-group">
                             <label for="nombre_habilidad">Nombre</label>
                             <input
@@ -355,6 +358,7 @@ unset(
                                             </button>
 
                                             <form action="../procesos/eliminar_habilidad.php" method="POST" onsubmit="return confirm('¿Seguro que deseas eliminar esta habilidad?');">
+                                                <?php echo edunexo_csrf_input(); ?>
                                                 <input type="hidden" name="id_habilidad" value="<?php echo (int) $habilidad['id_habilidad']; ?>">
                                                 <button type="submit" class="btn btn-reject btn-sm">Eliminar</button>
                                             </form>
@@ -384,6 +388,7 @@ unset(
         </div>
 
         <form action="../procesos/editar_categoria.php" method="POST" class="stack-form">
+            <?php echo edunexo_csrf_input(); ?>
             <input type="hidden" name="id_categoria" id="edit_id_categoria">
 
             <div class="filter-group">
@@ -414,6 +419,7 @@ unset(
         </div>
 
         <form action="../procesos/editar_habilidad.php" method="POST" class="stack-form">
+            <?php echo edunexo_csrf_input(); ?>
             <input type="hidden" name="id_habilidad" id="edit_id_habilidad">
 
             <div class="filter-group">

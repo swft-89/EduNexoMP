@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once '../../config/conexion.php';
+require_once '../../includes/csrf.php';
 require_once '../../includes/help_schema.php';
 
 if (!isset($_SESSION['usuario_id']) || ($_SESSION['rol'] ?? '') !== 'administrador') {
@@ -12,6 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ../../ayuda.php');
     exit;
 }
+
+edunexo_require_csrf('../../ayuda.php');
 
 edunexo_ensure_help_tables($pdo);
 

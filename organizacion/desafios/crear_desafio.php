@@ -76,6 +76,7 @@ unset($_SESSION['success'], $_SESSION['error']);
 
             <div class="crear-desafio-card">
                 <form action="../../procesos/guardar_desafio.php" method="POST" class="crear-desafio-form" novalidate>
+                    <?php echo edunexo_csrf_input(); ?>
                     <div class="form-grid-2">
 
                         <div class="form-group full">

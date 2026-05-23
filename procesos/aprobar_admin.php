@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../config/conexion.php';
+require_once __DIR__ . '/../includes/csrf.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -23,6 +24,8 @@ $redirectsPermitidos = [
 if (!in_array($redirect, $redirectsPermitidos, true)) {
     $redirect = '../superadmin/dashboard_superadmin.php';
 }
+
+edunexo_require_csrf($redirect);
 
 if ($idAdminObjetivo <= 0) {
     $_SESSION['error'] = "Solicitud inválida.";

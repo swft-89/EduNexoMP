@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../config/conexion.php';
+require_once __DIR__ . '/../includes/csrf.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -15,6 +16,17 @@ if (!isset($_SESSION['usuario_id']) || ($_SESSION['rol'] ?? '') !== 'administrad
 $idSuperadmin = (int) $_SESSION['usuario_id'];
 $idUsuarioObjetivo = (int) ($_POST['id_usuario'] ?? 0);
 $nuevoEstado = trim($_POST['nuevo_estado'] ?? '');
+$redirect = $_POST['redirect'] ?? '../superadmin/usuarios/usuarios_superadmin.php';
+$redirectsPermitidos = [
+    '../superadmin/usuarios/usuarios_superadmin.php',
+    '../superadmin/usuarios/detalle_usuario_superadmin.php?id=' . $idUsuarioObjetivo
+];
+
+if (!in_array($redirect, $redirectsPermitidos, true)) {
+    $redirect = '../superadmin/usuarios/usuarios_superadmin.php';
+}
+
+edunexo_require_csrf($redirect);
 
 $estadosPermitidos = ['activo', 'suspendido'];
 
@@ -149,16 +161,6 @@ try {
     }
 
     $_SESSION['error'] = $e->getMessage();
-}
-
-$redirect = $_POST['redirect'] ?? '../superadmin/usuarios/usuarios_superadmin.php';
-$redirectsPermitidos = [
-    '../superadmin/usuarios/usuarios_superadmin.php',
-    '../superadmin/usuarios/detalle_usuario_superadmin.php?id=' . $idUsuarioObjetivo
-];
-
-if (!in_array($redirect, $redirectsPermitidos, true)) {
-    $redirect = '../superadmin/usuarios/usuarios_superadmin.php';
 }
 
 header('Location: ' . $redirect);

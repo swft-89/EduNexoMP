@@ -260,6 +260,7 @@ unset($_SESSION['success'], $_SESSION['error']);
                     </div>
 
                     <form action="../procesos/enviar_mensaje_organizacion.php" method="POST" class="chat-send-form">
+                        <?php echo edunexo_csrf_input(); ?>
                         <input type="hidden" name="id_conversacion" value="<?php echo (int) $conversacionActiva['id_conversacion']; ?>">
                         <input type="text" name="contenido" placeholder="Escribe un mensaje..." required>
                         <button type="submit" class="btn btn-primary">Enviar</button>

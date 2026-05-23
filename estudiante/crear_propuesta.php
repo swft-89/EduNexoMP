@@ -97,6 +97,7 @@ unset($_SESSION['error_form'], $_SESSION['old_propuesta']);
             <div class="propuesta-card">
 
                 <form action="../procesos/guardar_propuesta.php" method="POST" enctype="multipart/form-data" novalidate>
+                    <?php echo edunexo_csrf_input(); ?>
 
                     <input type="hidden" name="id_desafio" value="<?php echo (int) $idDesafio; ?>">
 

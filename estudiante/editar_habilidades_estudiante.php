@@ -178,6 +178,7 @@ unset($_SESSION['success'], $_SESSION['error']);
 
             <section class="skills-edit-card">
                 <form action="../procesos/estudiante/guardar_habilidades_estudiante.php" method="POST" id="formHabilidadesEstudiante">
+                    <?php echo edunexo_csrf_input(); ?>
 
                     <div class="skills-catalog-callout">
                         <div>

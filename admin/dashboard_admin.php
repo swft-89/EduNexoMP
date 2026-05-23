@@ -273,13 +273,21 @@ unset($_SESSION['success'], $_SESSION['error']);
                 </div>
 
                 <div class="admin-quick-actions">
+                    <a href="usuarios_admin.php">
+                        <i class="bi bi-people"></i>
+                        <span>Usuarios</span>
+                    </a>
+                    <a href="desafios_admin.php">
+                        <i class="bi bi-file-earmark-text"></i>
+                        <span>Desafios</span>
+                    </a>
+                    <a href="propuestas_admin.php">
+                        <i class="bi bi-send"></i>
+                        <span>Propuestas</span>
+                    </a>
                     <a href="reportes_admin.php">
                         <i class="bi bi-clipboard-data"></i>
-                        <span>Ver reportes</span>
-                    </a>
-                    <a href="../procesos/reportes/exportar_reporte.php">
-                        <i class="bi bi-download"></i>
-                        <span>Exportar CSV</span>
+                        <span>Reportes</span>
                     </a>
                     <a href="perfil_admin.php">
                         <i class="bi bi-person"></i>

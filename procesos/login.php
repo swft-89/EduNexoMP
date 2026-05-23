@@ -1,11 +1,14 @@
 <?php
 session_start();
 require_once __DIR__ . '/../config/conexion.php';
+require_once __DIR__ . '/../includes/csrf.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ../index.php');
     exit;
 }
+
+edunexo_require_csrf('../index.php');
 
 $correo = trim($_POST['correo'] ?? '');
 $contrasena = trim($_POST['contrasena'] ?? '');
@@ -65,6 +68,8 @@ try {
     if (($usuario['estado'] ?? 'activo') !== 'activo') {
         throw new Exception("Tu cuenta no está activa.");
     }
+
+    session_regenerate_id(true);
 
     $_SESSION['usuario_id'] = $usuario['id_usuario'];
     $_SESSION['correo'] = $usuario['correo_electronico'];

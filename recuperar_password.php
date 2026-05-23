@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once __DIR__ . '/includes/csrf.php';
 
 $success = $_SESSION['success'] ?? null;
 $error = $_SESSION['error'] ?? null;
@@ -34,6 +35,7 @@ unset($_SESSION['success'], $_SESSION['error'], $_SESSION['password_reset_dev_co
         <p>Ingresa tu correo y te enviaremos un código temporal para crear una nueva contraseña.</p>
 
         <form class="auth-form" method="POST" action="procesos/solicitar_recuperacion.php">
+            <?php echo edunexo_csrf_input(); ?>
             <div class="auth-group">
                 <label for="correo">Correo electrónico</label>
                 <input
@@ -53,6 +55,7 @@ unset($_SESSION['success'], $_SESSION['error'], $_SESSION['password_reset_dev_co
 
         <h2>Ya tengo un código</h2>
         <form class="auth-form" method="POST" action="procesos/restablecer_password.php">
+            <?php echo edunexo_csrf_input(); ?>
             <div class="auth-group">
                 <label for="reset_correo">Correo electrónico</label>
                 <input

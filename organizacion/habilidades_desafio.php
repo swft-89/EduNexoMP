@@ -91,6 +91,7 @@ unset($_SESSION['success'], $_SESSION['error']);
 
             <div class="crear-desafio-card">
                 <form action="../procesos/guardar_habilidades_desafio.php" method="POST">
+                    <?php echo edunexo_csrf_input(); ?>
                     <input type="hidden" name="id_desafio" value="<?php echo (int) $desafio['id_desafio']; ?>">
 
                     <div class="form-grid-2">

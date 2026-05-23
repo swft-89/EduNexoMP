@@ -262,6 +262,7 @@ unset($_SESSION['success'], $_SESSION['error'], $_SESSION['old']);
                 </div>
 
                 <form action="../procesos/guardar_perfil_organizacion.php" method="POST" enctype="multipart/form-data" class="org-profile-form" novalidate>
+                    <?php echo edunexo_csrf_input(); ?>
                     <input type="hidden" name="foto_url_actual" value="<?php echo htmlspecialchars($organizacion['foto_url'] ?? ''); ?>">
 
                     <div class="org-profile-section">

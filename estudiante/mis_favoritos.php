@@ -124,6 +124,7 @@ unset($_SESSION['success'], $_SESSION['error']);
                             </a>
 
                             <form action="../procesos/estudiante/toggle_favorito.php" method="POST" style="margin:0;">
+                                <?php echo edunexo_csrf_input(); ?>
                                 <input type="hidden" name="id_desafio" value="<?php echo (int) $favorito['id_desafio']; ?>">
                                 <input type="hidden" name="redirect" value="../estudiante/mis_favoritos.php">
                                 <button type="submit" class="btn btn-primary">

@@ -1,10 +1,11 @@
 <?php
 session_start();
+require_once __DIR__ . '/auth_redirect.php';
+require_once __DIR__ . '/csrf.php';
 require_once __DIR__ . '/../config/conexion.php';
 
 if (!isset($_SESSION['usuario_id']) || ($_SESSION['rol'] ?? '') !== 'administrador') {
-    header('Location: index.php');
-    exit;
+    edunexo_redirect('index.php');
 }
 
 $stmt = $pdo->prepare("
@@ -20,6 +21,5 @@ $stmt->execute([
 $admin = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$admin || ($admin['tipo_admin'] ?? '') !== 'superadmin') {
-    header('Location: ../../superadmin/dashboard_admin.php');
-    exit;
+    edunexo_redirect('admin/dashboard_admin.php');
 }

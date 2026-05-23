@@ -128,12 +128,14 @@ unset($_SESSION['success'], $_SESSION['error']);
                             <div class="verification-actions">
                                 <?php if (($item['estado_solicitud'] ?? '') === 'pendiente'): ?>
                                     <form action="../../procesos/aprobar_admin.php" method="POST">
+                                        <?php echo edunexo_csrf_input(); ?>
                                         <input type="hidden" name="id_admin" value="<?php echo (int) $item['id_admin']; ?>">
                                         <input type="hidden" name="redirect" value="../superadmin/usuarios/solicitudes_admin.php">
                                         <button type="submit" class="btn btn-primary btn-verify">Verificar</button>
                                     </form>
 
                                     <form action="../../procesos/rechazar_admin.php" method="POST">
+                                        <?php echo edunexo_csrf_input(); ?>
                                         <input type="hidden" name="id_admin" value="<?php echo (int) $item['id_admin']; ?>">
                                         <input type="hidden" name="redirect" value="../superadmin/usuarios/solicitudes_admin.php">
                                         <button type="submit" class="btn btn-reject">Rechazar</button>

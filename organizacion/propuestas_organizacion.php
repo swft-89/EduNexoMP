@@ -197,6 +197,7 @@ unset($_SESSION['success'], $_SESSION['error']);
                             </div>
 
                             <form action="../procesos/cambiar_estado_propuesta.php" method="POST" class="org-estado-form">
+                                <?php echo edunexo_csrf_input(); ?>
                                 <input type="hidden" name="id_propuesta" value="<?php echo (int) $propuesta['id_propuesta']; ?>">
 
                                 <label for="estado_<?php echo (int) $propuesta['id_propuesta']; ?>">Cambiar estado</label>

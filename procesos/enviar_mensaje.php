@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once '../config/conexion.php';
+require_once '../includes/csrf.php';
 
 if (!isset($_SESSION['usuario_id'])) {
     header('Location: ../index.php');
@@ -11,6 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ../estudiante/chat.php');
     exit;
 }
+
+edunexo_require_csrf('../estudiante/chat.php');
 
 $idUsuario = (int) $_SESSION['usuario_id'];
 $idConversacion = isset($_POST['id_conversacion']) ? (int) $_POST['id_conversacion'] : 0;

@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once '../config/conexion.php';
+require_once '../includes/csrf.php';
 require_once '../includes/profile_photo.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -21,6 +22,8 @@ $redirectPermitido = '../superadmin/usuarios/detalle_usuario_superadmin.php?id='
 if ($redirect !== $redirectPermitido) {
     $redirect = '../superadmin/usuarios/usuarios_superadmin.php';
 }
+
+edunexo_require_csrf($redirect);
 
 if ($idUsuario <= 0) {
     $_SESSION['error'] = 'Usuario inválido.';

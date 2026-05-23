@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../config/conexion.php';
+require_once __DIR__ . '/../includes/csrf.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -15,6 +16,8 @@ if (!isset($_SESSION['usuario_id']) || ($_SESSION['rol'] ?? '') !== 'administrad
 $idSuperadmin = (int) $_SESSION['usuario_id'];
 $idDesafio = (int) ($_POST['id_desafio'] ?? 0);
 $nuevoEstado = trim($_POST['nuevo_estado'] ?? '');
+
+edunexo_require_csrf('../superadmin/desafio/desafios_superadmin.php');
 
 $estadosPermitidos = ['activo', 'pausado', 'cerrado'];
 

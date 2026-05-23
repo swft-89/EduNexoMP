@@ -130,6 +130,7 @@ $valores = [
 
             <div class="crear-desafio-card">
                 <form action="../../procesos/actualizar_desafio.php" method="POST" class="crear-desafio-form" novalidate>
+                    <?php echo edunexo_csrf_input(); ?>
                     <input type="hidden" name="id_desafio" value="<?php echo (int) $desafio['id_desafio']; ?>">
 
                     <div class="form-grid-2">

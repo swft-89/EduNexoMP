@@ -198,6 +198,7 @@ unset($_SESSION['success'], $_SESSION['error']);
                 <div class="detail-actions">
                     <?php if ($estado !== 'activo'): ?>
                         <form action="../../procesos/cambiar_estado_desafio_admin.php" method="POST">
+                            <?php echo edunexo_csrf_input(); ?>
                             <input type="hidden" name="id_desafio" value="<?php echo (int) $desafio['id_desafio']; ?>">
                             <input type="hidden" name="nuevo_estado" value="activo">
                             <button type="submit" class="btn btn-primary">Activar desafío</button>
@@ -206,6 +207,7 @@ unset($_SESSION['success'], $_SESSION['error']);
 
                     <?php if ($estado !== 'pausado'): ?>
                         <form action="../../procesos/cambiar_estado_desafio_admin.php" method="POST">
+                            <?php echo edunexo_csrf_input(); ?>
                             <input type="hidden" name="id_desafio" value="<?php echo (int) $desafio['id_desafio']; ?>">
                             <input type="hidden" name="nuevo_estado" value="pausado">
                             <button type="submit" class="btn superadmin-btn-light">Pausar desafío</button>
@@ -214,6 +216,7 @@ unset($_SESSION['success'], $_SESSION['error']);
 
                     <?php if ($estado !== 'cerrado'): ?>
                         <form action="../../procesos/cambiar_estado_desafio_admin.php" method="POST">
+                            <?php echo edunexo_csrf_input(); ?>
                             <input type="hidden" name="id_desafio" value="<?php echo (int) $desafio['id_desafio']; ?>">
                             <input type="hidden" name="nuevo_estado" value="cerrado">
                             <button type="submit" class="btn btn-reject">Cerrar desafío</button>

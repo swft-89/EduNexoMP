@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../config/conexion.php';
+require_once __DIR__ . '/../includes/csrf.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -11,6 +12,8 @@ if (!isset($_SESSION['usuario_id']) || ($_SESSION['rol'] ?? '') !== 'administrad
     header('Location: ../index.php');
     exit;
 }
+
+edunexo_require_csrf('../superadmin/categorias_superadmin.php');
 
 $idCategoria = (int) ($_POST['id_categoria'] ?? 0);
 $nombre = trim($_POST['nombre_categoria'] ?? '');

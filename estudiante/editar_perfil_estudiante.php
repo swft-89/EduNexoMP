@@ -148,6 +148,7 @@ function oldValue($key, $default, $old)
                 </div>
 
                 <form action="../procesos/estudiante/guardar_perfil_estudiante.php" method="POST" enctype="multipart/form-data" class="profile-form" novalidate>
+                    <?php echo edunexo_csrf_input(); ?>
                     <input type="hidden" name="foto_url_actual" value="<?php echo htmlspecialchars($estudiante['foto_url'] ?? ''); ?>">
 
                     <div class="profile-section">

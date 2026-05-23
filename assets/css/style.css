@@ -1271,6 +1271,24 @@ body {
     color: var(--text);
 }
 
+.sidebar-brand-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.sidebar-brand-copy span {
+    font-size: 1.05rem;
+    line-height: 1.15;
+}
+
+.sidebar-brand-copy small {
+    color: var(--text-soft);
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
 .logo-mini {
     width: 42px;
     height: 42px;

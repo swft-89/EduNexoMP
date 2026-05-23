@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once '../config/conexion.php';
+require_once '../includes/csrf.php';
 
 if (!isset($_SESSION['usuario_id']) || !isset($_SESSION['rol']) || $_SESSION['rol'] !== 'organizacion') {
     header('Location: ../index.php');
@@ -11,6 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ../organizacion/dashboard_organizacion.php');
     exit;
 }
+
+edunexo_require_csrf('../organizacion/dashboard_organizacion.php');
 
 $idOrganizacion = (int) $_SESSION['usuario_id'];
 $idDesafio = (int) ($_POST['id_desafio'] ?? 0);

@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once '../../config/conexion.php';
+require_once '../../includes/csrf.php';
 
 if (!isset($_SESSION['usuario_id'])) {
     header('Location: ../../index.php');
@@ -21,6 +22,8 @@ $redirectsPermitidos = [
     '../estudiante/mis_favoritos.php' => '../../estudiante/mis_favoritos.php'
 ];
 $redirectUrl = $redirectsPermitidos[$redirect] ?? '../../estudiante/dashboard_estudiante.php';
+
+edunexo_require_csrf($redirectUrl);
 
 if ($idDesafio <= 0) {
     $_SESSION['error'] = 'Desafío no válido.';

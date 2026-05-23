@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once '../../config/conexion.php';
+require_once '../../includes/csrf.php';
 
 if (!isset($_SESSION['usuario_id']) || !isset($_SESSION['rol']) || $_SESSION['rol'] !== 'estudiante') {
     header('Location: ../index.php');
@@ -11,6 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ../dashboard_estudiante.php');
     exit;
 }
+
+edunexo_require_csrf('../../estudiante/habilidades_estudiante.php');
 
 $idEstudiante = (int) $_SESSION['usuario_id'];
 $habilidadesSeleccionadas = $_POST['habilidades'] ?? [];

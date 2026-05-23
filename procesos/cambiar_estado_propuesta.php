@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once '../config/conexion.php';
+require_once '../includes/csrf.php';
 require_once '../includes/propuesta_utils.php';
 
 if (!isset($_SESSION['usuario_id']) || !isset($_SESSION['rol']) || $_SESSION['rol'] !== 'organizacion') {
@@ -12,6 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ../organizacion/propuestas_organizacion.php');
     exit;
 }
+
+edunexo_require_csrf('../organizacion/propuestas_organizacion.php');
 
 $idOrganizacion = (int) $_SESSION['usuario_id'];
 $idPropuesta = isset($_POST['id_propuesta']) ? (int) $_POST['id_propuesta'] : 0;
